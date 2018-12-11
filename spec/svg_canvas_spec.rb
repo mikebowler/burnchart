@@ -13,4 +13,13 @@ RSpec.describe Burnchart::SvgCanvas do
       "<text x='1' y='2'>foo</text>")
   end
 
+  it "writes full xml" do 
+    canvas = Burnchart::SvgCanvas.new
+    canvas.line x1: 1
+    expect(canvas.to_svg :full).to eq(
+      '<?xml version="1.0" standalone="no"?>' + "\n" +
+      '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' + "\n" +
+      '<svg><line x1=\'1\'/></svg>')
+  end
 end
+

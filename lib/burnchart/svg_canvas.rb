@@ -26,8 +26,52 @@ module Burnchart
       @svg = ''
     end
 
-    def to_svg svg_flavour = :partial
-      @svg
+    def to_svg svg_flavour = :full
+      if svg_flavour == :full
+        '<?xml version="1.0" standalone="no"?>' << "\n" <<
+        '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' <<
+        "\n<svg>" <<
+        @svg << "</svg>"
+      elsif svg_flavour == :partial
+        @svg
+      else
+        raise "unexpected svg flavour: #{svg_flavour}"
+      end
     end
   end
 end
+
+
+
+
+# <svg width="995" height="185"
+
+#  xmlns="http://www.w3.org/2000/svg"
+
+#  xmlns:xlink="http://www.w3.org/1999/xlink">
+
+
+
+# <style type="text/css">
+
+# <![CDATA[
+
+#  text {
+
+#    fill: black;
+
+#    font: italic 13px sans-serif;
+
+#  }
+
+# ]]>
+
+# </style>
+
+
+
+# <line x1="0" y1="149" x2="975" y2="149" stroke="gray"/>
+#       @svg
+#     end
+#   end
+# end
