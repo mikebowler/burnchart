@@ -41,37 +41,3 @@ module Burnchart
   end
 end
 
-
-
-
-# <svg width="995" height="185"
-
-#  xmlns="http://www.w3.org/2000/svg"
-
-#  xmlns:xlink="http://www.w3.org/1999/xlink">
-
-
-
-# <style type="text/css">
-
-# <![CDATA[
-
-#  text {
-
-#    fill: black;
-
-#    font: italic 13px sans-serif;
-
-#  }
-
-# ]]>
-
-# </style>
-
-
-
-# <line x1="0" y1="149" x2="975" y2="149" stroke="gray"/>
-#       @svg
-#     end
-#   end
-# end
