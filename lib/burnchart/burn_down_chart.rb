@@ -8,7 +8,9 @@ module Burnchart
       }.merge x_axis
       
       @y_axis = {
-        visible:true
+        visible:true,
+        point_height: 3,
+        max_value: 20
       }.merge y_axis
       
       @options = {
@@ -23,7 +25,7 @@ module Burnchart
       top = 0
       left = 0
       right = 200
-      bottom = @y_axis[:max_value]
+      bottom = @y_axis[:max_value] * @y_axis[:point_height]
       canvas = SvgCanvas.new
       # yaxis_width, yaxis_height = draw_yaxis
       # xaxis_width, xaxis_height = draw_xaxis yaxis_width, yaxis_height
@@ -37,7 +39,7 @@ module Burnchart
 
       @data_points.each do |date, value|
         x = left + ((date-start_date).to_i * day_width) + (day_width/2)
-        y = bottom - value
+        y = bottom - (value * @y_axis[:point_height])
         canvas.circle cx: x, cy: y, r: @options[:data_point_radius], fill: 'red'
       end
     end

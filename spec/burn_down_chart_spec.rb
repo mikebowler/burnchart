@@ -16,7 +16,8 @@ RSpec.describe Burnchart::BurnDownChart do
       },
       y_axis: {
         max_value: 30,
-        visible: false
+        visible: false,
+        point_height: 2
       },
       options: {
         data_point_radius: 5
@@ -26,7 +27,7 @@ RSpec.describe Burnchart::BurnDownChart do
       ]
     )
 
-    expect(chart.to_svg :partial).to eq("<circle cx='5' cy='20' r='5' fill='red'/>")
+    expect(chart.to_svg :partial).to eq("<circle cx='5' cy='40' r='5' fill='red'/>")
   end
 end
 

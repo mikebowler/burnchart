@@ -14,7 +14,8 @@ RSpec.describe Burnchart::BurnDownChart do
       },
       y_axis: {
         max_value: 30,
-        visible: false
+        visible: false, 
+        point_height: 5
       },
       data_points: [
         [Date.parse('2018-01-02'), 10],
