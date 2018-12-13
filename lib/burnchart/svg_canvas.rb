@@ -27,16 +27,28 @@ module Burnchart
     end
 
     def to_svg svg_flavour = :full
+      output = ''
+
       if svg_flavour == :full
-        '<?xml version="1.0" standalone="no"?>' << "\n" <<
-        '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' <<
-        "\n<svg>" <<
-        @svg << "</svg>"
-      elsif svg_flavour == :partial
-        @svg
-      else
-        raise "unexpected svg flavour: #{svg_flavour}"
+        output << '<?xml version="1.0" standalone="no"?>' << "\n" <<
+          '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' <<
+          "\n"
       end
+
+      if svg_flavour == :include_root || svg_flavour == :full
+        output << "<svg"
+        output << " height='#{@canvas_height}'" if @canvas_height
+        output << " width='#{@canvas_width}'>" if @canvas_width
+        output << '>'
+        output << @svg 
+        output << "</svg>"
+      elsif svg_flavour == :partial
+        output << @svg
+      else
+        raise "unexpected svg flavour: #{svg_flavour.inspect}"
+      end
+
+      output
     end
   end
 end
