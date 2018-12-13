@@ -12,14 +12,14 @@ module Burnchart
       }.merge y_axis
       
       @options = {
-        data_point_radius: 5
+        data_point_radius: 3
       }.merge options
 
       @data_points = data_points
 
     end
 
-    def to_svg flavour
+    def to_svg flavour = :full
       top = 0
       left = 0
       right = 200
@@ -38,7 +38,7 @@ module Burnchart
       @data_points.each do |date, value|
         x = left + ((date-start_date).to_i * day_width) + (day_width/2)
         y = bottom - value
-        canvas.circle cx: x, cy: y, r: 5, fill: 'red'
+        canvas.circle cx: x, cy: y, r: @options[:data_point_radius], fill: 'red'
       end
     end
   end

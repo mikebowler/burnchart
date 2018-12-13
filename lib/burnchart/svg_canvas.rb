@@ -39,6 +39,7 @@ module Burnchart
         output << "<svg"
         output << " height='#{@canvas_height}'" if @canvas_height
         output << " width='#{@canvas_width}'>" if @canvas_width
+        output << ' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"'
         output << '>'
         output << @svg 
         output << "</svg>"
