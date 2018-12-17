@@ -37,11 +37,22 @@ module Burnchart
       start_date = @x_axis[:start_date]
       day_width = @x_axis[:day_width]
 
-      @data_points.each do |date, value|
+      points = @data_points.collect do |date, value|
         x = left + ((date-start_date).to_i * day_width) + (day_width/2)
         y = bottom - (value * @y_axis[:point_height])
+        [x,y]
+      end
+      
+      last_x, last_y = nil, nil
+      points.each do |x,y|
+        canvas.line x1: last_x, y1: last_y, x2: x, y2: y, style: 'stroke:red;' unless last_x.nil?
+        last_x, last_y = x, y
+      end
+
+      points.each do |x,y|
         canvas.circle cx: x, cy: y, r: @options[:data_point_radius], fill: 'red'
       end
+
     end
   end
 end

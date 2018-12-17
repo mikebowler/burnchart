@@ -8,7 +8,7 @@ RSpec.describe Burnchart::BurnDownChart do
     chart = Burnchart::BurnDownChart.new(
       x_axis: { 
         start_date: Date.parse('2018-01-02'), 
-        end_date: Date.parse('2018-01-02'),
+        end_date: Date.parse('2018-01-05'),
         visible: false,
         day_width: 50
       },
@@ -20,6 +20,8 @@ RSpec.describe Burnchart::BurnDownChart do
       data_points: [
         [Date.parse('2018-01-02'), 10],
         [Date.parse('2018-01-03'), 15],
+        [Date.parse('2018-01-04'), 15],
+        [Date.parse('2018-01-05'), 8],
 
       ]
     )
