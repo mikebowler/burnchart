@@ -33,8 +33,6 @@ module Burnchart
       canvas = SvgCanvas.new
       draw_y_axis canvas if @y_axis[:visible]
       draw_x_axis canvas if @x_axis[:visible]
-      # yaxis_width, yaxis_height = draw_yaxis
-      # xaxis_width, xaxis_height = draw_xaxis yaxis_width, yaxis_height
       draw_data canvas, left, top, right, bottom
       canvas.to_svg flavour
     end
@@ -46,10 +44,6 @@ module Burnchart
         style: "stroke:#{AXIS_COLOUR};"
       )
     end
-
-# expected: "<line x1='0' y1='0' x2='0' y2='60' style='stroke:#000;'/><line x1='0' y1='60' x2='10' y2='60' style='stroke:#000;'/><circle cx='5' cy='40' r='5' fill='red'/>"
-#     got:  "<line x1='0' y1='0' x2='0' y2='60' style='stroke:#000;'/><line x1='0' y1='60' x2='30' y2='60' style='stroke:#000;'/><circle cx='5' cy='40' r='5' fill='red'/>"
-
 
     def draw_x_axis canvas
       day_count = (@end_date.date - @start_date.date).to_i + 1
