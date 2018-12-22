@@ -1,13 +1,9 @@
 require 'spec_helper'
+include Burnchart
 
-RSpec.describe Burnchart::BurnDownChart do
-  it "should return empty svg if no params specified" do
-    chart = Burnchart::BurnDownChart.new
-    expect(chart.to_svg :partial).to eq('')
-  end
-
+RSpec.describe BurnDownChart do
   it "should draw single datapoint" do 
-    chart = Burnchart::BurnDownChart.new(
+    chart = BurnDownChart.new(
       x_axis: { 
         start_date: Date.parse('2018-01-02'), 
         end_date: Date.parse('2018-01-02'),
@@ -23,7 +19,7 @@ RSpec.describe Burnchart::BurnDownChart do
         data_point_radius: 5
       },
       data_points: [
-        [Date.parse('2018-01-02'), 10]
+        DataPoint.new('2018-01-02', 10),
       ]
     )
 
@@ -31,7 +27,7 @@ RSpec.describe Burnchart::BurnDownChart do
   end
 
   it "should draw multiple datapoints with lines between" do 
-    chart = Burnchart::BurnDownChart.new(
+    chart = BurnDownChart.new(
       x_axis: { 
         start_date: Date.parse('2018-01-02'), 
         end_date: Date.parse('2018-01-04'),
@@ -47,9 +43,9 @@ RSpec.describe Burnchart::BurnDownChart do
         data_point_radius: 5
       },
       data_points: [
-        [Date.parse('2018-01-02'), 15],
-        [Date.parse('2018-01-03'), 10],
-        [Date.parse('2018-01-04'), 8]
+        DataPoint.new('2018-01-02', 15),
+        DataPoint.new('2018-01-03', 10),
+        DataPoint.new('2018-01-04', 8),
       ]
     )
 
@@ -60,6 +56,34 @@ RSpec.describe Burnchart::BurnDownChart do
       "<circle cx='15' cy='40' r='5' fill='red'/>" +
       "<circle cx='25' cy='44' r='5' fill='red'/>" 
     )
+  end
+
+  it "should draw axis' with a single datapoint" do 
+    chart = BurnDownChart.new(
+      x_axis: { 
+        start_date: Date.parse('2018-01-02'), 
+        end_date: Date.parse('2018-01-02'),
+        visible: true,
+        day_width: 10
+      },
+      y_axis: {
+        max_value: 30,
+        visible: true,
+        point_height: 2
+      },
+      options: {
+        data_point_radius: 5
+      },
+      data_points: [
+        DataPoint.new('2018-01-02', 10),
+      ]
+    )
+
+    expect(chart.to_svg :partial).to eq(
+      "<line x1='0' y1='0' x2='0' y2='60' style='stroke:#000;'/>" +
+      "<line x1='0' y1='60' x2='10' y2='60' style='stroke:#000;'/>" +
+
+      "<circle cx='5' cy='40' r='5' fill='red'/>")
   end
 end
 

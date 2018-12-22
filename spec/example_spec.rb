@@ -9,20 +9,19 @@ RSpec.describe Burnchart::BurnDownChart do
       x_axis: { 
         start_date: Date.parse('2018-01-02'), 
         end_date: Date.parse('2018-01-05'),
-        visible: false,
+        visible: true,
         day_width: 50
       },
       y_axis: {
         max_value: 30,
-        visible: false, 
+        visible: true, 
         point_height: 5
       },
       data_points: [
-        [Date.parse('2018-01-02'), 10],
-        [Date.parse('2018-01-03'), 15],
-        [Date.parse('2018-01-04'), 15],
-        [Date.parse('2018-01-05'), 8],
-
+        DataPoint.new('2018-01-02', 10),
+        DataPoint.new('2018-01-03', 15),
+        DataPoint.new('2018-01-04', 15),
+        DataPoint.new('2018-01-05', 8),
       ]
     )
 
