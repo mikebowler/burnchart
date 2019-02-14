@@ -23,6 +23,8 @@ module Burnchart
         px_between_ticks: 5,
         value_lower_bound: 0,
         value_upper_bound: 100,
+        font_size_px: 13,
+        estimated_char_width: 10
       }.merge params
     end
 
@@ -36,20 +38,38 @@ module Burnchart
       major_tick_left_edge = right - @options[:major_tick_length]
       minor_tick_left_edge = right - @options[:minor_tick_length]
 
-      lower.upto(upper) do |tick_count|
+      upper.downto(lower) do |tick_count|
         y = tick_count * increment
+        tick_left_edge = nil
         if tick_count % @options[:major_ticks_every] == 0 
-          canvas.line x1: major_tick_left_edge, y1: y, x2: right, y2: y, style: 'stroke:black;'
+          tick_left_edge = major_tick_left_edge
         elsif tick_count % @options[:minor_ticks_every] == 0 
-          canvas.line x1: minor_tick_left_edge, y1: y, x2: right, y2: y, style: 'stroke:black;'
+          tick_left_edge = minor_tick_left_edge
+        end
+
+        unless tick_left_edge.nil?
+          canvas.line x1: tick_left_edge, y1: y, x2: right, y2: y, style: 'stroke:black;'
+          if @options[:display_value_for_major_ticks] && tick_left_edge == major_tick_left_edge
+            canvas.text (upper-tick_count).to_s, x: tick_left_edge - label_width, y: y + (@options[:font_size_px]/3), 
+              style: "font: italic #{@options[:font_size_px]}px sans-serif"
+          end
         end
       end
   	end
 
+    def label_width
+      @options[:value_upper_bound].to_s.length * @options[:estimated_char_width]
+    end
+
     def preferred_size
+      width = @options[:major_tick_length] + 1
+      if @options[:display_value_for_major_ticks]
+        width += label_width
+      end
+
       Size.new(
         height: (@options[:value_upper_bound] * @options[:px_between_ticks]).to_i, 
-        width: @options[:major_tick_length] + 1
+        width: width
       )
     end
 
