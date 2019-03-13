@@ -51,6 +51,7 @@ module Burnchart
       minor_tick_left_edge = right - @options[:minor_tick_length]
 
       upper.downto(lower) do |tick_count|
+      # lower.upto upper do |tick_count|
         y = (tick_count * increment) + top
         tick_left_edge = nil
         if tick_count % @options[:major_ticks_every] == 0 
@@ -68,6 +69,25 @@ module Burnchart
         end
       end
   	end
+
+    # Returns an array of these: [px_position, is_major_tick, label]
+    def ticks
+      minor_ticks_every = @options[:minor_ticks_every]
+      major_ticks_every = @options[:major_ticks_every]
+      px_between_ticks = @options[:px_between_ticks]
+      lower = @options[:value_lower_bound]
+      upper = @options[:value_upper_bound]
+      px_between_ticks = @options[:px_between_ticks]
+
+      result = []
+      offset = lower * px_between_ticks
+      minor_ticks_every.step(upper, minor_ticks_every) do |y|
+        is_major_tick = (y % major_ticks_every == 0)
+        result << [y*px_between_ticks - offset, is_major_tick, y.to_s]
+      end
+      result
+    end
+
 
     def label_width
       @options[:value_upper_bound].to_s.length * @options[:estimated_char_width]
