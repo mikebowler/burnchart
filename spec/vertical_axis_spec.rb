@@ -2,10 +2,6 @@ require 'spec_helper'
 include Burnchart
 
 RSpec.describe VerticalAxis do
-  # it "should default to basic size" do
-  #   expect(VerticalAxis.new.preferred_size).to eql Size.new(height:500, width:8)
-  # end
-
   it "should draw simple ticks" do 
     component = VerticalAxis.new( 
         minor_ticks_every: 10,
