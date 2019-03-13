@@ -1,8 +1,7 @@
-require "burnchart/version"
-require "burnchart/svg_canvas"
-require "burnchart/burn_down_chart"
-require "burnchart/data_point"
-require "burnchart/vertical_axis"
+Dir.foreach('lib/burnchart') do |file|
+  next if file.start_with? '.'
+  require "burnchart/#{file}"
+end
 
 module Burnchart
   class Error < StandardError; end
