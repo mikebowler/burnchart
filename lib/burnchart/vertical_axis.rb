@@ -50,22 +50,12 @@ module Burnchart
       major_tick_left_edge = right - @options[:major_tick_length]
       minor_tick_left_edge = right - @options[:minor_tick_length]
 
-      upper.downto(lower) do |tick_count|
-      # lower.upto upper do |tick_count|
-        y = (tick_count * increment) + top
-        tick_left_edge = nil
-        if tick_count % @options[:major_ticks_every] == 0 
-          tick_left_edge = major_tick_left_edge
-        elsif tick_count % @options[:minor_ticks_every] == 0 
-          tick_left_edge = minor_tick_left_edge
-        end
-
-        unless tick_left_edge.nil?
-          canvas.line x1: tick_left_edge, y1: y, x2: right, y2: y, style: 'stroke:black;'
-          if @options[:display_value_for_major_ticks] && tick_left_edge == major_tick_left_edge
-            canvas.text (upper-tick_count).to_s, x: tick_left_edge - label_width, y: y + (@options[:font_size_px]/3), 
-              style: "font: italic #{@options[:font_size_px]}px sans-serif"
-          end
+      ticks.each do |y, is_major_tick, label|
+        tick_left_edge = (is_major_tick ? major_tick_left_edge : minor_tick_left_edge)
+        canvas.line x1: tick_left_edge, y1: bottom-y, x2: right, y2: bottom-y, style: 'stroke:black;'
+        if @options[:display_value_for_major_ticks] && is_major_tick
+          canvas.text label, x: tick_left_edge - label_width, y: bottom-y+(@options[:font_size_px]/3), 
+            style: "font: italic #{@options[:font_size_px]}px sans-serif"
         end
       end
   	end
