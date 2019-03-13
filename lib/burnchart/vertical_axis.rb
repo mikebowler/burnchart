@@ -28,7 +28,19 @@ module Burnchart
       }.merge params
     end
 
+    # We need the top pad to ensure we aren't truncating labels
+    # TODO: Be smarter about this. We only need the padding if there is a label right at the
+    # top and today we're always putting padding just in case
+    def top_pad
+      if @options[:display_value_for_major_ticks]
+        @options[:font_size_px]/2
+      else
+        0
+      end
+    end
+
   	def render left:, right:, top:, bottom:, canvas:
+      top += top_pad
       canvas.line x1: right, y1: top, x2: right, y2: bottom, style: 'stroke:black;'
 
       lower = @options[:value_lower_bound]
@@ -39,7 +51,7 @@ module Burnchart
       minor_tick_left_edge = right - @options[:minor_tick_length]
 
       upper.downto(lower) do |tick_count|
-        y = tick_count * increment
+        y = (tick_count * increment) + top
         tick_left_edge = nil
         if tick_count % @options[:major_ticks_every] == 0 
           tick_left_edge = major_tick_left_edge
@@ -68,7 +80,7 @@ module Burnchart
       end
 
       Size.new(
-        height: (@options[:value_upper_bound] * @options[:px_between_ticks]).to_i, 
+        height: (@options[:value_upper_bound] * @options[:px_between_ticks]).to_i + top_pad,
         width: width
       )
     end

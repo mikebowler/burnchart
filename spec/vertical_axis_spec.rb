@@ -50,14 +50,17 @@ RSpec.describe VerticalAxis do
       file.puts canvas.to_svg
     end
     expect(canvas.to_svg :partial).to eq(
-      "<line x1='36' y1='0' x2='36' y2='200' style='stroke:black;'/>" +
-      "<line x1='28' y1='200' x2='36' y2='200' style='stroke:black;'/>" +
-      "<line x1='21' y1='150' x2='36' y2='150' style='stroke:black;'/>" +
-      "<text x='1' y='154' style='font: italic 13px sans-serif'>10</text>" +
-      "<line x1='28' y1='100' x2='36' y2='100' style='stroke:black;'/>" +
-      "<line x1='28' y1='50' x2='36' y2='50' style='stroke:black;'/>" +
-      "<line x1='21' y1='0' x2='36' y2='0' style='stroke:black;'/>" +
-      "<text x='1' y='4' style='font: italic 13px sans-serif'>40</text>"
+      "<line x1='36' y1='6' x2='36' y2='206' style='stroke:black;'/>" +
+      "<line x1='28' y1='206' x2='36' y2='206' style='stroke:black;'/>" +
+      "<line x1='21' y1='156' x2='36' y2='156' style='stroke:black;'/>" +
+      "<text x='1' y='160' style='font: italic 13px sans-serif'>10</text>" +
+      "<line x1='28' y1='106' x2='36' y2='106' style='stroke:black;'/>" +
+      "<line x1='28' y1='56' x2='36' y2='56' style='stroke:black;'/>" +
+      "<line x1='21' y1='6' x2='36' y2='6' style='stroke:black;'/>" +
+      "<text x='1' y='10' style='font: italic 13px sans-serif'>40</text>"
     )
+
+    "<line x1='36' y1='6' x2='36' y2='206' style='stroke:black;'/>" +
+    "<line x1='28' y1='206' x2='36' y2='206'...36' y2='6' style='stroke:black;'/><text x='1' y='10' style='font: italic 13px sans-serif'>40</text>"
   end
 end
