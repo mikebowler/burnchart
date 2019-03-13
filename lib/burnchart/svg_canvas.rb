@@ -52,5 +52,11 @@ module Burnchart
       output
     end
   end
+
+  # Method to conveniently dump out the string we need to paste into the test
+  def dump_svg_for_test 
+    puts "      \""+to_svg(:partial).gsub('><', ">\" +\n      \"<")+'"'
+  end
+
 end
 

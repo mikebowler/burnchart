@@ -89,9 +89,4 @@ RSpec.describe VerticalAxis do
       [150, false, '40'],
     ])
   end
-
-  # Method to conveniently dump out the string we need to paste into the test
-  def dump_svg_for_test canvas
-    puts "      \""+canvas.to_svg(:partial).gsub('><', ">\" +\n      \"<")+'"'
-  end
 end
