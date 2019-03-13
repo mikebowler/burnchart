@@ -29,4 +29,28 @@ RSpec.describe Burnchart::BurnDownChart do
       file.puts chart.to_svg
     end
   end
+
+  it "should illustrate usage" do 
+    # chart = Burnchart::Chart.new
+    # chart.left_axis = HorizontalAxis.new(
+    #   units: Date, min_value: Date.parse('2018-01-02'), max_value: Date.parse('2018-01-04')
+    # )
+    # chart.bottom_axis = VerticalAxis.new(
+    #   units: fixnum, min_value: 0, max_value: 20, title: 'lead times (days)'
+    # )
+    # chart.data_layers << DataLayer.create do |layer|
+    #   layer.renderers << SimpleLineChartRenderer.new(stroke: 'red')
+    #   layer.renderers << DotRenderer.new(stroke: 'black')
+    #   layer.data = [ 
+    #     DataPoint.new('2018-01-02', 10),
+    #     DataPoint.new('2018-01-03', 15),
+    #     DataPoint.new('2018-01-04', 15),
+    #     DataPoint.new('2018-01-05', 8),
+    #   ]
+    # end
+
+    # File.open 'example-burndown.svg', 'w' do | file |
+    #   file.puts chart.to_svg
+    # end    
+  end
 end
