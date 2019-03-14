@@ -27,6 +27,10 @@ module Burnchart
         @options[:value_lower_bound] = @options[:value_lower_bound].jd
         @options[:value_upper_bound] = @options[:value_upper_bound].jd
       end
+
+      if @options[:value_lower_bound] > @options[:value_upper_bound]
+        raise "Lower bound must be less than upper: #{@options[:value_lower_bound]} > #{@options[:value_upper_bound]}"
+      end
     end
 
     def label_width

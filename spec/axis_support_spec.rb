@@ -35,4 +35,14 @@ RSpec.describe AxisSupport do
       [150, false, '40'],
     ])
   end
+
+  it "should reject lower bounds being higher than upper bounds" do
+    expect { HorizontalAxis.new( 
+        minor_ticks_every: 10,
+        major_ticks_every: 30,
+        px_between_ticks: 5,
+        value_lower_bound: 40,
+        value_upper_bound: 10,
+    ) }.to raise_error('Lower bound must be less than upper: 40 > 10')
+  end
 end
