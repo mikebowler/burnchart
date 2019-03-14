@@ -29,9 +29,6 @@ RSpec.describe SimpleChart do
     chart = SimpleChart.new
     chart.left_axis = MockAxis.new height: 100, width: 200
     chart.bottom_axis = MockAxis.new height: 300, width: 400
-    File.open 'simple_chart.svg', 'w' do | file |
-      file.puts chart.to_svg
-    end
 
     expect(chart.to_svg :partial).to eq(
       "<rect x='0' y='0' width='200' height='100' style='stroke:red'/>" +

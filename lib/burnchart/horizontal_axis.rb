@@ -16,10 +16,10 @@ module Burnchart
 
       ticks.each do |x, is_major_tick, label|
         tick_bottom_edge = (is_major_tick ? major_tick_bottom_edge : minor_tick_bottom_edge)
-        canvas.line x1: x, y1: 0, x2: x, y2: tick_bottom_edge, style: 'stroke:black;'
+        canvas.line x1: x+left, y1: top, x2: x+left, y2: tick_bottom_edge, style: 'stroke:black;'
         if @options[:display_value_for_major_ticks] && is_major_tick
           canvas.text label, 
-            x: x - (label_width/2), y: major_tick_bottom_edge + font_size_px,
+            x: x +left - (label_width(label)/2), y: major_tick_bottom_edge + font_size_px,
             style: "font: italic #{font_size_px}px sans-serif"
         end
       end

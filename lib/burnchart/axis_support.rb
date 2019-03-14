@@ -37,8 +37,8 @@ module Burnchart
       end
     end
 
-    def label_width
-      @options[:value_upper_bound].to_s.length * @options[:estimated_char_width]
+    def label_width text
+      text.to_s.length * @options[:estimated_char_width]
     end
 
     # Returns an array of these: [px_position, is_major_tick, label]

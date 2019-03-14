@@ -29,8 +29,9 @@ module Burnchart
         tick_left_edge = (is_major_tick ? major_tick_left_edge : minor_tick_left_edge)
         canvas.line x1: tick_left_edge, y1: bottom-y, x2: right, y2: bottom-y, style: 'stroke:black;'
         if @options[:display_value_for_major_ticks] && is_major_tick
-          canvas.text label, x: tick_left_edge - label_width, y: bottom-y+(@options[:font_size_px]/3), 
+          canvas.text label, x: tick_left_edge - label_width(label), y: bottom-y+(@options[:font_size_px]/3), 
             style: "font: italic #{@options[:font_size_px]}px sans-serif"
+            # text_anchor: 'end'
         end
       end
   	end
@@ -38,7 +39,7 @@ module Burnchart
     def preferred_size
       width = @options[:major_tick_length] + 1
       if @options[:display_value_for_major_ticks]
-        width += label_width
+        width += label_width(@options[:value_upper_bound].to_s)
       end
 
       Size.new(
