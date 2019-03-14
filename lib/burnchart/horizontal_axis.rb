@@ -3,27 +3,6 @@ module Burnchart
   class HorizontalAxis
     include AxisSupport
 
-    def initialize params = {}
-      @options = {
-        minor_ticks_every: 1,
-        minor_tick_length: 3,
-        major_ticks_every: 10,
-        major_tick_length: 7,
-        display_value_for_major_ticks: true,
-        px_between_ticks: 5,
-        value_lower_bound: 0,
-        value_upper_bound: 100,
-        value_unit: Integer,
-        font_size_px: 13,
-        estimated_char_width: 10
-      }.merge params
-
-      if @options[:value_unit] == Date
-        @options[:value_lower_bound] = @options[:value_lower_bound].jd
-        @options[:value_upper_bound] = @options[:value_upper_bound].jd
-      end
-    end
-
     def render left:, right:, top:, bottom:, canvas:
       canvas.line x1: left, y1: top, x2: right, y2: top, style: 'stroke:black;'
 

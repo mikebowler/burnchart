@@ -3,21 +3,6 @@ module Burnchart
   class VerticalAxis
     include AxisSupport
 
-    def initialize params = {}
-      @options = {
-        minor_ticks_every: 1,
-        minor_tick_length: 3,
-        major_ticks_every: 10,
-        major_tick_length: 7,
-        display_value_for_major_ticks: true,
-        px_between_ticks: 5,
-        value_lower_bound: 0,
-        value_upper_bound: 100,
-        font_size_px: 13,
-        estimated_char_width: 10
-      }.merge params
-    end
-
     # We need the top pad to ensure we aren't truncating labels
     # TODO: Be smarter about this. We only need the padding if there is a label right at the
     # top and today we're always putting padding just in case
