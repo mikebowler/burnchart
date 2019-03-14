@@ -13,7 +13,14 @@ module Burnchart
         value_upper_bound: 100,
         value_unit: Integer,
         font_size_px: 13,
-        estimated_char_width: 10
+        estimated_char_width: 10,
+        formatter: lambda do |value|
+          if @options[:value_unit] == Date
+            Date.jd(value).to_s
+          else
+            value.to_s
+          end
+        end
       }.merge params
 
       if @options[:value_unit] == Date
@@ -39,9 +46,12 @@ module Burnchart
       offset = lower * px_between_ticks
       first_tick = lower - (lower % minor_ticks_every)
       first_tick = lower + minor_ticks_every if first_tick == lower
+
       first_tick.step(upper, minor_ticks_every) do |y|
         is_major_tick = (y % major_ticks_every == 0)
-        result << [y*px_between_ticks - offset, is_major_tick, y.to_s]
+        label = @options[:formatter].call(y)
+
+        result << [y*px_between_ticks - offset, is_major_tick, label]
       end
       result
     end

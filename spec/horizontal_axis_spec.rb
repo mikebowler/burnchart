@@ -58,9 +58,9 @@ RSpec.describe HorizontalAxis do
         major_ticks_every: 7,
         major_tick_length: 8,
         display_value_for_major_ticks: true,
-        px_between_ticks: 5,
+        px_between_ticks: 50,
         value_lower_bound: Date.parse('2019-01-01'),
-        value_upper_bound: Date.parse('2019-01-05'),
+        value_upper_bound: Date.parse('2019-01-08'),
         value_unit: Date
     )
     canvas = SvgCanvas.new
@@ -69,8 +69,17 @@ RSpec.describe HorizontalAxis do
     File.open 'horizontal_axis.svg', 'w' do |file|
       file.puts canvas.to_svg
     end
-    canvas.dump_svg_for_test
 
-    # TODO: expect somethign
+    expect(canvas.to_svg :partial).to eq(
+      "<line x1='0' y1='0' x2='122924600' y2='0' style='stroke:black;'/>" +
+      "<line x1='50' y1='0' x2='50' y2='4' style='stroke:black;'/>" +
+      "<line x1='100' y1='0' x2='100' y2='4' style='stroke:black;'/>" +
+      "<line x1='150' y1='0' x2='150' y2='4' style='stroke:black;'/>" +
+      "<line x1='200' y1='0' x2='200' y2='4' style='stroke:black;'/>" +
+      "<line x1='250' y1='0' x2='250' y2='4' style='stroke:black;'/>" +
+      "<line x1='300' y1='0' x2='300' y2='8' style='stroke:black;'/>" +
+      "<text x='265' y='21' style='font: italic 13px sans-serif'>2019-01-07</text>" +
+      "<line x1='350' y1='0' x2='350' y2='4' style='stroke:black;'/>"
+    )
   end
 end
