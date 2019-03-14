@@ -6,9 +6,12 @@ module Burnchart
       module_eval <<-END
         def #{name} #{'text,' if takes_text} hash
           possible_args = [#{possible_args}]
+          hash.keys.each do |key| 
+            raise "\#{key} is not an attribute on svg #{name}" unless possible_args.include? key
+          end
           tag = "<#{name}"
           hash.keys.sort{|a,b| possible_args.index(a) <=> possible_args.index(b)}.each do |key|
-            tag << " \#{key}='\#{hash[key]}'"
+            tag << " \#{key.to_s.gsub('_','-')}='\#{hash[key]}'"
           end
           tag << "#{ takes_text ? ">\#{text}</#{name}>" : "/>" }"
 
@@ -17,10 +20,10 @@ module Burnchart
       END
     end
 
-    svg_primitive :line, attrs: %w(x1 y1 x2 y2 style text_anchor)
-    svg_primitive :rect, attrs: %w(x y width height stroke_width style)
+    svg_primitive :line, attrs: %w(x1 y1 x2 y2 style)
+    svg_primitive :rect, attrs: %w(x y width height style)
     svg_primitive :circle, attrs: %w(cx cy r fill)
-    svg_primitive :text, attrs: %w(x y style), takes_text: true
+    svg_primitive :text, attrs: %w(x y style text_anchor), takes_text: true
 
     def initialize
       @svg = ''
@@ -54,7 +57,7 @@ module Burnchart
   end
 
   # Method to conveniently dump out the string we need to paste into the test
-  def dump_svg_for_test 
+  def dump
     puts "      \""+to_svg(:partial).gsub('><', ">\" +\n      \"<")+'"'
   end
 

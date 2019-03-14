@@ -69,7 +69,7 @@ RSpec.describe HorizontalAxis do
     File.open 'horizontal_axis.svg', 'w' do |file|
       file.puts canvas.to_svg
     end
-    canvas.dump_svg_for_test
+    # canvas.dump_svg_for_test
     expect(canvas.to_svg :partial).to eq(
       "<line x1='0' y1='0' x2='122924600' y2='0' style='stroke:black;'/>" +
       "<line x1='50' y1='0' x2='50' y2='4' style='stroke:black;'/>" +
