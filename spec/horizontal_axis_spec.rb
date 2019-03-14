@@ -41,10 +41,6 @@ RSpec.describe HorizontalAxis do
     canvas = SvgCanvas.new
     size = component.preferred_size
     component.render left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
-    File.open 'horizontal_axis.svg', 'w' do |file|
-      file.puts canvas.to_svg
-    end
-    canvas.dump_svg_for_test
     expect(canvas.to_svg :partial).to eq(
       "<line x1='0' y1='0' x2='200' y2='0' style='stroke:black;'/>" +
       "<line x1='50' y1='0' x2='50' y2='8' style='stroke:black;'/>" +
@@ -55,4 +51,26 @@ RSpec.describe HorizontalAxis do
     )
   end
 
+  it "should handle date ranges" do 
+    component = HorizontalAxis.new( 
+        minor_ticks_every: 1,
+        minor_tick_length: 4,
+        major_ticks_every: 7,
+        major_tick_length: 8,
+        display_value_for_major_ticks: true,
+        px_between_ticks: 5,
+        value_lower_bound: Date.parse('2019-01-01'),
+        value_upper_bound: Date.parse('2019-01-05'),
+        value_unit: Date
+    )
+    canvas = SvgCanvas.new
+    size = component.preferred_size
+    component.render left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
+    File.open 'horizontal_axis.svg', 'w' do |file|
+      file.puts canvas.to_svg
+    end
+    canvas.dump_svg_for_test
+
+    # TODO: expect somethign
+  end
 end

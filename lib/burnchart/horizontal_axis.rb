@@ -13,9 +13,15 @@ module Burnchart
         px_between_ticks: 5,
         value_lower_bound: 0,
         value_upper_bound: 100,
+        value_unit: Integer,
         font_size_px: 13,
         estimated_char_width: 10
       }.merge params
+
+      if @options[:value_unit] == Date
+        @options[:value_lower_bound] = @options[:value_lower_bound].jd
+        @options[:value_upper_bound] = @options[:value_upper_bound].jd
+      end
     end
 
     def render left:, right:, top:, bottom:, canvas:
@@ -25,7 +31,7 @@ module Burnchart
       upper = @options[:value_upper_bound]
       increment = @options[:px_between_ticks]
       font_size_px = @options[:font_size_px]
-      
+
       major_tick_bottom_edge = top + @options[:major_tick_length]
       minor_tick_bottom_edge = top + @options[:minor_tick_length]
 

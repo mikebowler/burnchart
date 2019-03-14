@@ -76,7 +76,6 @@ RSpec.describe VerticalAxis do
     )
 
     expect(component.ticks).to eq([
-      [0,   false, '10'],
       [50,  false, '20'],
       [100, true,  '30'],
       [150, false, '40'],
