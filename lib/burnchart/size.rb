@@ -7,7 +7,7 @@ module Burnchart
       @width = width
     end
 
-    def eql? other
+    def == other
       self.height == other.height && self.width == other.width
     end
   end

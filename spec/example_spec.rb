@@ -31,7 +31,7 @@ RSpec.describe Burnchart::BurnDownChart do
   end
 
   it "should illustrate usage" do 
-    # chart = Burnchart::Chart.new
+    # chart = SimpleChart.new
     # chart.left_axis = HorizontalAxis.new(
     #   units: Date, min_value: Date.parse('2018-01-02'), max_value: Date.parse('2018-01-04')
     # )
