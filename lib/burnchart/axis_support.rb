@@ -31,6 +31,10 @@ module Burnchart
       if @options[:value_lower_bound] > @options[:value_upper_bound]
         raise "Lower bound must be less than upper: #{@options[:value_lower_bound]} > #{@options[:value_upper_bound]}"
       end
+
+      unless @options[:major_ticks_every] % @options[:minor_ticks_every] == 0
+        raise "Major ticks must be a multiple of minor: #{@options[:major_ticks_every]} and #{@options[:minor_ticks_every]}"
+      end
     end
 
     def label_width

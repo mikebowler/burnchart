@@ -45,4 +45,14 @@ RSpec.describe AxisSupport do
         value_upper_bound: 10,
     ) }.to raise_error('Lower bound must be less than upper: 40 > 10')
   end
+
+  it "should reject major ticks if they aren't a multiple of minor" do
+    expect { HorizontalAxis.new( 
+        minor_ticks_every: 10,
+        major_ticks_every: 35,
+        px_between_ticks: 5,
+        value_lower_bound: 10,
+        value_upper_bound: 40,
+    ) }.to raise_error('Major ticks must be a multiple of minor: 35 and 10')
+  end
 end
