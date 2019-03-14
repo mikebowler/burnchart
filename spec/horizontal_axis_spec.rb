@@ -65,13 +65,13 @@ RSpec.describe HorizontalAxis do
     )
     canvas = SvgCanvas.new
     size = component.preferred_size
+    puts "size=#{size}"
     component.render left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
     File.open 'horizontal_axis.svg', 'w' do |file|
       file.puts canvas.to_svg
     end
-    # canvas.dump_svg_for_test
     expect(canvas.to_svg :partial).to eq(
-      "<line x1='0' y1='0' x2='122924600' y2='0' style='stroke:black;'/>" +
+      "<line x1='0' y1='0' x2='350' y2='0' style='stroke:black;'/>" +
       "<line x1='50' y1='0' x2='50' y2='4' style='stroke:black;'/>" +
       "<line x1='100' y1='0' x2='100' y2='4' style='stroke:black;'/>" +
       "<line x1='150' y1='0' x2='150' y2='4' style='stroke:black;'/>" +

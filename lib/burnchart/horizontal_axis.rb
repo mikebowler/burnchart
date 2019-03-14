@@ -31,9 +31,10 @@ module Burnchart
         height += @options[:font_size_px]
       end
 
+      delta = @options[:value_upper_bound] - @options[:value_lower_bound]
       Size.new(
         height: height,
-        width: (@options[:value_upper_bound] * @options[:px_between_ticks]).to_i
+        width: (delta * @options[:px_between_ticks]).to_i
       )
     end
 

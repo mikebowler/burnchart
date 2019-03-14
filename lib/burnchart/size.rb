@@ -10,5 +10,9 @@ module Burnchart
     def == other
       self.height == other.height && self.width == other.width
     end
+
+    def to_s
+      "Size(height:#{@height},width:#{@width})"
+    end
   end
 end

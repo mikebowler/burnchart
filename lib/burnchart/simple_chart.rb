@@ -21,6 +21,7 @@ module Burnchart
       x_size = @x_axis.preferred_size
       y_size = @y_axis.preferred_size
 
+puts "c_size=#{c_size} x_size=#{x_size} y_size=#{y_size}"
       canvas = SvgCanvas.new
       @y_axis.render(
         left: 0, 
