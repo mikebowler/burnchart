@@ -39,14 +39,14 @@ RSpec.describe Burnchart::BurnDownChart do
       units: Date, min_value: Date.parse('2018-01-02'), max_value: Date.parse('2018-01-04')
     )
     # chart.data_layers << DataLayer.create do |layer|
-    #   layer.renderers << SimpleLineChartRenderer.new(stroke: 'red')
-    #   layer.renderers << DotRenderer.new(stroke: 'black')
-    #   layer.data = [ 
-    #     DataPoint.new('2018-01-02', 10),
-    #     DataPoint.new('2018-01-03', 15),
-    #     DataPoint.new('2018-01-04', 15),
-    #     DataPoint.new('2018-01-05', 8),
-    #   ]
+    #   layer.renderers << SmoothLineChartRenderer.new(stroke: 'red')
+    #   # layer.renderers << DotRenderer.new(stroke: 'black')
+    # #   layer.data = [ 
+    # #     Point.new(x:'2018-01-02', y:10),
+    # #     Point.new(x:'2018-01-03', y:15),
+    # #     Point.new(x:'2018-01-04', y:15),
+    # #     Point.new(x:'2018-01-05', y:8),
+    # #   ]
     # end
 
     File.open 'simple_chart.svg', 'w' do | file |

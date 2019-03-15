@@ -64,4 +64,12 @@ module Burnchart
       result
     end
   end
+
+  def to_coordinate_space value:, lower_coordinate:, upper_coordinate:
+    value_delta = @options[:value_upper_bound] - @options[:value_lower_bound]
+    value_percent = (value - @options[:value_lower_bound]) * 1.0 / value_delta
+
+    coordinate_delta = upper_coordinate - lower_coordinate
+    lower_coordinate + (coordinate_delta * value_percent).to_i
+  end
 end

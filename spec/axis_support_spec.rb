@@ -55,4 +55,56 @@ RSpec.describe AxisSupport do
         value_upper_bound: 40,
     ) }.to raise_error('Major ticks must be a multiple of minor: 35 and 10')
   end
+
+  it 'should convert to coordinate space when lower value and coordinates are zero' do 
+    component = HorizontalAxis.new( 
+        minor_ticks_every: 10,
+        major_ticks_every: 30,
+        px_between_ticks: 5,
+        value_lower_bound: 0,
+        value_upper_bound: 40,
+    )
+
+    inputs = [10, 20, 40]
+    expected = [25, 50, 100]
+    actual = inputs.collect do |i| 
+      component.to_coordinate_space value: i, lower_coordinate: 0, upper_coordinate: 100
+    end
+    expect(actual).to eq(expected)
+  end
+
+  it 'should convert to coordinate space when lower value is offset and coordinates are not' do 
+    component = HorizontalAxis.new( 
+        minor_ticks_every: 10,
+        major_ticks_every: 30,
+        px_between_ticks: 5,
+        value_lower_bound: 10,
+        value_upper_bound: 50,
+    )
+
+    inputs = [20, 30, 50]
+    expected = [25, 50, 100]
+    actual = inputs.collect do |i| 
+      component.to_coordinate_space value: i, lower_coordinate: 0, upper_coordinate: 100
+    end
+    expect(actual).to eq(expected)
+  end
+
+  it 'should convert to coordinate space when lower coordinate is offset and value bounds are not' do 
+    component = HorizontalAxis.new( 
+        minor_ticks_every: 10,
+        major_ticks_every: 30,
+        px_between_ticks: 5,
+        value_lower_bound: 0,
+        value_upper_bound: 40,
+    )
+
+    inputs = [10, 20, 40]
+    expected = [35, 60, 110]
+    actual = inputs.collect do |i| 
+      component.to_coordinate_space value: i, lower_coordinate: 10, upper_coordinate: 110
+    end
+    expect(actual).to eq(expected)
+  end
+
 end
