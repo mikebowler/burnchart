@@ -106,5 +106,4 @@ RSpec.describe AxisSupport do
     end
     expect(actual).to eq(expected)
   end
-
 end
