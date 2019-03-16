@@ -46,7 +46,7 @@ RSpec.describe HorizontalAxis do
       "<line x1='50' y1='0' x2='50' y2='8' style='stroke:black;'/>" +
       "<line x1='100' y1='0' x2='100' y2='8' style='stroke:black;'/>" +
       "<line x1='150' y1='0' x2='150' y2='15' style='stroke:black;'/>" +
-      "<text x='140' y='28' style='font: italic 13px sans-serif'>30</text>" +
+      "<text x='150' y='28' style='font: italic 13px sans-serif' text-anchor='middle'>30</text>" +
       "<line x1='200' y1='0' x2='200' y2='8' style='stroke:black;'/>"
     )
   end
@@ -74,7 +74,7 @@ RSpec.describe HorizontalAxis do
       "<line x1='200' y1='0' x2='200' y2='4' style='stroke:black;'/>" +
       "<line x1='250' y1='0' x2='250' y2='4' style='stroke:black;'/>" +
       "<line x1='300' y1='0' x2='300' y2='8' style='stroke:black;'/>" +
-      "<text x='250' y='21' style='font: italic 13px sans-serif'>2019-01-07</text>" +
+      "<text x='300' y='21' style='font: italic 13px sans-serif' text-anchor='middle'>2019-01-07</text>" +
       "<line x1='350' y1='0' x2='350' y2='4' style='stroke:black;'/>"
     )
   end
