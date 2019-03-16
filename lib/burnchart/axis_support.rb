@@ -14,6 +14,7 @@ module Burnchart
         value_unit: Integer,
         font_size_px: 13,
         estimated_char_width: 10,
+        display_lower_bound_tick: false,
         formatter: lambda do |value|
           if @options[:value_unit] == Date
             Date.jd(value).to_s
@@ -53,7 +54,9 @@ module Burnchart
       result = []
       offset = lower * px_between_ticks
       first_tick = lower - (lower % minor_ticks_every)
-      first_tick = lower + minor_ticks_every if first_tick == lower
+      if @options[:display_lower_bound_tick] == false && first_tick == lower
+        first_tick = lower + minor_ticks_every
+      end
 
       first_tick.step(upper, minor_ticks_every) do |y|
         is_major_tick = (y % major_ticks_every == 0)

@@ -53,6 +53,7 @@ RSpec.describe Burnchart::SimpleChart do
       major_tick_length: 15,
       display_value_for_major_ticks: true,
       px_between_ticks: 100,
+      display_lower_bound_tick: true
     )
     chart.data_layers << DataLayer.create do |layer|
       layer.renderers << SmoothLineChartRenderer.new #(stroke: 'red')
