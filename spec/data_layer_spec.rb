@@ -1,15 +1,7 @@
-module Burnchart
+require 'spec_helper'
+include Burnchart
 
-  class DataLayer
-    @attr_accessor :data, :title
-    @attr_reader   :renderers
-
-    def initialize
-      @renderers = []
-    end
-
-    def render left:, right:, top:, bottom:, canvas:, x_axis:, y_axis:
-    end
-
+RSpec.describe DataLayer do
+  it "should pass" do 
   end
 end

@@ -23,7 +23,9 @@ module Burnchart
     svg_primitive :line, attrs: %w(x1 y1 x2 y2 style)
     svg_primitive :rect, attrs: %w(x y width height style)
     svg_primitive :circle, attrs: %w(cx cy r fill)
+    svg_primitive :path, attrs: %w(d fill stroke)
     svg_primitive :text, attrs: %w(x y style text_anchor), takes_text: true
+
 
     def initialize
       @svg = ''

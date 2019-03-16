@@ -66,10 +66,21 @@ module Burnchart
   end
 
   def to_coordinate_space value:, lower_coordinate:, upper_coordinate:
+    value = value.jd if @options[:value_unit] == Date
+
     value_delta = @options[:value_upper_bound] - @options[:value_lower_bound]
     value_percent = (value - @options[:value_lower_bound]) * 1.0 / value_delta
 
+    ugly_hack_adjustment = case self
+    when VerticalAxis
+      -lower_coordinate
+    when HorizontalAxis
+      lower_coordinate
+    else 
+      raise "Unexpected axis type: #{self.class}"
+    end
+
     coordinate_delta = upper_coordinate - lower_coordinate
-    lower_coordinate + (coordinate_delta * value_percent).to_i
+    result = (coordinate_delta * value_percent).to_i + ugly_hack_adjustment
   end
 end

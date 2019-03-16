@@ -2,7 +2,7 @@
 # https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74
 module Burnchart
   class SmoothLineChartRenderer
-    def render canvas, points
+    def render canvas:, points:
       # Without at least two points, there's nothing to draw
       return if points.length < 2
 
@@ -42,11 +42,11 @@ module Burnchart
       lengthX = next_point.x - previous_point.x
       lengthY = next_point.y - previous_point.y
 
-      opposed_line_length - Math.sqrt( (lengthX ** 2) + (lengthY ** 2) )
+      opposed_line_length = Math.sqrt( (lengthX ** 2) + (lengthY ** 2) )
       opposed_line_angle = Math.atan2 lengthX, lengthY
       opposed_line_angle += Math::PI if is_end_control_point
 
-      smoothed_length - opposed_line_length * smoothing_ratio
+      smoothed_length = opposed_line_length * smoothing_ratio
 
       Point.new(
         x: (current_point.x + Math.cos(opposed_line_angle) * smoothed_length).to_i,

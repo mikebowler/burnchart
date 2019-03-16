@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'date'
 include Burnchart
 
 # Since AxisSupport is a mixin, we test through HorizontalAxis
@@ -103,6 +104,24 @@ RSpec.describe AxisSupport do
     expected = [35, 60, 110]
     actual = inputs.collect do |i| 
       component.to_coordinate_space value: i, lower_coordinate: 10, upper_coordinate: 110
+    end
+    expect(actual).to eq(expected)
+  end
+
+  it 'should convert to coordinate space when value is date' do 
+    component = HorizontalAxis.new( 
+        minor_ticks_every: 10,
+        major_ticks_every: 30,
+        px_between_ticks: 5,
+        value_lower_bound: Date.parse('2019-01-01'),
+        value_upper_bound: Date.parse('2019-01-05'),
+        value_unit: Date
+    )
+
+    inputs = [Date.parse('2019-01-02')]
+    expected = [25]
+    actual = inputs.collect do |i| 
+      component.to_coordinate_space value: i, lower_coordinate: 0, upper_coordinate: 100
     end
     expect(actual).to eq(expected)
   end

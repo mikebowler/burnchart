@@ -1,6 +1,12 @@
 module Burnchart
 
   class SimpleChart
+    attr_reader :data_layers
+
+    def initialize
+      @data_layers = []
+    end
+
     def left_axis= axis
       @y_axis = axis
     end
@@ -36,8 +42,37 @@ module Burnchart
         bottom: c_size.height, 
         canvas: canvas
       )
-      # canvas.dump_svg_for_test
+      @data_layers.each do |layer|
+        render_layer(
+          data_layer:layer, 
+          left: y_size.width, 
+          right: y_size.width + x_size.width, 
+          top: x_size.height, 
+          bottom: x_size.height + y_size.height, 
+          canvas: canvas
+        )
+      end
       canvas.to_svg svg_flavour
+    end
+
+    def render_layer data_layer:, left:, right:, top:,bottom:, canvas:
+      points = data_layer.data.collect do |point|
+        Point.new( 
+          x: @x_axis.to_coordinate_space(
+            value: point.x, 
+            lower_coordinate: left, 
+            upper_coordinate: right
+          ),
+          y: @y_axis.to_coordinate_space(
+            value: point.y, 
+            lower_coordinate: top, 
+            upper_coordinate: bottom
+          )
+        )
+      end
+      data_layer.renderers.each do |renderer|
+        renderer.render canvas: canvas, points: points
+      end
     end
   end
 end
