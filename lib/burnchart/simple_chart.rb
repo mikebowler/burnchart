@@ -29,43 +29,43 @@ module Burnchart
 
       canvas = SvgCanvas.new
       @y_axis.render(
-        left: 0, 
-        right: y_size.width, 
-        top: 0, 
-        bottom: y_size.height, 
+        left: 0,
+        right: y_size.width,
+        top: 0,
+        bottom: y_size.height,
         canvas: canvas
       )
       @x_axis.render(
-        left: y_size.width, 
-        right: c_size.width, 
-        top: y_size.height, 
-        bottom: c_size.height, 
+        left: y_size.width,
+        right: c_size.width,
+        top: y_size.height,
+        bottom: c_size.height,
         canvas: canvas
       )
       @data_layers.each do |layer|
         render_layer(
-          data_layer:layer, 
-          left: y_size.width, 
-          right: y_size.width + x_size.width, 
-          top: x_size.height, 
-          bottom: x_size.height + y_size.height, 
+          data_layer: layer,
+          left: y_size.width,
+          right: y_size.width + x_size.width,
+          top: x_size.height,
+          bottom: x_size.height + y_size.height,
           canvas: canvas
         )
       end
       canvas.to_svg svg_flavour
     end
 
-    def render_layer data_layer:, left:, right:, top:,bottom:, canvas:
+    def render_layer data_layer:, left:, right:, top:, bottom:, canvas:
       points = data_layer.data.collect do |point|
-        Point.new( 
+        Point.new(
           x: @x_axis.to_coordinate_space(
-            value: point.x, 
-            lower_coordinate: left, 
+            value: point.x,
+            lower_coordinate: left,
             upper_coordinate: right
           ),
           y: @y_axis.to_coordinate_space(
-            value: point.y, 
-            lower_coordinate: top, 
+            value: point.y,
+            lower_coordinate: top,
             upper_coordinate: bottom
           )
         )

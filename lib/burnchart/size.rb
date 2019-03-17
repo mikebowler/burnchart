@@ -1,5 +1,4 @@
 module Burnchart
-
   class Size
     attr_accessor :height, :width
     def initialize height:, width:
@@ -8,7 +7,7 @@ module Burnchart
     end
 
     def == other
-      self.height == other.height && self.width == other.width
+      height == other.height && width == other.width
     end
 
     def to_s

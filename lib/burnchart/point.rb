@@ -9,7 +9,7 @@ module Burnchart
     end
 
     def == other
-      self.x == other.x && self.y == other.y
+      x == other.x && y == other.y
     end
 
     def to_s

@@ -33,7 +33,7 @@ module Burnchart
         raise "Lower bound must be less than upper: #{@options[:value_lower_bound]} > #{@options[:value_upper_bound]}"
       end
 
-      unless @options[:major_ticks_every] % @options[:minor_ticks_every] == 0
+      unless (@options[:major_ticks_every] % @options[:minor_ticks_every]).zero?
         raise "Major ticks must be a multiple of minor: #{@options[:major_ticks_every]} and #{@options[:minor_ticks_every]}"
       end
     end
@@ -59,10 +59,10 @@ module Burnchart
       end
 
       first_tick.step(upper, minor_ticks_every) do |y|
-        is_major_tick = (y % major_ticks_every == 0)
+        is_major_tick = (y % major_ticks_every).zero?
         label = @options[:formatter].call(y)
 
-        result << [y*px_between_ticks - offset, is_major_tick, label]
+        result << [y * px_between_ticks - offset, is_major_tick, label]
       end
       result
     end
@@ -79,11 +79,11 @@ module Burnchart
       -lower_coordinate
     when HorizontalAxis
       lower_coordinate
-    else 
+    else
       raise "Unexpected axis type: #{self.class}"
     end
 
     coordinate_delta = upper_coordinate - lower_coordinate
-    result = (coordinate_delta * value_percent).to_i + ugly_hack_adjustment
+    (coordinate_delta * value_percent).to_i + ugly_hack_adjustment
   end
 end

@@ -1,0 +1,27 @@
+Metrics/LineLength:
+  Max: 100
+
+Metrics/ClassLength:
+  Max: 1000
+
+Metrics/MethodLength:
+  Max: 40
+
+Style/MethodDefParentheses:
+  EnforcedStyle: require_no_parentheses_except_multiline
+
+# Allow $1, $2 etc
+Style/PerlBackrefs:
+  Enabled: false
+
+# Do not require a comment on the top of each class
+Style/Documentation:
+  Enabled: false
+
+# This one prevents code like this because the when is left of the case
+# result = case
+# when 'a'
+Style/CaseIndentation:
+  Description: 'Indentation of when in a case/when/[else/]end.'
+  StyleGuide: '#indent-when-to-case'
+  Enabled: false

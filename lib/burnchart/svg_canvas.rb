@@ -1,31 +1,31 @@
 module Burnchart
   class SvgCanvas
     def self.svg_primitive name, params
-      possible_args = params[:attrs].collect{|a| ":#{a}"}.join(',')
+      possible_args = params[:attrs].collect { |a| ":#{a}" }.join(',')
       takes_text = params[:takes_text]
-      module_eval <<-END
+      module_eval <<-PRIMITIVE, __FILE__, __LINE__ + 1
         def #{name} #{'text,' if takes_text} hash
           possible_args = [#{possible_args}]
-          hash.keys.each do |key| 
+          hash.keys.each do |key|
             raise "\#{key} is not an attribute on svg #{name}" unless possible_args.include? key
           end
           tag = "<#{name}"
           hash.keys.sort{|a,b| possible_args.index(a) <=> possible_args.index(b)}.each do |key|
             tag << " \#{key.to_s.gsub('_','-')}='\#{hash[key]}'"
           end
-          tag << "#{ takes_text ? ">\#{text}</#{name}>" : "/>" }"
+
+          tag << "#{takes_text ? ">\#{text}</#{name}>" : '/>'}"
 
           @svg << tag
         end
-      END
+      PRIMITIVE
     end
 
-    svg_primitive :line, attrs: %w(x1 y1 x2 y2 style)
-    svg_primitive :rect, attrs: %w(x y width height style)
-    svg_primitive :circle, attrs: %w(cx cy r fill)
-    svg_primitive :path, attrs: %w(d fill stroke)
-    svg_primitive :text, attrs: %w(x y style text_anchor), takes_text: true
-
+    svg_primitive :line, attrs: %w[x1 y1 x2 y2 style]
+    svg_primitive :rect, attrs: %w[x y width height style]
+    svg_primitive :circle, attrs: %w[cx cy r fill]
+    svg_primitive :path, attrs: %w[d fill stroke]
+    svg_primitive :text, attrs: %w[x y style text_anchor], takes_text: true
 
     def initialize
       @svg = ''
@@ -35,8 +35,9 @@ module Burnchart
       output = ''
 
       if svg_flavour == :full
-        output << '<?xml version="1.0" standalone="no"?>' << "\n" <<
-          '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' <<
+        output << "<?xml version=\"1.0\" standalone=\"no\"?>\n" \
+          '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" ' \
+          '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' \
           "\n"
       end
 
