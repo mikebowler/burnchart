@@ -8,33 +8,39 @@ module Burnchart
     # top and today we're always putting padding just in case
     def top_pad
       if @options[:display_value_for_major_ticks]
-        @options[:font_size_px]/2
+        @options[:font_size_px] / 2
       else
         0
       end
     end
 
-  	def render left:, right:, top:, bottom:, canvas:
+    def render left:, right:, top:, bottom:, canvas:
       top += top_pad
       canvas.line x1: right, y1: top, x2: right, y2: bottom, style: 'stroke:black;'
-
-      lower = @options[:value_lower_bound]
-      upper = @options[:value_upper_bound]
-      increment = @options[:px_between_ticks]
 
       major_tick_left_edge = right - @options[:major_tick_length]
       minor_tick_left_edge = right - @options[:minor_tick_length]
 
       ticks.each do |y, is_major_tick, label|
         tick_left_edge = (is_major_tick ? major_tick_left_edge : minor_tick_left_edge)
-        canvas.line x1: tick_left_edge, y1: bottom-y, x2: right, y2: bottom-y, style: 'stroke:black;'
+        canvas.line(
+          x1: tick_left_edge,
+          y1: bottom - y,
+          x2: right,
+          y2: bottom - y,
+          style: 'stroke:black;'
+        )
         if @options[:display_value_for_major_ticks] && is_major_tick
-          canvas.text label, x: tick_left_edge-1, y: bottom-y+(@options[:font_size_px]/3), 
+          canvas.text(
+            label,
+            x: tick_left_edge - 1,
+            y: bottom - y + (@options[:font_size_px] / 3),
             style: "font: italic #{@options[:font_size_px]}px sans-serif",
             text_anchor: 'end'
+          )
         end
       end
-  	end
+    end
 
     def preferred_size
       width = @options[:major_tick_length] + 1
@@ -47,6 +53,5 @@ module Burnchart
         width: width
       )
     end
-
   end
 end

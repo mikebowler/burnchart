@@ -41,14 +41,14 @@ module Burnchart
           "\n"
       end
 
-      if svg_flavour == :include_root || svg_flavour == :full
-        output << "<svg"
+      if [:include_root, :full].include? svg_flavour
+        output << '<svg'
         output << " height='#{@canvas_height}'" if @canvas_height
         output << " width='#{@canvas_width}'>" if @canvas_width
         output << ' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"'
         output << '>'
-        output << @svg 
-        output << "</svg>"
+        output << @svg
+        output << '</svg>'
       elsif svg_flavour == :partial
         output << @svg
       else
@@ -61,7 +61,7 @@ module Burnchart
 
   # Method to conveniently dump out the string we need to paste into the test
   def dump
-    puts "      \""+to_svg(:partial).gsub('><', ">\" +\n      \"<")+'"'
+    puts '      "' + to_svg(:partial).gsub('><', ">\" \\\n      \"<") + '"'
   end
 
 end

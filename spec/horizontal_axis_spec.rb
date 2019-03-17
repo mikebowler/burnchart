@@ -74,7 +74,8 @@ RSpec.describe HorizontalAxis do
       "<line x1='200' y1='0' x2='200' y2='4' style='stroke:black;'/>" \
       "<line x1='250' y1='0' x2='250' y2='4' style='stroke:black;'/>" \
       "<line x1='300' y1='0' x2='300' y2='8' style='stroke:black;'/>" \
-      "<text x='300' y='21' style='font: italic 13px sans-serif' text-anchor='middle'>2019-01-07</text>" \
+      "<text x='300' y='21' style='font: italic 13px sans-serif' text-anchor='middle'>" \
+      '2019-01-07</text>' \
       "<line x1='350' y1='0' x2='350' y2='4' style='stroke:black;'/>"
     )
   end
