@@ -4,14 +4,14 @@ include Burnchart
 RSpec.describe HorizontalAxis do
   it 'should draw simple ticks' do
     component = HorizontalAxis.new(
-        minor_ticks_every: 10,
-        minor_tick_length: 8,
-        major_ticks_every: 30,
-        major_tick_length: 15,
-        display_value_for_major_ticks: false,
-        px_between_ticks: 5,
-        value_lower_bound: 0,
-        value_upper_bound: 40
+      minor_ticks_every: 10,
+      minor_tick_length: 8,
+      major_ticks_every: 30,
+      major_tick_length: 15,
+      display_value_for_major_ticks: false,
+      px_between_ticks: 5,
+      value_lower_bound: 0,
+      value_upper_bound: 40
     )
 
     canvas = SvgCanvas.new
