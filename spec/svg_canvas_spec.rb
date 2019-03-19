@@ -20,8 +20,8 @@ RSpec.describe Burnchart::SvgCanvas do
     expect(canvas.to_svg(:full)).to eq(
       '<?xml version="1.0" standalone="no"?>' \
       "\n" \
-      '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" " \
-      "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' \
+      '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" ' \
+      '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">' \
       "\n" \
       '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">' \
       '<line x1=\'1\'/></svg>'
