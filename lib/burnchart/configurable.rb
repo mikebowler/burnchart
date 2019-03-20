@@ -10,8 +10,7 @@ module Burnchart
         # Define a configurable parameter. Possible args are
         # defaults_to: defaultValue
         def self.attr_configurable name, args = {}
-          attr_writer name
-          class_eval <<-METHOD, __FILE__, __LINE__ + 1
+          class_eval <<-METHODS, __FILE__, __LINE__ + 1
             def #{name}
               if defined? @#{name}
                 @#{name}
@@ -19,7 +18,12 @@ module Burnchart
                 #{args[:defaults_to]}
               end
             end
-          METHOD
+
+            def #{name}= arg
+              @#{name} = arg
+            end
+          METHODS
+
         end
       end
     end
