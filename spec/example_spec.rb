@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# The purpose of this "spec" is to generate some samples that can be used in 
+# The purpose of this "spec" is to generate some samples that can be used in
 # documentation
 
 RSpec.describe 'Runnable examples' do
