@@ -25,3 +25,7 @@ Style/CaseIndentation:
   Description: 'Indentation of when in a case/when/[else/]end.'
   StyleGuide: '#indent-when-to-case'
   Enabled: false
+
+# Warn about methods with extraneous parentheses.
+Style/DefWithParentheses
+  Enabled: false
