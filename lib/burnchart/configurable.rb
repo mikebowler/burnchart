@@ -22,6 +22,7 @@ module Burnchart
             def #{name}= arg
               @#{name} = arg
             end
+            protected :#{name}, :#{name}=
           METHODS
 
         end
