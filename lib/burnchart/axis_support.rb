@@ -6,8 +6,10 @@ module Burnchart
 
     attr_configurable :minor_ticks_every, defaults_to: 1
     attr_configurable :minor_tick_length, defaults_to: 10
+    attr_configurable :minor_ticks_visible, defaults_to: true
     attr_configurable :major_ticks_every, defaults_to: 1
     attr_configurable :major_tick_length, defaults_to: 7
+    attr_configurable :major_ticks_visible, defaults_to: true
     attr_configurable :display_value_for_major_ticks, defaults_to: true
     attr_configurable :px_between_ticks, defaults_to: 5
     attr_configurable :value_lower_bound, defaults_to: 0
@@ -64,7 +66,10 @@ module Burnchart
       end
 
       first_tick.step(upper, minor_ticks_every()) do |y|
-        is_major_tick = (y % major_ticks_every()).zero?
+        is_major_tick = (y % major_ticks_every()).zero? && major_ticks_visible()
+
+        next if is_major_tick == false && minor_ticks_visible() == false 
+
         label = @options[:formatter].call(y)
 
         result << [y * px_between_ticks() - offset, is_major_tick, label]

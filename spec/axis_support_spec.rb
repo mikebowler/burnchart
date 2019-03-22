@@ -56,6 +56,39 @@ RSpec.describe AxisSupport do
     ])
   end
 
+  it 'hide minor ticks when specified' do 
+    component = HorizontalAxis.new(
+      minor_ticks_every: 10,
+      minor_ticks_visible: false,
+      major_ticks_every: 30,
+      px_between_ticks: 5,
+      value_lower_bound: 0,
+      value_upper_bound: 40,
+    )
+
+    expect(component.ticks).to eq([
+      [150, true,  '30'],
+    ])
+  end
+
+  it 'should draw major ticks as minor when major ticks are hidden' do 
+    component = HorizontalAxis.new(
+      minor_ticks_every: 10,
+      major_ticks_visible: false,
+      major_ticks_every: 30,
+      px_between_ticks: 5,
+      value_lower_bound: 0,
+      value_upper_bound: 40,
+    )
+
+    expect(component.ticks).to eq([
+      [50,  false, '10'],
+      [100, false, '20'],
+      [150, false,  '30'],
+      [200, false, '40'],
+    ])
+  end
+
   it "should reject lower bounds being higher than upper bounds" do
     expect { HorizontalAxis.new(
       minor_ticks_every: 10,
