@@ -4,14 +4,10 @@ include Burnchart
 RSpec.describe VerticalAxis do
   it "should draw simple ticks" do
     component = VerticalAxis.new(
-      minor_ticks_every: 10,
-      minor_ticks_length: 8,
-      major_ticks_every: 30,
-      major_ticks_length: 15,
-      major_ticks_show_label: false,
+      minor_ticks: { every: 10, length: 8 },
+      major_ticks: { every: 30, length: 15, show_label: false },
       px_between_ticks: 5,
-      values_lower_bound: 0,
-      values_upper_bound: 40
+      values: { lower_bound: 0, upper_bound: 40 }
     )
 
     canvas = SvgCanvas.new
@@ -28,14 +24,10 @@ RSpec.describe VerticalAxis do
 
   it 'should draw simple ticks with labels' do
     component = VerticalAxis.new(
-      minor_ticks_every: 10,
-      minor_ticks_length: 8,
-      major_ticks_every: 30,
-      major_ticks_length: 15,
-      major_ticks_show_label: true,
+      minor_ticks: { every: 10, length: 8 },
+      major_ticks: { every: 30, length: 15, show_label: true },
       px_between_ticks: 5,
-      values_lower_bound: 0,
-      values_upper_bound: 40
+      values: { lower_bound: 0, upper_bound: 40 }
     )
 
     canvas = SvgCanvas.new

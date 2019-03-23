@@ -4,14 +4,10 @@ include Burnchart
 RSpec.describe HorizontalAxis do
   it 'should draw simple ticks' do
     component = HorizontalAxis.new(
-      minor_ticks_every: 10,
-      minor_ticks_length: 8,
-      major_ticks_every: 30,
-      major_ticks_length: 15,
-      major_ticks_show_label: false,
+      minor_ticks: { every: 10, length: 8 },
+      major_ticks: { every: 30, length: 15, show_label: false },
       px_between_ticks: 5,
-      values_lower_bound: 0,
-      values_upper_bound: 40
+      values: { lower_bound: 0, upper_bound: 40 }
     )
 
     canvas = SvgCanvas.new
@@ -28,14 +24,10 @@ RSpec.describe HorizontalAxis do
 
   it 'should draw simple ticks with labels' do
     component = HorizontalAxis.new(
-      minor_ticks_every: 10,
-      minor_ticks_length: 8,
-      major_ticks_every: 30,
-      major_ticks_length: 15,
-      major_ticks_show_label: true,
+      minor_ticks: { every: 10, length: 8 },
+      major_ticks: { every: 30, length: 15, show_label: true },
       px_between_ticks: 5,
-      values_lower_bound: 0,
-      values_upper_bound: 40
+      values: { lower_bound: 0, upper_bound: 40 }
     )
 
     canvas = SvgCanvas.new
@@ -53,15 +45,14 @@ RSpec.describe HorizontalAxis do
 
   it 'should handle date ranges' do
     component = HorizontalAxis.new(
-      minor_ticks_every: 1,
-      minor_ticks_length: 4,
-      major_ticks_every: 7,
-      major_ticks_length: 8,
-      major_ticks_show_label: true,
+      minor_ticks: { every: 1, length: 4 },
+      major_ticks: { every: 7, length: 8, show_label: true },
       px_between_ticks: 50,
-      values_lower_bound: Date.parse('2019-01-01'),
-      values_upper_bound: Date.parse('2019-01-08'),
-      values_unit: Date
+      values: { 
+        lower_bound: Date.parse('2019-01-01'),
+        upper_bound: Date.parse('2019-01-08'),
+        unit: Date
+      }
     )
     canvas = SvgCanvas.new
     size = component.preferred_size
