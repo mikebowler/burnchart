@@ -78,13 +78,16 @@ module SolvingBits
         first_tick = lower + minor_ticks_every()
       end
 
-      first_tick.step(upper, minor_ticks_every()) do |y|
-        is_major_tick = (y % major_ticks_every()).zero? && major_ticks_visible()
+      first_tick.step(upper, minor_ticks_every()) do |value|
+        is_major_tick = (value % major_ticks_every()).zero? && major_ticks_visible()
 
         next if is_major_tick == false && minor_ticks_visible() == false 
 
-        label = formatter.call(y)
-        result << [y * minor_ticks_px_between() - offset, is_major_tick, label]
+        result << [
+          value * minor_ticks_px_between() - offset, 
+          is_major_tick, 
+          formatter.call(value)
+        ]
       end
       result
     end
