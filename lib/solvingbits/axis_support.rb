@@ -8,6 +8,8 @@ module SolvingBits
     attr_configurable :minor_ticks_length, defaults_to: 10
     attr_configurable :minor_ticks_visible, defaults_to: true
     attr_configurable :minor_ticks_px_between, defaults_to: 5
+    # Often we don't want to display a tick at the 'zero' value
+    attr_configurable :minor_ticks_show_lowest_value, defaults_to: false
 
     attr_configurable :major_ticks_every, defaults_to: 1
     attr_configurable :major_ticks_length, defaults_to: 7
@@ -17,9 +19,9 @@ module SolvingBits
     attr_configurable :values_lower_bound, defaults_to: 0
     attr_configurable :values_upper_bound, defaults_to: 100
     attr_configurable :values_unit, defaults_to: Integer
+
     attr_configurable :font_size_px, defaults_to: 13
     attr_configurable :estimated_char_width, defaults_to: 10
-    attr_configurable :display_lower_bound_tick, defaults_to: false
     attr_configurable :formatter, defaults_to: 10
 
     def initialize params = {}
@@ -75,7 +77,7 @@ module SolvingBits
       result = []
       offset = lower * minor_ticks_px_between()
       first_tick = lower - (lower % minor_ticks_every())
-      if display_lower_bound_tick() == false && first_tick == lower
+      if minor_ticks_show_lowest_value() == false && first_tick == lower
         first_tick = lower + minor_ticks_every()
       end
 

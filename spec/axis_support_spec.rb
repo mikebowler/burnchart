@@ -35,10 +35,9 @@ RSpec.describe AxisSupport do
 
   it "should include lower bound tick when asked" do 
     component = HorizontalAxis.new(
-      minor_ticks: { every: 10, px_between: 5 },
+      minor_ticks: { every: 10, px_between: 5, show_lowest_value: true },
       major_ticks: { every: 30 },
-      values: { lower_bound: 0, upper_bound: 40 },
-      display_lower_bound_tick: true
+      values: { lower_bound: 0, upper_bound: 40 }
     )
 
     expect(component.ticks).to eq([

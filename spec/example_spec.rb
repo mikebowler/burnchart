@@ -20,9 +20,8 @@ RSpec.describe 'Runnable examples' do
         lower_bound: Date.parse('2018-01-02'), 
         upper_bound: Date.parse('2018-01-05') 
       },
-      minor_ticks: { every: 1, length: 4, px_between: 100 },
+      minor_ticks: { every: 1, length: 4, px_between: 100, show_lowest_value: true },
       major_ticks: { every: 1, length: 15, show_label: true },
-      display_lower_bound_tick: true
     )
     chart.data_layers << DataLayer.create do |layer|
       layer.renderers << SmoothLineChartRenderer.new # (stroke: 'red')
