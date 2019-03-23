@@ -7,7 +7,7 @@ RSpec.describe 'Runnable examples' do
   it 'should illustrate usage' do
     chart = SimpleChart.new
     chart.left_axis = VerticalAxis.new(
-      minor_ticks: { every: 1, length: 8, px_between: 5 },
+      minor_ticks: { every: 1, length: 4, px_between: 5 },
       major_ticks: { every: 10, length: 8 },
       values: { lower_bound: 0, upper_bound: 20, unit: Integer },
       # fonts: { axis_label_size: 13, value_label_size: 11 }

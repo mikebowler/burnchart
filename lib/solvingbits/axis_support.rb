@@ -104,7 +104,7 @@ module SolvingBits
     # Ugly hack to account for the fact that the 0,0 origin is top left not bottom left
     case self
     when VerticalAxis
-      upper_coordinate - (coordinate_delta * value_percent).to_i
+      upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
     when HorizontalAxis
       (coordinate_delta * value_percent).to_i + lower_coordinate
     else
