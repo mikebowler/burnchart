@@ -6,11 +6,10 @@ include Burnchart
 RSpec.describe AxisSupport do
   it 'should calculate ticks with lower bound of zero' do 
     component = HorizontalAxis.new(
-      minor_ticks_every: 10,
-      major_ticks_every: 30,
+      minor_ticks: { every: 10 },
+      major_ticks: { every: 30 },
       px_between_ticks: 5,
-      values_lower_bound: 0,
-      values_upper_bound: 40,
+      values: { lower_bound: 0, upper_bound: 40 }
     )
 
     expect(component.ticks).to eq([
@@ -23,11 +22,10 @@ RSpec.describe AxisSupport do
 
   it 'should calculate ticks with non-zero lower bound' do 
     component = HorizontalAxis.new(
-      minor_ticks_every: 10,
-      major_ticks_every: 30,
+      minor_ticks: { every: 10 },
+      major_ticks: { every: 30 },
       px_between_ticks: 5,
-      values_lower_bound: 10,
-      values_upper_bound: 40,
+      values: { lower_bound: 10, upper_bound: 40 }
     )
 
     expect(component.ticks).to eq([
@@ -39,11 +37,10 @@ RSpec.describe AxisSupport do
 
   it "should include lower bound tick when asked" do 
     component = HorizontalAxis.new(
-      minor_ticks_every: 10,
-      major_ticks_every: 30,
+      minor_ticks: { every: 10 },
+      major_ticks: { every: 30 },
       px_between_ticks: 5,
-      values_lower_bound: 0,
-      values_upper_bound: 40,
+      values: { lower_bound: 0, upper_bound: 40 },
       display_lower_bound_tick: true
     )
 
@@ -58,12 +55,10 @@ RSpec.describe AxisSupport do
 
   it 'hide minor ticks when specified' do 
     component = HorizontalAxis.new(
-      minor_ticks_every: 10,
-      minor_ticks_visible: false,
-      major_ticks_every: 30,
+      minor_ticks: { every: 10, visible: false},
+      major_ticks: { every: 30 },
       px_between_ticks: 5,
-      values_lower_bound: 0,
-      values_upper_bound: 40,
+      values: { lower_bound: 0, upper_bound: 40 }
     )
 
     expect(component.ticks).to eq([
@@ -73,12 +68,10 @@ RSpec.describe AxisSupport do
 
   it 'should draw major ticks as minor when major ticks are hidden' do 
     component = HorizontalAxis.new(
-      minor_ticks_every: 10,
-      major_ticks_visible: false,
-      major_ticks_every: 30,
+      minor_ticks: { every: 10 },
+      major_ticks: { every: 30, visible: false },
       px_between_ticks: 5,
-      values_lower_bound: 0,
-      values_upper_bound: 40,
+      values: { lower_bound: 0, upper_bound: 40 }
     )
 
     expect(component.ticks).to eq([
@@ -91,31 +84,28 @@ RSpec.describe AxisSupport do
 
   it "should reject lower bounds being higher than upper bounds" do
     expect { HorizontalAxis.new(
-      minor_ticks_every: 10,
-      major_ticks_every: 30,
+      minor_ticks: { every: 10 },
+      major_ticks: { every: 30 },
       px_between_ticks: 5,
-      values_lower_bound: 40,
-      values_upper_bound: 10,
+      values: { lower_bound: 40, upper_bound: 10 }
     ) }.to raise_error('Lower bound must be less than upper: 40 > 10')
   end
 
   it "should reject major ticks if they aren't a multiple of minor" do
     expect { HorizontalAxis.new(
-      minor_ticks_every: 10,
-      major_ticks_every: 35,
+      minor_ticks: { every: 10 },
+      major_ticks: { every: 35 },
       px_between_ticks: 5,
-      values_lower_bound: 10,
-      values_upper_bound: 40,
+      values: { lower_bound: 10, upper_bound: 40 }
     ) }.to raise_error('Major ticks must be a multiple of minor: 35 and 10')
   end
 
   it 'should convert to coordinate space when lower value and coordinates are zero' do 
     component = HorizontalAxis.new(
-      minor_ticks_every: 10,
-      major_ticks_every: 30,
+      minor_ticks: { every: 10 },
+      major_ticks: { every: 30 },
       px_between_ticks: 5,
-      values_lower_bound: 0,
-      values_upper_bound: 40,
+      values: { lower_bound: 0, upper_bound: 40 }
     )
 
     inputs = [10, 20, 40]
@@ -128,11 +118,10 @@ RSpec.describe AxisSupport do
 
   it 'should convert to coordinate space when lower value is offset and coordinates are not' do 
     component = HorizontalAxis.new(
-      minor_ticks_every: 10,
-      major_ticks_every: 30,
+      minor_ticks: { every: 10 },
+      major_ticks: { every: 30 },
       px_between_ticks: 5,
-      values_lower_bound: 10,
-      values_upper_bound: 50,
+      values: { lower_bound: 10, upper_bound: 50 }
     )
 
     inputs = [20, 30, 50]
@@ -145,11 +134,10 @@ RSpec.describe AxisSupport do
 
   it 'should convert to coordinate space when lower coordinate is offset and value bounds are not' do 
     component = HorizontalAxis.new(
-      minor_ticks_every: 10,
-      major_ticks_every: 30,
+      minor_ticks: { every: 10 },
+      major_ticks: { every: 30 },
       px_between_ticks: 5,
-      values_lower_bound: 0,
-      values_upper_bound: 40,
+      values: { lower_bound: 0, upper_bound: 40 }
     )
 
     inputs = [10, 20, 40]
@@ -162,12 +150,14 @@ RSpec.describe AxisSupport do
 
   it 'should convert to coordinate space when value is date' do 
     component = HorizontalAxis.new(
-      minor_ticks_every: 10,
-      major_ticks_every: 30,
+      minor_ticks: { every: 10 },
+      major_ticks: { every: 30 },
       px_between_ticks: 5,
-      values_lower_bound: Date.parse('2019-01-01'),
-      values_upper_bound: Date.parse('2019-01-05'),
-      values_unit: Date
+      values: { 
+        lower_bound: Date.parse('2019-01-01'), 
+        upper_bound: Date.parse('2019-01-05'), 
+        unit: Date
+      }
     )
 
     inputs = [Date.parse('2019-01-02')]

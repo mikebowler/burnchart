@@ -6,23 +6,13 @@ require 'spec_helper'
 RSpec.describe 'Runnable examples' do
   it 'should illustrate usage' do
     chart = SimpleChart.new
-    # chart.left_axis = VerticalAxis.new(
-    #   minor_ticks_every: 1,
-    #   minor_tick_length: 8,
-    #   major_ticks_every: 10,
-    #   major_tick_length: 15,
-    #   display_value_for_major_ticks: true,
-    #   px_between_ticks: 5,
-    #   value_lower_bound: 0,
-    #   value_upper_bound: 20
-    #   # , title: 'lead times (days)'
-    # )
     chart.left_axis = VerticalAxis.new(
       minor_ticks: { every: 1, length: 8 },
       major_ticks: { every: 10, length: 8 },
       values: { lower_bound: 0, upper_bound: 20, unit: Integer },
       px_between_ticks: 5,
       # fonts: { axis_label_size: 13, value_label_size: 11 }
+      # , title: 'lead times (days)'
     )
 
     chart.bottom_axis = HorizontalAxis.new(
