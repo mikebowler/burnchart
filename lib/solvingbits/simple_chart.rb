@@ -1,4 +1,4 @@
-module Burnchart
+module SolvingBits
 
   class SimpleChart
     attr_reader :data_layers

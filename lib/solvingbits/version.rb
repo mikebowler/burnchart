@@ -1,3 +1,3 @@
-module Burnchart
+module SolvingBits
   VERSION = "0.1.0"
 end

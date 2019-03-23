@@ -1,5 +1,5 @@
 require 'spec_helper'
-include Burnchart
+include SolvingBits
 
 RSpec.describe HorizontalAxis do
   it 'should draw simple ticks' do

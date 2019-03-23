@@ -1,16 +1,16 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "burnchart/version"
+require "solvingbits/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "burnchart"
-  spec.version       = Burnchart::VERSION
+  spec.name          = "SolvingBits"
+  spec.version       = SolvingBits::VERSION
   spec.authors       = ["Mike Bowler"]
   spec.email         = ["mbowler@GargoyleSoftware.com"]
 
-  spec.summary       = "Create SVG burndown and burnup chart"
-  spec.homepage      = "https://github.com/mikebowler/burnchart"
+  spec.summary       = "Enable creation of various SVG charts and visualizations"
+  spec.homepage      = "https://github.com/mikebowler/solvingbits"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   #   spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
   #   spec.metadata["homepage_uri"] = spec.homepage
-  #   spec.metadata["source_code_uri"] = "https://github.com/mikebowler/burnchart"
+  #   spec.metadata["source_code_uri"] = "https://github.com/mikebowler/solvingbits"
   #   spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
   # else
   #   raise "RubyGems 2.0 or newer is required to protect against " \
@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.17"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "bundler", "~> 1.17.2"
+  spec.add_development_dependency "rake", "~> 12.3.2"
+  spec.add_development_dependency "rspec", "~> 3.8"
 end

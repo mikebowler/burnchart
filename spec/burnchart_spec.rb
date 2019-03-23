@@ -1,5 +1,5 @@
-RSpec.describe Burnchart do
+RSpec.describe SolvingBits do
   it 'has a version number' do
-    expect(Burnchart::VERSION).not_to be nil
+    expect(SolvingBits::VERSION).not_to be nil
   end
 end

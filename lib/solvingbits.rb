@@ -1,10 +1,10 @@
-Dir.foreach('lib/burnchart') do |file|
+Dir.foreach('lib/solvingbits') do |file|
   next if file.start_with? '.'
 
-  require "burnchart/#{file}"
+  require "solvingbits/#{file}"
 end
 
-module Burnchart
+module SolvingBits
   class Error < StandardError; end
   # Your code goes here...
 end

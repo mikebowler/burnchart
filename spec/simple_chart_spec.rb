@@ -1,7 +1,7 @@
 require 'spec_helper'
-include Burnchart
+include SolvingBits
 
-module Burnchart
+module SolvingBits
   class MockAxis
     def initialize height:, width:
       @preferred_size = Size.new( height: height, width: width)

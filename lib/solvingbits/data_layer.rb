@@ -1,4 +1,4 @@
-module Burnchart
+module SolvingBits
   class DataLayer
     def self.create
       instance = new

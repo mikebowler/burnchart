@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'date'
-include Burnchart
+include SolvingBits
 
 # Since AxisSupport is a mixin, we test through HorizontalAxis
 RSpec.describe AxisSupport do

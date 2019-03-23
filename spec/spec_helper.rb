@@ -1,5 +1,5 @@
 require 'bundler/setup'
-require 'burnchart'
+require 'solvingbits'
 require 'date'
 
 RSpec.configure do |config|

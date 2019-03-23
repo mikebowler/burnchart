@@ -1,5 +1,5 @@
 require 'spec_helper'
-include Burnchart
+include SolvingBits
 
 RSpec.describe Configurable do
   it 'should allow simple argument' do

@@ -1,4 +1,4 @@
-module Burnchart
+module SolvingBits
 
   module Configurable
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
-include Burnchart
+include SolvingBits
 
-RSpec.describe Burnchart::SvgCanvas do
+RSpec.describe SvgCanvas do
   it 'orders arguments correctly' do
     canvas = SvgCanvas.new
     canvas.line y2: 1, x2: 2, y1: 3, x1: 4

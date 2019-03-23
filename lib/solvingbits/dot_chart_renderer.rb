@@ -1,4 +1,4 @@
-module Burnchart
+module SolvingBits
   class DotChartRenderer
     def render canvas:, points:
       points.each do |point|

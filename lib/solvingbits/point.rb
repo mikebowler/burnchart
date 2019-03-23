@@ -1,4 +1,4 @@
-module Burnchart
+module SolvingBits
 
   class Point
     attr_accessor :x, :y

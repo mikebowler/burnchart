@@ -1,5 +1,5 @@
 
-module Burnchart
+module SolvingBits
 
   class HorizontalAxis < AxisSupport
 

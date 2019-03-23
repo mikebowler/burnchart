@@ -1,4 +1,4 @@
-module Burnchart
+module SolvingBits
   class Size
     attr_accessor :height, :width
     def initialize height:, width:

@@ -1,6 +1,6 @@
-require 'burnchart/configurable'
+require 'solvingbits/configurable'
 
-module Burnchart
+module SolvingBits
   class AxisSupport
     include Configurable
 

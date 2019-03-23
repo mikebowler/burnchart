@@ -1,4 +1,4 @@
-module Burnchart
+module SolvingBits
   class LeadTimeDistributionChart
   end
 end

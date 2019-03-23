@@ -1,6 +1,6 @@
 # Algorithm based on this writeup by François Romain
 # https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74
-module Burnchart
+module SolvingBits
   class SmoothLineChartRenderer
     def render canvas:, points:
       # Without at least two points, there's nothing to draw

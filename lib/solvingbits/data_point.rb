@@ -1,6 +1,6 @@
 require 'date'
 
-module Burnchart
+module SolvingBits
   class DataPoint
     attr_reader :date, :value
 

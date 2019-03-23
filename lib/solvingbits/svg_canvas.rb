@@ -1,4 +1,4 @@
-module Burnchart
+module SolvingBits
   class SvgCanvas
     def self.svg_primitive name, params
       possible_args = params[:attrs].collect { |a| ":#{a}" }.join(',')
