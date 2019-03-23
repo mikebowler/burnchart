@@ -4,17 +4,28 @@ module Burnchart
   class AxisSupport
     include Configurable
 
+    # class MinorTickConfig
+    #   include Configurable
+    #   attr_configurable :every, defaults_to: 1
+    #   attr_configurable :length, defaults_to: 10
+    #   attr_configurable :visible, defaults_to: true
+    #   attr_configurable :show_label, defaults_to: true
+    # end
+    # def minor_ticks
+    #   @minor_ticks ||= MinorTickConfig.new
+    # end
+
     attr_configurable :minor_ticks_every, defaults_to: 1
-    attr_configurable :minor_tick_length, defaults_to: 10
+    attr_configurable :minor_ticks_length, defaults_to: 10
     attr_configurable :minor_ticks_visible, defaults_to: true
     attr_configurable :major_ticks_every, defaults_to: 1
-    attr_configurable :major_tick_length, defaults_to: 7
+    attr_configurable :major_ticks_length, defaults_to: 7
     attr_configurable :major_ticks_visible, defaults_to: true
     attr_configurable :display_value_for_major_ticks, defaults_to: true
     attr_configurable :px_between_ticks, defaults_to: 5
-    attr_configurable :value_lower_bound, defaults_to: 0
-    attr_configurable :value_upper_bound, defaults_to: 100
-    attr_configurable :value_unit, defaults_to: Integer
+    attr_configurable :values_lower_bound, defaults_to: 0
+    attr_configurable :values_upper_bound, defaults_to: 100
+    attr_configurable :values_unit, defaults_to: Integer
     attr_configurable :font_size_px, defaults_to: 13
     attr_configurable :estimated_char_width, defaults_to: 10
     attr_configurable :display_lower_bound_tick, defaults_to: false
@@ -23,7 +34,7 @@ module Burnchart
     def initialize params = {}
       @options = {
         formatter: lambda do |value|
-          if value_unit() == Date
+          if values_unit() == Date
             Date.jd(value).to_s
           else
             value.to_s
@@ -32,16 +43,22 @@ module Burnchart
       }.merge params
 
       @options.each_pair do |config, value|
-        __send__ "#{config}=", value unless config == :formatter
+        if value.is_a? Hash
+          value.each_pair do |key, inner_value|
+            __send__ "#{config}_#{key}=", inner_value
+          end
+        else
+          __send__ "#{config}=", value unless config == :formatter
+        end
       end
 
-      if value_unit() == Date
-        self.value_lower_bound = self.value_lower_bound.jd
-        self.value_upper_bound = self.value_upper_bound.jd
+      if values_unit() == Date
+        self.values_lower_bound = self.values_lower_bound.jd
+        self.values_upper_bound = self.values_upper_bound.jd
       end
 
-      if value_lower_bound() > value_upper_bound()
-        raise "Lower bound must be less than upper: #{value_lower_bound()} > #{value_upper_bound()}"
+      if values_lower_bound() > values_upper_bound()
+        raise "Lower bound must be less than upper: #{values_lower_bound()} > #{values_upper_bound()}"
       end
 
       unless (major_ticks_every() % minor_ticks_every()).zero?
@@ -55,8 +72,8 @@ module Burnchart
 
     # Returns an array of these: [px_position, is_major_tick, label]
     def ticks
-      lower = value_lower_bound()
-      upper = value_upper_bound()
+      lower = values_lower_bound()
+      upper = values_upper_bound()
 
       result = []
       offset = lower * px_between_ticks()
@@ -79,10 +96,10 @@ module Burnchart
   end
 
   def to_coordinate_space value:, lower_coordinate:, upper_coordinate:
-    value = value.jd if value_unit() == Date
+    value = value.jd if values_unit() == Date
 
-    value_delta = value_upper_bound() - value_lower_bound()
-    value_percent = (value - value_lower_bound()) * 1.0 / value_delta
+    value_delta = values_upper_bound() - values_lower_bound()
+    value_percent = (value - values_lower_bound()) * 1.0 / value_delta
 
     ugly_hack_adjustment = case self
     when VerticalAxis

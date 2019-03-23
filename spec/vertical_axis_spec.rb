@@ -5,13 +5,13 @@ RSpec.describe VerticalAxis do
   it "should draw simple ticks" do
     component = VerticalAxis.new(
       minor_ticks_every: 10,
-      minor_tick_length: 8,
+      minor_ticks_length: 8,
       major_ticks_every: 30,
-      major_tick_length: 15,
+      major_ticks_length: 15,
       display_value_for_major_ticks: false,
       px_between_ticks: 5,
-      value_lower_bound: 0,
-      value_upper_bound: 40
+      values_lower_bound: 0,
+      values_upper_bound: 40
     )
 
     canvas = SvgCanvas.new
@@ -29,13 +29,13 @@ RSpec.describe VerticalAxis do
   it 'should draw simple ticks with labels' do
     component = VerticalAxis.new(
       minor_ticks_every: 10,
-      minor_tick_length: 8,
+      minor_ticks_length: 8,
       major_ticks_every: 30,
-      major_tick_length: 15,
+      major_ticks_length: 15,
       display_value_for_major_ticks: true,
       px_between_ticks: 5,
-      value_lower_bound: 0,
-      value_upper_bound: 40
+      values_lower_bound: 0,
+      values_upper_bound: 40
     )
 
     canvas = SvgCanvas.new

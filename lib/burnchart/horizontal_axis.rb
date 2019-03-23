@@ -6,8 +6,8 @@ module Burnchart
     def render left:, right:, top:, bottom:, canvas:
       canvas.line x1: left, y1: top, x2: right, y2: top, style: 'stroke:black;'
 
-      major_tick_bottom_edge = top + major_tick_length
-      minor_tick_bottom_edge = top + minor_tick_length
+      major_tick_bottom_edge = top + major_ticks_length
+      minor_tick_bottom_edge = top + minor_ticks_length
 
       ticks.each do |x, is_major_tick, label|
         tick_bottom_edge = (is_major_tick ? major_tick_bottom_edge : minor_tick_bottom_edge)
@@ -32,12 +32,12 @@ module Burnchart
     end
 
     def preferred_size
-      height = major_tick_length
+      height = major_ticks_length
       if display_value_for_major_ticks
         height += font_size_px
       end
 
-      delta = value_upper_bound - value_lower_bound
+      delta = values_upper_bound - values_lower_bound
       Size.new(
         height: height,
         width: (delta * px_between_ticks).to_i
