@@ -18,9 +18,9 @@ RSpec.describe 'Runnable examples' do
       values: { 
         unit: Date, 
         lower_bound: Date.parse('2018-01-02'), 
-        upper_bound: Date.parse('2018-01-05') 
+        upper_bound: Date.parse('2018-01-16') 
       },
-      minor_ticks: { every: 1, length: 4, px_between: 100, show_lowest_value: true },
+      minor_ticks: { every: 1, length: 4, px_between: 50, show_lowest_value: true },
       major_ticks: { every: 1, length: 15, show_label: true },
     )
     chart.data_layers << DataLayer.create do |layer|
@@ -30,7 +30,11 @@ RSpec.describe 'Runnable examples' do
         Point.new(x: Date.parse('2018-01-02'), y: 10),
         Point.new(x: Date.parse('2018-01-03'), y: 15),
         Point.new(x: Date.parse('2018-01-04'), y: 15),
-        Point.new(x: Date.parse('2018-01-05'), y: 8)
+        Point.new(x: Date.parse('2018-01-05'), y: 8),
+        Point.new(x: Date.parse('2018-01-06'), y: 7),
+        Point.new(x: Date.parse('2018-01-07'), y: 4),
+        Point.new(x: Date.parse('2018-01-08'), y: 2),
+        Point.new(x: Date.parse('2018-01-09'), y: 0),
       ]
     end
 

@@ -99,16 +99,16 @@ module SolvingBits
     value_delta = values_upper_bound() - values_lower_bound()
     value_percent = (value - values_lower_bound()) * 1.0 / value_delta
 
-    ugly_hack_adjustment = case self
+    coordinate_delta = upper_coordinate - lower_coordinate
+
+    # Ugly hack to account for the fact that the 0,0 origin is top left not bottom left
+    case self
     when VerticalAxis
-      -lower_coordinate
+      upper_coordinate - (coordinate_delta * value_percent).to_i
     when HorizontalAxis
-      lower_coordinate
+      (coordinate_delta * value_percent).to_i + lower_coordinate
     else
       raise "Unexpected axis type: #{self.class}"
     end
-
-    coordinate_delta = upper_coordinate - lower_coordinate
-    (coordinate_delta * value_percent).to_i + ugly_hack_adjustment
   end
 end

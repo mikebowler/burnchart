@@ -47,8 +47,8 @@ module SolvingBits
           data_layer: layer,
           left: y_size.width,
           right: y_size.width + x_size.width,
-          top: x_size.height,
-          bottom: x_size.height + y_size.height,
+          top: 0,
+          bottom: y_size.height,
           canvas: canvas
         )
       end
