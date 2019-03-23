@@ -32,8 +32,7 @@ RSpec.describe 'Runnable examples' do
         upper_bound: Date.parse('2018-01-05') 
       },
       minor_ticks: { every: 1, length: 4 },
-      major_ticks: { every: 1, length: 15 },
-      display_value_for_major_ticks: true,
+      major_ticks: { every: 1, length: 15, show_label: true },
       px_between_ticks: 100,
       display_lower_bound_tick: true
     )

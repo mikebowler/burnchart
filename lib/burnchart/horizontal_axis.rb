@@ -19,7 +19,7 @@ module Burnchart
           style: 'stroke:black;'
         )
         
-        if display_value_for_major_ticks && is_major_tick
+        if major_ticks_show_label() && is_major_tick
           canvas.text(
             label,
             x: x + left,
@@ -33,7 +33,7 @@ module Burnchart
 
     def preferred_size
       height = major_ticks_length
-      if display_value_for_major_ticks
+      if major_ticks_show_label()
         height += font_size_px
       end
 

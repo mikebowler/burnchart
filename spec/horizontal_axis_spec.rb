@@ -8,7 +8,7 @@ RSpec.describe HorizontalAxis do
       minor_ticks_length: 8,
       major_ticks_every: 30,
       major_ticks_length: 15,
-      display_value_for_major_ticks: false,
+      major_ticks_show_label: false,
       px_between_ticks: 5,
       values_lower_bound: 0,
       values_upper_bound: 40
@@ -32,7 +32,7 @@ RSpec.describe HorizontalAxis do
       minor_ticks_length: 8,
       major_ticks_every: 30,
       major_ticks_length: 15,
-      display_value_for_major_ticks: true,
+      major_ticks_show_label: true,
       px_between_ticks: 5,
       values_lower_bound: 0,
       values_upper_bound: 40
@@ -57,7 +57,7 @@ RSpec.describe HorizontalAxis do
       minor_ticks_length: 4,
       major_ticks_every: 7,
       major_ticks_length: 8,
-      display_value_for_major_ticks: true,
+      major_ticks_show_label: true,
       px_between_ticks: 50,
       values_lower_bound: Date.parse('2019-01-01'),
       values_upper_bound: Date.parse('2019-01-08'),

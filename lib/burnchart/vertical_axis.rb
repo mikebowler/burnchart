@@ -6,7 +6,7 @@ module Burnchart
     # TODO: Be smarter about this. We only need the padding if there is a label right at the
     # top and today we're always putting padding just in case
     def top_pad
-      if display_value_for_major_ticks()
+      if major_ticks_show_label()
         font_size_px / 2
       else
         0
@@ -29,7 +29,7 @@ module Burnchart
           y2: bottom - y,
           style: 'stroke:black;'
         )
-        if display_value_for_major_ticks && is_major_tick
+        if major_ticks_show_label() && is_major_tick
           canvas.text(
             label,
             x: tick_left_edge - 1,
@@ -43,7 +43,7 @@ module Burnchart
 
     def preferred_size
       width = major_ticks_length + 1
-      if display_value_for_major_ticks
+      if major_ticks_show_label
         width += label_width(values_upper_bound.to_s)
       end
 

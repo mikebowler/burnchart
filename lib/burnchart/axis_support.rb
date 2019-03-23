@@ -4,24 +4,14 @@ module Burnchart
   class AxisSupport
     include Configurable
 
-    # class MinorTickConfig
-    #   include Configurable
-    #   attr_configurable :every, defaults_to: 1
-    #   attr_configurable :length, defaults_to: 10
-    #   attr_configurable :visible, defaults_to: true
-    #   attr_configurable :show_label, defaults_to: true
-    # end
-    # def minor_ticks
-    #   @minor_ticks ||= MinorTickConfig.new
-    # end
-
     attr_configurable :minor_ticks_every, defaults_to: 1
     attr_configurable :minor_ticks_length, defaults_to: 10
     attr_configurable :minor_ticks_visible, defaults_to: true
+
     attr_configurable :major_ticks_every, defaults_to: 1
     attr_configurable :major_ticks_length, defaults_to: 7
     attr_configurable :major_ticks_visible, defaults_to: true
-    attr_configurable :display_value_for_major_ticks, defaults_to: true
+    attr_configurable :major_ticks_show_label, defaults_to: true
     attr_configurable :px_between_ticks, defaults_to: 5
     attr_configurable :values_lower_bound, defaults_to: 0
     attr_configurable :values_upper_bound, defaults_to: 100
