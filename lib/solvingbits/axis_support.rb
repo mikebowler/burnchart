@@ -19,25 +19,13 @@ module SolvingBits
     attr_configurable :values_lower_bound, defaults_to: 0
     attr_configurable :values_upper_bound, defaults_to: 100
     attr_configurable :values_unit, defaults_to: Integer
+    attr_configurable :values_formatter
 
     attr_configurable :font_size_px, defaults_to: 13
     attr_configurable :estimated_char_width, defaults_to: 10
-    attr_configurable :formatter, defaults_to: 10
 
     def initialize params = {}
-      @options = {
-        formatter: lambda do |value|
-          if values_unit() == Date
-            Date.jd(value).to_s
-          else
-            value.to_s
-          end
-        end
-      }.merge params
-
-      @options.each_pair do |config, value|
-        next if config == :formatter
-
+      params.each_pair do |config, value|
         if value.is_a? Hash
           value.each_pair do |key, inner_value|
             method = :"#{config}_#{key}="
@@ -69,8 +57,17 @@ module SolvingBits
       text.to_s.length * estimated_char_width
     end
 
+    def format_value value
+      if values_unit() == Date
+        Date.jd(value).to_s
+      else
+        value.to_s
+      end
+    end
+
     # Returns an array of these: [px_position, is_major_tick, label]
     def ticks
+      formatter = values_formatter() || lambda {|value| format_value(value)}
       lower = values_lower_bound()
       upper = values_upper_bound()
 
@@ -86,8 +83,7 @@ module SolvingBits
 
         next if is_major_tick == false && minor_ticks_visible() == false 
 
-        label = @options[:formatter].call(y)
-
+        label = formatter.call(y)
         result << [y * minor_ticks_px_between() - offset, is_major_tick, label]
       end
       result
