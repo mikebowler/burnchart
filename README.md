@@ -1,4 +1,4 @@
-# SolVinG Bits
+# **S**ol**v**in**g** Bits
 
 Bits and pieces to help you visualize data in SVG.
 
