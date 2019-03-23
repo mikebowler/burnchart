@@ -42,13 +42,13 @@ module Burnchart
     end
 
     def preferred_size
-      width = major_ticks_length + 1
-      if major_ticks_show_label
-        width += label_width(values_upper_bound.to_s)
+      width = major_ticks_length() + 1
+      if major_ticks_show_label()
+        width += label_width(values_upper_bound().to_s)
       end
 
       Size.new(
-        height: (values_upper_bound * px_between_ticks).to_i + top_pad,
+        height: (values_upper_bound() * minor_ticks_px_between()).to_i + top_pad,
         width: width
       )
     end

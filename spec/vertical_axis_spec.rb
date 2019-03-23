@@ -4,9 +4,8 @@ include Burnchart
 RSpec.describe VerticalAxis do
   it "should draw simple ticks" do
     component = VerticalAxis.new(
-      minor_ticks: { every: 10, length: 8 },
+      minor_ticks: { every: 10, length: 8, px_between: 5 },
       major_ticks: { every: 30, length: 15, show_label: false },
-      px_between_ticks: 5,
       values: { lower_bound: 0, upper_bound: 40 }
     )
 
@@ -24,9 +23,8 @@ RSpec.describe VerticalAxis do
 
   it 'should draw simple ticks with labels' do
     component = VerticalAxis.new(
-      minor_ticks: { every: 10, length: 8 },
+      minor_ticks: { every: 10, length: 8, px_between: 5 },
       major_ticks: { every: 30, length: 15, show_label: true },
-      px_between_ticks: 5,
       values: { lower_bound: 0, upper_bound: 40 }
     )
 

@@ -7,12 +7,13 @@ module Burnchart
     attr_configurable :minor_ticks_every, defaults_to: 1
     attr_configurable :minor_ticks_length, defaults_to: 10
     attr_configurable :minor_ticks_visible, defaults_to: true
+    attr_configurable :minor_ticks_px_between, defaults_to: 5
 
     attr_configurable :major_ticks_every, defaults_to: 1
     attr_configurable :major_ticks_length, defaults_to: 7
     attr_configurable :major_ticks_visible, defaults_to: true
     attr_configurable :major_ticks_show_label, defaults_to: true
-    attr_configurable :px_between_ticks, defaults_to: 5
+
     attr_configurable :values_lower_bound, defaults_to: 0
     attr_configurable :values_upper_bound, defaults_to: 100
     attr_configurable :values_unit, defaults_to: Integer
@@ -33,12 +34,18 @@ module Burnchart
       }.merge params
 
       @options.each_pair do |config, value|
+        next if config == :formatter
+
         if value.is_a? Hash
           value.each_pair do |key, inner_value|
+            method = :"#{config}_#{key}="
+            raise "No configuration for #{config}:#{key}" unless respond_to?(method, true)
             __send__ "#{config}_#{key}=", inner_value
           end
         else
-          __send__ "#{config}=", value unless config == :formatter
+            method = :"#{config}="
+            raise "No configuration for #{config}" unless respond_to?(method, true)
+          __send__ method, value
         end
       end
 
@@ -66,7 +73,7 @@ module Burnchart
       upper = values_upper_bound()
 
       result = []
-      offset = lower * px_between_ticks()
+      offset = lower * minor_ticks_px_between()
       first_tick = lower - (lower % minor_ticks_every())
       if display_lower_bound_tick() == false && first_tick == lower
         first_tick = lower + minor_ticks_every()
@@ -79,7 +86,7 @@ module Burnchart
 
         label = @options[:formatter].call(y)
 
-        result << [y * px_between_ticks() - offset, is_major_tick, label]
+        result << [y * minor_ticks_px_between() - offset, is_major_tick, label]
       end
       result
     end

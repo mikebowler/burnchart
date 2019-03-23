@@ -40,7 +40,7 @@ module Burnchart
       delta = values_upper_bound - values_lower_bound
       Size.new(
         height: height,
-        width: (delta * px_between_ticks).to_i
+        width: (delta * minor_ticks_px_between).to_i
       )
     end
 

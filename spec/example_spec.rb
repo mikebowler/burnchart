@@ -7,10 +7,9 @@ RSpec.describe 'Runnable examples' do
   it 'should illustrate usage' do
     chart = SimpleChart.new
     chart.left_axis = VerticalAxis.new(
-      minor_ticks: { every: 1, length: 8 },
+      minor_ticks: { every: 1, length: 8, px_between: 5 },
       major_ticks: { every: 10, length: 8 },
       values: { lower_bound: 0, upper_bound: 20, unit: Integer },
-      px_between_ticks: 5,
       # fonts: { axis_label_size: 13, value_label_size: 11 }
       # , title: 'lead times (days)'
     )
@@ -21,9 +20,8 @@ RSpec.describe 'Runnable examples' do
         lower_bound: Date.parse('2018-01-02'), 
         upper_bound: Date.parse('2018-01-05') 
       },
-      minor_ticks: { every: 1, length: 4 },
+      minor_ticks: { every: 1, length: 4, px_between: 100 },
       major_ticks: { every: 1, length: 15, show_label: true },
-      px_between_ticks: 100,
       display_lower_bound_tick: true
     )
     chart.data_layers << DataLayer.create do |layer|
