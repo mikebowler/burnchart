@@ -9,9 +9,8 @@ RSpec.describe 'Runnable examples' do
     chart.left_axis = VerticalAxis.new(
       minor_ticks: { every: 1, length: 4, px_between: 5 },
       major_ticks: { every: 10, length: 8 },
-      values: { lower_bound: 0, upper_bound: 20, unit: Integer },
-      # fonts: { axis_label_size: 13, value_label_size: 11 }
-      # , title: 'lead times (days)'
+      values: { lower_bound: 0, upper_bound: 30, unit: Integer },
+      label: { visible: true, text: 'Lead time', font_size_px: 15 }
     )
 
     chart.bottom_axis = HorizontalAxis.new(
@@ -29,12 +28,12 @@ RSpec.describe 'Runnable examples' do
       layer.renderers << LineChartRenderer.new # (stroke: 'red')
       layer.renderers << DotChartRenderer.new # (stroke: 'black')
       layer.data = [
-        Point.new(x: Date.parse('2018-01-02'), y: 10),
-        Point.new(x: Date.parse('2018-01-03'), y: 15),
-        Point.new(x: Date.parse('2018-01-04'), y: 15),
-        Point.new(x: Date.parse('2018-01-05'), y: 8),
-        Point.new(x: Date.parse('2018-01-06'), y: 7),
-        Point.new(x: Date.parse('2018-01-07'), y: 4),
+        Point.new(x: Date.parse('2018-01-02'), y: 25),
+        Point.new(x: Date.parse('2018-01-03'), y: 21),
+        Point.new(x: Date.parse('2018-01-04'), y: 23),
+        Point.new(x: Date.parse('2018-01-05'), y: 17),
+        Point.new(x: Date.parse('2018-01-06'), y: 11),
+        Point.new(x: Date.parse('2018-01-07'), y: 6),
         Point.new(x: Date.parse('2018-01-08'), y: 2),
         Point.new(x: Date.parse('2018-01-09'), y: 0),
       ]

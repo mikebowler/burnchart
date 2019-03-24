@@ -40,13 +40,27 @@ module SolvingBits
           )
         end
       end
+
+      if label_visible()
+        x_rotation = left + label_font_size_px()
+        y_rotation = top
+
+        canvas.text(
+          label_text(),
+          x: x_rotation,
+          y: y_rotation,
+          style: "font: #{label_font_size_px()}px sans-serif",
+          transform: "rotate(270, #{x_rotation}, #{y_rotation})",
+          text_anchor: 'end'
+        )
+      end
+
     end
 
     def preferred_size
       width = major_ticks_length() + 1
-      if major_ticks_show_label()
-        width += label_width(values_upper_bound().to_s)
-      end
+      width += label_width(values_upper_bound().to_s) if major_ticks_show_label()
+      width += label_font_size_px() if label_visible()
 
       Size.new(
         height: (values_upper_bound() * minor_ticks_px_between()).to_i + top_pad,
