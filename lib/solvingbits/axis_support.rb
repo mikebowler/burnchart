@@ -39,10 +39,8 @@ module SolvingBits
         end
       end
 
-      if values_unit() == Date
-        self.values_lower_bound = self.values_lower_bound.jd
-        self.values_upper_bound = self.values_upper_bound.jd
-      end
+      self.values_lower_bound = convert_to_internal_value(self.values_lower_bound)
+      self.values_upper_bound = convert_to_internal_value(self.values_upper_bound)
 
       if values_lower_bound() > values_upper_bound()
         raise "Lower bound must be less than upper: #{values_lower_bound()} > #{values_upper_bound()}"
@@ -57,17 +55,29 @@ module SolvingBits
       text.to_s.length * estimated_char_width
     end
 
-    def format_value value
+    # The internal represention that we use for the value may not be the same
+    # as what's passed in. Convert.
+    def convert_to_internal_value value
       if values_unit() == Date
-        Date.jd(value).to_s
+        value.jd
       else
-        value.to_s
+        value
+      end
+    end
+
+    # The internal represention that we use for the value may not be the same
+    # as what's passed in. Convert.
+    def convert_to_external_value value
+      if values_unit() == Date
+        Date.jd(value)
+      else
+        value
       end
     end
 
     # Returns an array of these: [px_position, is_major_tick, label]
     def ticks
-      formatter = values_formatter() || lambda {|value| format_value(value)}
+      formatter = values_formatter() || lambda {|value| value.to_s}
       lower = values_lower_bound()
       upper = values_upper_bound()
 
@@ -86,7 +96,7 @@ module SolvingBits
         result << [
           value * minor_ticks_px_between() - offset, 
           is_major_tick, 
-          formatter.call(value)
+          formatter.call(convert_to_external_value value)
         ]
       end
       result
@@ -94,7 +104,7 @@ module SolvingBits
   end
 
   def to_coordinate_space value:, lower_coordinate:, upper_coordinate:
-    value = value.jd if values_unit() == Date
+    value = convert_to_internal_value value
 
     value_delta = values_upper_bound() - values_lower_bound()
     value_percent = (value - values_lower_bound()) * 1.0 / value_delta

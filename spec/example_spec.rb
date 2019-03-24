@@ -17,8 +17,9 @@ RSpec.describe 'Runnable examples' do
     chart.bottom_axis = HorizontalAxis.new(
       values: { 
         unit: Date, 
-        lower_bound: Date.parse('2018-01-02'), 
-        upper_bound: Date.parse('2018-01-16') 
+        lower_bound: Date.parse('2018-01-02'),
+        upper_bound: Date.parse('2018-01-16'),
+        formatter: lambda { |value| "#{value.strftime '%b %e'}"}
       },
       minor_ticks: { every: 1, length: 4, px_between: 50, show_lowest_value: true },
       major_ticks: { every: 1, length: 15, show_label: true },
