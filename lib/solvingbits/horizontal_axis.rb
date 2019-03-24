@@ -30,13 +30,22 @@ module SolvingBits
           )
         end
       end
+
+      if label_visible()
+        canvas.text(
+          label_text(),
+          x: right,
+          y: bottom,
+          style: "font: #{label_font_size_px()}px sans-serif",
+          text_anchor: 'end'
+        )
+      end
     end
 
     def preferred_size
-      height = major_ticks_length
-      if major_ticks_show_label()
-        height += font_size_px
-      end
+      height = major_ticks_length      
+      height += font_size_px() if major_ticks_show_label()
+      height += label_font_size_px() if label_visible()
 
       delta = values_upper_bound - values_lower_bound
       Size.new(

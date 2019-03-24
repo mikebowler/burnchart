@@ -67,4 +67,26 @@ RSpec.describe HorizontalAxis do
       "<line x1='350' y1='0' x2='350' y2='4' style='stroke:black;'/>"
     )
   end
+
+  it 'should draw label when no labels on ticks' do
+    component = HorizontalAxis.new(
+      minor_ticks: { every: 10, length: 8, px_between: 5 },
+      major_ticks: { every: 30, length: 15, show_label: false },
+      values: { lower_bound: 0, upper_bound: 40 },
+      label: { visible: true, text: 'Lead time', font_size_px: 13 }
+    )
+
+    canvas = SvgCanvas.new
+    size = component.preferred_size
+    component.render left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
+    expect(canvas.to_svg(:partial)).to eq(
+      "<line x1='0' y1='0' x2='200' y2='0' style='stroke:black;'/>" \
+      "<line x1='50' y1='0' x2='50' y2='8' style='stroke:black;'/>" \
+      "<line x1='100' y1='0' x2='100' y2='8' style='stroke:black;'/>" \
+      "<line x1='150' y1='0' x2='150' y2='15' style='stroke:black;'/>" \
+      "<line x1='200' y1='0' x2='200' y2='8' style='stroke:black;'/>" \
+      "<text x='200' y='28' style='font: 13px sans-serif' text-anchor='end'>Lead time</text>"
+    )
+
+  end
 end

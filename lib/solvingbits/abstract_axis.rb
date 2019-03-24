@@ -21,6 +21,10 @@ module SolvingBits
     attr_configurable :values_unit, defaults_to: Integer
     attr_configurable :values_formatter
 
+    attr_configurable :label_text
+    attr_configurable :label_visible, defaults_to: false
+    attr_configurable :label_font_size_px, defaults_to: 13
+    
     attr_configurable :font_size_px, defaults_to: 13
     attr_configurable :estimated_char_width, defaults_to: 10
 

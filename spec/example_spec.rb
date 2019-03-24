@@ -23,6 +23,7 @@ RSpec.describe 'Runnable examples' do
       },
       minor_ticks: { every: 1, length: 4, px_between: 50, show_lowest_value: true },
       major_ticks: { every: 1, length: 4, show_label: true },
+      label: { visible: true, text: 'Story points', font_size_px: 15 }
     )
     chart.data_layers << DataLayer.create do |layer|
       layer.renderers << LineChartRenderer.new # (stroke: 'red')
