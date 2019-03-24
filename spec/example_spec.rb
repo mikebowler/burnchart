@@ -22,7 +22,7 @@ RSpec.describe 'Runnable examples' do
         formatter: lambda { |value| "#{value.strftime '%b %e'}"}
       },
       minor_ticks: { every: 1, length: 4, px_between: 50, show_lowest_value: true },
-      major_ticks: { every: 1, length: 15, show_label: true },
+      major_ticks: { every: 1, length: 4, show_label: true },
     )
     chart.data_layers << DataLayer.create do |layer|
       layer.renderers << SmoothLineChartRenderer.new # (stroke: 'red')
