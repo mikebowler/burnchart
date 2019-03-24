@@ -101,7 +101,10 @@ module SolvingBits
 
     coordinate_delta = upper_coordinate - lower_coordinate
 
-    # Ugly hack to account for the fact that the 0,0 origin is top left not bottom left
+    # Ugly hack to account for the fact that the 0,0 origin is top left not 
+    # bottom left which in turn means that for horizontal axis, as the value
+    # increases, so does the coordinate values. For the vertical axis, as the
+    # value increases, the coordinate values decrease.
     case self
     when VerticalAxis
       upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
