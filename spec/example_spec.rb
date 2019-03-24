@@ -25,7 +25,7 @@ RSpec.describe 'Runnable examples' do
       major_ticks: { every: 1, length: 4, show_label: true },
     )
     chart.data_layers << DataLayer.create do |layer|
-      layer.renderers << SmoothLineChartRenderer.new # (stroke: 'red')
+      layer.renderers << LineChartRenderer.new # (stroke: 'red')
       layer.renderers << DotChartRenderer.new # (stroke: 'black')
       layer.data = [
         Point.new(x: Date.parse('2018-01-02'), y: 10),
