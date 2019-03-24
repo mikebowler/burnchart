@@ -1,7 +1,7 @@
 require 'solvingbits/configurable'
 
 module SolvingBits
-  class AxisSupport
+  class AbstractAxis
     include Configurable
 
     attr_configurable :minor_ticks_every, defaults_to: 1

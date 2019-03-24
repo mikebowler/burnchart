@@ -2,8 +2,8 @@ require 'spec_helper'
 require 'date'
 include SolvingBits
 
-# Since AxisSupport is a mixin, we test through HorizontalAxis
-RSpec.describe AxisSupport do
+# Since AbstractAxis is a mixin, we test through HorizontalAxis
+RSpec.describe AbstractAxis do
   it 'should calculate ticks with lower bound of zero' do 
     component = HorizontalAxis.new(
       minor_ticks: { every: 10, px_between: 5 },

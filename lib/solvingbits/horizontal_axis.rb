@@ -1,7 +1,8 @@
+require 'solvingbits/abstract_axis'
 
 module SolvingBits
 
-  class HorizontalAxis < AxisSupport
+  class HorizontalAxis < AbstractAxis
 
     def render left:, right:, top:, bottom:, canvas:
       canvas.line x1: left, y1: top, x2: right, y2: top, style: 'stroke:black;'

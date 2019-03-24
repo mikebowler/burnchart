@@ -1,6 +1,7 @@
-module SolvingBits
+require 'solvingbits/abstract_axis'
 
-  class VerticalAxis < AxisSupport
+module SolvingBits
+  class VerticalAxis < AbstractAxis
 
     # We need the top pad to ensure we aren't truncating labels
     # TODO: Be smarter about this. We only need the padding if there is a label right at the
