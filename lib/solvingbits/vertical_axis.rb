@@ -35,9 +35,10 @@ module SolvingBits
             label,
             x: tick_left_edge - 1,
             # TODO align middle rather than px/3
-            y: bottom - y + (major_ticks_label_font_size_px() / 3),
+            y: bottom - y, # + (major_ticks_label_font_size_px() / 3),
             style: "font: italic #{major_ticks_label_font_size_px}px sans-serif",
-            text_anchor: 'end'
+            text_anchor: 'end',
+            alignment_baseline: 'middle'
           )
         end
       end

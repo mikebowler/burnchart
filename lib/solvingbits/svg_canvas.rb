@@ -25,7 +25,7 @@ module SolvingBits
     svg_primitive :rect, attrs: %w[x y width height style]
     svg_primitive :circle, attrs: %w[cx cy r fill]
     svg_primitive :path, attrs: %w[d fill stroke]
-    svg_primitive :text, attrs: %w[x y style text_anchor transform], takes_text: true
+    svg_primitive :text, attrs: %w[x y style text_anchor transform alignment_baseline], takes_text: true
 
     def initialize
       @svg = ''

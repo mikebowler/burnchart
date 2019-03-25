@@ -36,7 +36,7 @@ RSpec.describe VerticalAxis do
       "<line x1='28' y1='156' x2='36' y2='156' style='stroke:black;'/>" \
       "<line x1='28' y1='106' x2='36' y2='106' style='stroke:black;'/>" \
       "<line x1='21' y1='56' x2='36' y2='56' style='stroke:black;'/>" \
-      "<text x='20' y='60' style='font: italic 13px sans-serif' text-anchor='end'>30</text>" \
+      "<text x='20' y='56' style='font: italic 13px sans-serif' text-anchor='end' alignment-baseline='middle'>30</text>" \
       "<line x1='28' y1='6' x2='36' y2='6' style='stroke:black;'/>"
     )
   end
