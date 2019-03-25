@@ -29,28 +29,7 @@ module SolvingBits
     attr_configurable :estimated_char_width, defaults_to: 10
 
     def initialize params = {}
-
-      params.each_pair do |config, value|
-        if value.is_a? Hash
-          value.each_pair do |config2, value2|
-            if value2.is_a? Hash
-              value2.each do |config3, value3|
-                method = :"#{config}_#{config2}_#{config3}="
-                raise "No configuration for #{config}::#{config2}::#{config3}" unless respond_to?(method, true)
-                __send__ "#{config}_#{config2}_#{config3}=", value3
-              end
-            else
-              method = :"#{config}_#{config2}="
-              raise "No configuration for #{config}:#{config2}" unless respond_to?(method, true)
-              __send__ "#{config}_#{config2}=", value2
-            end
-          end
-        else
-            method = :"#{config}="
-            raise "No configuration for #{config}" unless respond_to?(method, true)
-          __send__ method, value
-        end
-      end
+      initialize_configuration params: params
 
       self.values_lower_bound = convert_to_internal_value(self.values_lower_bound)
       self.values_upper_bound = convert_to_internal_value(self.values_upper_bound)

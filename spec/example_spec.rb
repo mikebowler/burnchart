@@ -10,7 +10,7 @@ RSpec.describe 'Runnable examples' do
       minor_ticks: { every: 1, length: 4, px_between: 5 },
       major_ticks: { every: 10, length: 8 },
       values: { lower_bound: 0, upper_bound: 30, unit: Integer },
-      label: { visible: true, text: 'Lead time', font_size_px: 15 }
+      label: { visible: true, text: 'Story points', font_size_px: 15 }
     )
 
     chart.bottom_axis = HorizontalAxis.new(
@@ -22,7 +22,7 @@ RSpec.describe 'Runnable examples' do
       },
       minor_ticks: { every: 1, length: 4, px_between: 50, show_lowest_value: true },
       major_ticks: { every: 1, length: 4, label: { visible: true, font_size_px: 11 } },
-      label: { visible: true, text: 'Story points', font_size_px: 15 }
+      label: { visible: true, text: 'Dates', font_size_px: 15 }
     )
     chart.data_layers << DataLayer.create do |layer|
       layer.renderers << LineChartRenderer.new # (stroke: 'red')
