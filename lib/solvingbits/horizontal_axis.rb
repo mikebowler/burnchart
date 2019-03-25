@@ -20,12 +20,12 @@ module SolvingBits
           style: 'stroke:black;'
         )
         
-        if major_ticks_show_label() && is_major_tick
+        if major_ticks_label_visible() && is_major_tick
           canvas.text(
             label,
             x: x + left,
-            y: major_tick_bottom_edge + font_size_px,
-            style: "font: italic #{font_size_px}px sans-serif",
+            y: major_tick_bottom_edge + major_ticks_label_font_size_px(),
+            style: "font: italic #{major_ticks_label_font_size_px}px sans-serif",
             text_anchor: 'middle'
           )
         end
@@ -44,7 +44,7 @@ module SolvingBits
 
     def preferred_size
       height = major_ticks_length      
-      height += font_size_px() if major_ticks_show_label()
+      height += major_ticks_label_font_size_px() if major_ticks_label_visible()
       height += label_font_size_px() if label_visible()
 
       delta = values_upper_bound - values_lower_bound

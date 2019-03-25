@@ -7,8 +7,8 @@ module SolvingBits
     # TODO: Be smarter about this. We only need the padding if there is a label right at the
     # top and today we're always putting padding just in case
     def top_pad
-      if major_ticks_show_label()
-        font_size_px / 2
+      if major_ticks_label_visible()
+        major_ticks_label_font_size_px() / 2
       else
         0
       end
@@ -30,12 +30,13 @@ module SolvingBits
           y2: bottom - y,
           style: 'stroke:black;'
         )
-        if major_ticks_show_label() && is_major_tick
+        if major_ticks_label_visible() && is_major_tick
           canvas.text(
             label,
             x: tick_left_edge - 1,
-            y: bottom - y + (font_size_px / 3),
-            style: "font: italic #{font_size_px}px sans-serif",
+            # TODO align middle rather than px/3
+            y: bottom - y + (major_ticks_label_font_size_px() / 3),
+            style: "font: italic #{major_ticks_label_font_size_px}px sans-serif",
             text_anchor: 'end'
           )
         end
@@ -59,7 +60,7 @@ module SolvingBits
 
     def preferred_size
       width = major_ticks_length() + 1
-      width += label_width(values_upper_bound().to_s) if major_ticks_show_label()
+      width += label_width(values_upper_bound().to_s) if major_ticks_label_visible()
       width += label_font_size_px() if label_visible()
 
       Size.new(

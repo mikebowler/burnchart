@@ -5,7 +5,7 @@ RSpec.describe VerticalAxis do
   it "should draw simple ticks" do
     component = VerticalAxis.new(
       minor_ticks: { every: 10, length: 8, px_between: 5 },
-      major_ticks: { every: 30, length: 15, show_label: false },
+      major_ticks: { every: 30, length: 15, label: { visible: false } },
       values: { lower_bound: 0, upper_bound: 40 }
     )
 
@@ -24,7 +24,7 @@ RSpec.describe VerticalAxis do
   it 'should draw simple ticks with labels' do
     component = VerticalAxis.new(
       minor_ticks: { every: 10, length: 8, px_between: 5 },
-      major_ticks: { every: 30, length: 15, show_label: true },
+      major_ticks: { every: 30, length: 15, label: { visible: true } },
       values: { lower_bound: 0, upper_bound: 40 }
     )
 
@@ -44,7 +44,7 @@ RSpec.describe VerticalAxis do
   it "should draw label" do
     component = VerticalAxis.new(
       minor_ticks: { every: 10, length: 8, px_between: 5 },
-      major_ticks: { every: 30, length: 15, show_label: false },
+      major_ticks: { every: 30, length: 15, label: { visible: false } },
       values: { lower_bound: 0, upper_bound: 40 },
       label: { visible: true, text: 'Time' }
     )

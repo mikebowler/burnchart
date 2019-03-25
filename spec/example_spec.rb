@@ -21,7 +21,7 @@ RSpec.describe 'Runnable examples' do
         formatter: lambda { |value| "#{value.strftime '%b %e'}"}
       },
       minor_ticks: { every: 1, length: 4, px_between: 50, show_lowest_value: true },
-      major_ticks: { every: 1, length: 4, show_label: true },
+      major_ticks: { every: 1, length: 4, label: { visible: true, font_size_px: 11 } },
       label: { visible: true, text: 'Story points', font_size_px: 15 }
     )
     chart.data_layers << DataLayer.create do |layer|

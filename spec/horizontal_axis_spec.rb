@@ -5,7 +5,7 @@ RSpec.describe HorizontalAxis do
   it 'should draw simple ticks' do
     component = HorizontalAxis.new(
       minor_ticks: { every: 10, length: 8, px_between: 5 },
-      major_ticks: { every: 30, length: 15, show_label: false },
+      major_ticks: { every: 30, length: 15, label: { visible: false } },
       values: { lower_bound: 0, upper_bound: 40 }
     )
 
@@ -24,7 +24,7 @@ RSpec.describe HorizontalAxis do
   it 'should draw simple ticks with labels' do
     component = HorizontalAxis.new(
       minor_ticks: { every: 10, length: 8, px_between: 5 },
-      major_ticks: { every: 30, length: 15, show_label: true },
+      major_ticks: { every: 30, length: 15, label: { visible: true } },
       values: { lower_bound: 0, upper_bound: 40 }
     )
 
@@ -44,7 +44,7 @@ RSpec.describe HorizontalAxis do
   it 'should handle date ranges' do
     component = HorizontalAxis.new(
       minor_ticks: { every: 1, length: 4, px_between: 50 },
-      major_ticks: { every: 7, length: 8, show_label: true },
+      major_ticks: { every: 7, length: 8, label: { visible: true } },
       values: { 
         lower_bound: Date.parse('2019-01-01'),
         upper_bound: Date.parse('2019-01-08'),
@@ -71,7 +71,7 @@ RSpec.describe HorizontalAxis do
   it 'should draw label when no labels on ticks' do
     component = HorizontalAxis.new(
       minor_ticks: { every: 10, length: 8, px_between: 5 },
-      major_ticks: { every: 30, length: 15, show_label: false },
+      major_ticks: { every: 30, length: 15, label: { visible: false } },
       values: { lower_bound: 0, upper_bound: 40 },
       label: { visible: true, text: 'Lead time', font_size_px: 13 }
     )

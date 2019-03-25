@@ -14,7 +14,8 @@ module SolvingBits
     attr_configurable :major_ticks_every, defaults_to: 1
     attr_configurable :major_ticks_length, defaults_to: 7
     attr_configurable :major_ticks_visible, defaults_to: true
-    attr_configurable :major_ticks_show_label, defaults_to: true
+    attr_configurable :major_ticks_label_visible, defaults_to: true
+    attr_configurable :major_ticks_label_font_size_px, defaults_to: 13
 
     attr_configurable :values_lower_bound, defaults_to: 0
     attr_configurable :values_upper_bound, defaults_to: 100
@@ -24,17 +25,25 @@ module SolvingBits
     attr_configurable :label_text
     attr_configurable :label_visible, defaults_to: false
     attr_configurable :label_font_size_px, defaults_to: 13
-    
-    attr_configurable :font_size_px, defaults_to: 13
+
     attr_configurable :estimated_char_width, defaults_to: 10
 
     def initialize params = {}
+
       params.each_pair do |config, value|
         if value.is_a? Hash
-          value.each_pair do |key, inner_value|
-            method = :"#{config}_#{key}="
-            raise "No configuration for #{config}:#{key}" unless respond_to?(method, true)
-            __send__ "#{config}_#{key}=", inner_value
+          value.each_pair do |config2, value2|
+            if value2.is_a? Hash
+              value2.each do |config3, value3|
+                method = :"#{config}_#{config2}_#{config3}="
+                raise "No configuration for #{config}::#{config2}::#{config3}" unless respond_to?(method, true)
+                __send__ "#{config}_#{config2}_#{config3}=", value3
+              end
+            else
+              method = :"#{config}_#{config2}="
+              raise "No configuration for #{config}:#{config2}" unless respond_to?(method, true)
+              __send__ "#{config}_#{config2}=", value2
+            end
           end
         else
             method = :"#{config}="
