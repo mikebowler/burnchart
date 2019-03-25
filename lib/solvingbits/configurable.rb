@@ -6,25 +6,20 @@ module SolvingBits
     # isn't as straight forward as you might think.
     def self.included base
       base.class_eval do
-
-        # Define a configurable parameter. Possible args are
-        # defaults_to: defaultValue
         def self.attr_configurable name, args = {}
-          class_eval <<-METHODS, __FILE__, __LINE__ + 1
-            def #{name}
-              if defined? @#{name}
-                @#{name}
-              else
-                #{args[:defaults_to]}
-              end
-            end
+          instance_var_name = "@#{name}"
 
-            def #{name}= arg
-              @#{name} = arg
+          define_method name do
+            if instance_variable_defined? instance_var_name
+              instance_variable_get instance_var_name
+            else
+              args[:defaults_to]
             end
-            protected :#{name}, :#{name}=
-          METHODS
+          end
 
+          define_method "#{name}=" do |value|
+            instance_variable_set instance_var_name, value
+          end
         end
       end
     end
