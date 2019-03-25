@@ -39,4 +39,35 @@ RSpec.describe Configurable do
     expect(object.__send__ :five).to eq(5)
     expect(object.__send__ :one_two_three_four).to eq(4)
   end
+
+  it 'should allow legal restricted input values' do
+    object = Class.new do
+      include Configurable
+      attr_configurable :one, only: [ :two, :three ]
+
+      def initialize args
+        initialize_configuration params: args
+      end
+    end.new(
+      one: :two
+    )
+
+    expect(object.__send__ :one).to eq(:two)
+  end
+
+  it 'should reject illegal restricted input values' do
+    expect {
+      object = Class.new do
+        include Configurable
+        attr_configurable :one, only: [ :two, :three ]
+
+        def initialize args
+          initialize_configuration params: args
+        end
+      end.new(
+        one: :bad_data
+      )
+    }.to raise_error "Illegal value: :bad_data legal values are :two, :three"
+
+  end
 end

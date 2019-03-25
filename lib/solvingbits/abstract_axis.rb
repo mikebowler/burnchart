@@ -13,17 +13,17 @@ module SolvingBits
 
     attr_configurable :major_ticks_every, defaults_to: 1
     attr_configurable :major_ticks_length, defaults_to: 7
-    attr_configurable :major_ticks_visible, defaults_to: true
-    attr_configurable :major_ticks_label_visible, defaults_to: true
+    attr_configurable :major_ticks_visible, defaults_to: true, only: [true, false]
+    attr_configurable :major_ticks_label_visible, defaults_to: true, only: [true, false]
     attr_configurable :major_ticks_label_font_size_px, defaults_to: 13
 
     attr_configurable :values_lower_bound, defaults_to: 0
     attr_configurable :values_upper_bound, defaults_to: 100
-    attr_configurable :values_unit, defaults_to: Integer
+    attr_configurable :values_unit, defaults_to: Integer, only: [Integer, Date]
     attr_configurable :values_formatter
 
     attr_configurable :label_text
-    attr_configurable :label_visible, defaults_to: false
+    attr_configurable :label_visible, defaults_to: false, only: [true, false]
     attr_configurable :label_font_size_px, defaults_to: 13
 
     attr_configurable :estimated_char_width, defaults_to: 10

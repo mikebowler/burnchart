@@ -6,6 +6,7 @@ module SolvingBits
     # isn't as straight forward as you might think.
     def self.included base
       base.class_eval do
+
         def self.attr_configurable name, args = {}
           instance_var_name = "@#{name}"
 
@@ -18,6 +19,11 @@ module SolvingBits
           end
 
           define_method "#{name}=" do |value|
+            if args[:only]&.include?(value) == false
+              legal_values = args[:only].collect {|i| i.inspect}.join(', ')
+              raise "Illegal value: #{value.inspect} legal values are #{legal_values}" 
+            end
+
             instance_variable_set instance_var_name, value
           end
         end
