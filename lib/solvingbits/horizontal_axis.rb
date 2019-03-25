@@ -25,7 +25,7 @@ module SolvingBits
             label,
             x: x + left,
             y: major_tick_bottom_edge + major_ticks_label_font_size_px(),
-            style: "font: italic #{major_ticks_label_font_size_px}px sans-serif",
+            style: "font: italic #{major_ticks_label_font_size_px()}px sans-serif",
             text_anchor: 'middle'
           )
         end
