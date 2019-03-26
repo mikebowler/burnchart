@@ -71,7 +71,14 @@ module SolvingBits
         )
       end
       data_layer.renderers.each do |renderer|
-        renderer.render canvas: canvas, points: points
+        renderer.data_points = points
+        renderer.render(
+          left: left,
+          right: right,
+          top: top,
+          bottom: bottom,
+          canvas: canvas
+        )
       end
     end
   end
