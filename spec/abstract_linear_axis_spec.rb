@@ -2,10 +2,10 @@ require 'spec_helper'
 require 'date'
 include SolvingBits
 
-# Since AbstractAxis is a mixin, we test through HorizontalAxis
-RSpec.describe AbstractAxis do
+# Since AbstractAxis is a mixin, we test through HorizontalLinearAxis
+RSpec.describe AbstractLinearAxis do
   it 'should calculate ticks with lower bound of zero' do 
-    component = HorizontalAxis.new(
+    component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 30 },
       values: { lower_bound: 0, upper_bound: 40 }
@@ -20,7 +20,7 @@ RSpec.describe AbstractAxis do
   end
 
   it 'should calculate ticks with non-zero lower bound' do 
-    component = HorizontalAxis.new(
+    component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 30 },
       values: { lower_bound: 10, upper_bound: 40 }
@@ -34,7 +34,7 @@ RSpec.describe AbstractAxis do
   end
 
   it "should include lower bound tick when asked" do 
-    component = HorizontalAxis.new(
+    component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5, show_lowest_value: true },
       major_ticks: { every: 30 },
       values: { lower_bound: 0, upper_bound: 40 }
@@ -50,7 +50,7 @@ RSpec.describe AbstractAxis do
   end
 
   it 'hide minor ticks when specified' do 
-    component = HorizontalAxis.new(
+    component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, visible: false, px_between: 5 },
       major_ticks: { every: 30 },
       values: { lower_bound: 0, upper_bound: 40 }
@@ -62,7 +62,7 @@ RSpec.describe AbstractAxis do
   end
 
   it 'should draw major ticks as minor when major ticks are hidden' do 
-    component = HorizontalAxis.new(
+    component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 30, visible: false },
       values: { lower_bound: 0, upper_bound: 40 }
@@ -77,7 +77,7 @@ RSpec.describe AbstractAxis do
   end
 
   it "should reject lower bounds being higher than upper bounds" do
-    expect { HorizontalAxis.new(
+    expect { HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 30 },
       values: { lower_bound: 40, upper_bound: 10 }
@@ -85,7 +85,7 @@ RSpec.describe AbstractAxis do
   end
 
   it "should reject major ticks if they aren't a multiple of minor" do
-    expect { HorizontalAxis.new(
+    expect { HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 35 },
       values: { lower_bound: 10, upper_bound: 40 }
@@ -93,7 +93,7 @@ RSpec.describe AbstractAxis do
   end
 
   it 'should convert to coordinate space when lower value and coordinates are zero' do 
-    component = HorizontalAxis.new(
+    component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 30 },
       values: { lower_bound: 0, upper_bound: 40 }
@@ -108,7 +108,7 @@ RSpec.describe AbstractAxis do
   end
 
   it 'should convert to coordinate space when lower value is offset and coordinates are not' do 
-    component = HorizontalAxis.new(
+    component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 30 },
       values: { lower_bound: 10, upper_bound: 50 }
@@ -123,7 +123,7 @@ RSpec.describe AbstractAxis do
   end
 
   it 'should convert to coordinate space when lower coordinate is offset and value bounds are not' do 
-    component = HorizontalAxis.new(
+    component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 30 },
       values: { lower_bound: 0, upper_bound: 40 }
@@ -138,7 +138,7 @@ RSpec.describe AbstractAxis do
   end
 
   it 'should convert to coordinate space when value is date' do 
-    component = HorizontalAxis.new(
+    component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 30 },
       values: { 

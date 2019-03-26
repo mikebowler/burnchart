@@ -1,7 +1,8 @@
 require 'solvingbits/configurable'
+require 'date'
 
 module SolvingBits
-  class AbstractAxis
+  class AbstractLinearAxis
     include Configurable
 
     attr_configurable :minor_ticks_every, defaults_to: 1
@@ -108,9 +109,9 @@ module SolvingBits
     # increases, so does the coordinate values. For the vertical axis, as the
     # value increases, the coordinate values decrease.
     case self
-    when VerticalAxis
+    when VerticalLinearAxis
       upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
-    when HorizontalAxis
+    when HorizontalLinearAxis
       (coordinate_delta * value_percent).to_i + lower_coordinate
     else
       raise "Unexpected axis type: #{self.class}"

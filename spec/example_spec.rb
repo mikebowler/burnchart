@@ -6,14 +6,14 @@ require 'spec_helper'
 RSpec.describe 'Runnable examples' do
   it 'should illustrate usage' do
     chart = SimpleChart.new
-    chart.left_axis = VerticalAxis.new(
+    chart.left_axis = VerticalLinearAxis.new(
       minor_ticks: { every: 1, length: 4, px_between: 5 },
       major_ticks: { every: 10, length: 8 },
       values: { lower_bound: 0, upper_bound: 30, unit: Integer },
       label: { visible: true, text: 'Story points', font_size_px: 15 }
     )
 
-    chart.bottom_axis = HorizontalAxis.new(
+    chart.bottom_axis = HorizontalLinearAxis.new(
       values: { 
         unit: Date, 
         lower_bound: Date.parse('2018-01-02'),
