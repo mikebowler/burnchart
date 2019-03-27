@@ -68,5 +68,32 @@ module SolvingBits
         width: width
       )
     end
+
+    class BackgroundLineRenderer
+      include Configurable
+      attr_configurable :color, defaults_to: 'lightgray'
+      def initialize axis
+        @axis = axis
+      end
+
+      def render left:, right:, top:, bottom:, canvas: 
+        @axis.ticks.each do |y, is_major_tick, label|
+          next unless is_major_tick
+          next if y == 0 # Don't draw over the x axis, regardless of settings
+
+          canvas.line(
+            x1: left,
+            y1: bottom - y,
+            x2: right,
+            y2: bottom - y,
+            style: "stroke: #{color()}"
+          )
+        end
+      end
+    end
+
+    def background_line_renderer
+      BackgroundLineRenderer.new(self)
+    end
   end
 end

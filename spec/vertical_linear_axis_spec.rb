@@ -61,4 +61,28 @@ RSpec.describe VerticalLinearAxis do
       "<text x='13' y='0' style='font: 13px sans-serif' text-anchor='end' transform='rotate(270, 13, 0)'>Time</text>"
     )
   end
+
+  it "should draw background lines" do
+    component = VerticalLinearAxis.new(
+      minor_ticks: { every: 10, length: 8, px_between: 5 },
+      major_ticks: { every: 10, length: 15, label: { visible: false } },
+      values: { lower_bound: 0, upper_bound: 40 }
+    )
+
+    canvas = SvgCanvas.new
+    size = component.preferred_size
+    component.background_line_renderer.render(
+      left: 0, 
+      right: size.width, 
+      top: 0, 
+      bottom: size.height, 
+      canvas: canvas
+    )
+    expect(canvas.to_svg(:partial)).to eq(
+      "<line x1='0' y1='150' x2='16' y2='150' style='stroke: lightgray'/>" \
+      "<line x1='0' y1='100' x2='16' y2='100' style='stroke: lightgray'/>" \
+      "<line x1='0' y1='50' x2='16' y2='50' style='stroke: lightgray'/>" \
+      "<line x1='0' y1='0' x2='16' y2='0' style='stroke: lightgray'/>"      
+    )
+  end
 end

@@ -71,7 +71,7 @@ module SolvingBits
         )
       end
       data_layer.renderers.each do |renderer|
-        renderer.data_points = points
+        renderer.data_points = points if renderer.respond_to? :data_points
         renderer.render(
           left: left,
           right: right,

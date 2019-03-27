@@ -6,7 +6,7 @@ require 'spec_helper'
 RSpec.describe 'Runnable examples' do
   it 'should illustrate usage' do
     chart = SimpleChart.new
-    chart.left_axis = VerticalLinearAxis.new(
+    chart.left_axis = y_axis = VerticalLinearAxis.new(
       minor_ticks: { every: 1, length: 4, px_between: 5 },
       major_ticks: { every: 10, length: 8 },
       values: { lower_bound: 0, upper_bound: 30, unit: Integer },
@@ -25,6 +25,7 @@ RSpec.describe 'Runnable examples' do
       label: { visible: true, text: 'Dates', font_size_px: 15 }
     )
     chart.data_layers << DataLayer.create do |layer|
+      layer.renderers << y_axis.background_line_renderer
       layer.renderers << LineChartRenderer.new # (stroke: 'red')
       layer.renderers << DotChartRenderer.new # (stroke: 'black')
       layer.data = [
