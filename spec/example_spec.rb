@@ -13,12 +13,12 @@ RSpec.describe 'Runnable examples' do
       label: { visible: true, text: 'Story points', font_size_px: 15 }
     )
 
-    chart.bottom_axis = x_axis = HorizontalLinearAxis.new(
-      values: { 
-        unit: Date, 
+    chart.bottom_axis = HorizontalLinearAxis.new(
+      values: {
+        unit: Date,
         lower_bound: Date.parse('2018-01-02'),
         upper_bound: Date.parse('2018-01-16'),
-        formatter: lambda { |value| "#{value.strftime '%b %e'}"}
+        formatter: ->(value) { value.strftime '%b %e' }
       },
       minor_ticks: { every: 1, length: 4, px_between: 50, show_lowest_value: true },
       major_ticks: { every: 1, length: 4, label: { visible: true, font_size_px: 11 } },
@@ -36,7 +36,7 @@ RSpec.describe 'Runnable examples' do
         Point.new(x: Date.parse('2018-01-06'), y: 11),
         Point.new(x: Date.parse('2018-01-07'), y: 6),
         Point.new(x: Date.parse('2018-01-08'), y: 2),
-        Point.new(x: Date.parse('2018-01-09'), y: 0),
+        Point.new(x: Date.parse('2018-01-09'), y: 0)
       ]
     end
 
