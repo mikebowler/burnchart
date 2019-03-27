@@ -13,7 +13,7 @@ RSpec.describe 'Runnable examples' do
       label: { visible: true, text: 'Story points', font_size_px: 15 }
     )
 
-    chart.bottom_axis = HorizontalLinearAxis.new(
+    chart.bottom_axis = x_axis = HorizontalLinearAxis.new(
       values: { 
         unit: Date, 
         lower_bound: Date.parse('2018-01-02'),

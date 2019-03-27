@@ -87,6 +87,30 @@ RSpec.describe HorizontalLinearAxis do
       "<line x1='200' y1='0' x2='200' y2='8' style='stroke:black;'/>" \
       "<text x='200' y='28' style='font: 13px sans-serif' text-anchor='end'>Lead time</text>"
     )
-
   end
+
+  it "should draw background lines" do
+    component = HorizontalLinearAxis.new(
+      minor_ticks: { every: 10, length: 8, px_between: 5 },
+      major_ticks: { every: 10, length: 15, label: { visible: false } },
+      values: { lower_bound: 0, upper_bound: 40 }
+    )
+
+    canvas = SvgCanvas.new
+    size = component.preferred_size
+    component.background_line_renderer.render(
+      left: 0, 
+      right: size.width, 
+      top: 0, 
+      bottom: size.height, 
+      canvas: canvas
+    )
+    expect(canvas.to_svg(:partial)).to eq(
+      "<line x1='50' y1='0' x2='50' y2='15' style='stroke: lightgray'/>" \
+      "<line x1='100' y1='0' x2='100' y2='15' style='stroke: lightgray'/>" \
+      "<line x1='150' y1='0' x2='150' y2='15' style='stroke: lightgray'/>" \
+      "<line x1='200' y1='0' x2='200' y2='15' style='stroke: lightgray'/>"
+    )
+  end
+
 end
