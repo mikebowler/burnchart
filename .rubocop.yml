@@ -27,5 +27,5 @@ Style/CaseIndentation:
   Enabled: false
 
 # Warn about methods with extraneous parentheses.
-Style/DefWithParentheses
+Style/DefWithParentheses:
   Enabled: false
