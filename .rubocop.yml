@@ -1,3 +1,6 @@
+AllCops:
+  TargetRubyVersion: 2.5
+
 Metrics/LineLength:
   Max: 100
 
@@ -27,5 +30,9 @@ Style/CaseIndentation:
   Enabled: false
 
 # Warn about methods with extraneous parentheses.
-Style/DefWithParentheses:
+Style/MethodCallWithoutArgsParentheses:
   Enabled: false
+
+# Complexity within a method
+Metrics/AbcSize:
+  Max: 20

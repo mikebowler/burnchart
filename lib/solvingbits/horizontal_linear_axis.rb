@@ -43,7 +43,7 @@ module SolvingBits
     end
 
     def preferred_size
-      height = major_ticks_length      
+      height = major_ticks_length
       height += major_ticks_label_font_size_px() if major_ticks_label_visible()
       height += label_font_size_px() if label_visible()
 
@@ -61,8 +61,8 @@ module SolvingBits
         @axis = axis
       end
 
-      def render left:, right:, top:, bottom:, canvas: 
-        @axis.ticks.each do |x, is_major_tick, label|
+      def render left:, right:, top:, bottom:, canvas:
+        @axis.ticks.each do |x, is_major_tick, _label|
           next unless is_major_tick
           next if x == 0 # Don't draw over the y axis, regardless of settings
 

@@ -70,7 +70,7 @@ module SolvingBits
 
     # Returns an array of these: [px_position, is_major_tick, label]
     def ticks
-      formatter = values_formatter() || lambda {|value| value.to_s}
+      formatter = values_formatter() || ->(value) { value.to_s }
       lower = values_lower_bound()
       upper = values_upper_bound()
 
@@ -84,12 +84,12 @@ module SolvingBits
       first_tick.step(upper, minor_ticks_every()) do |value|
         is_major_tick = (value % major_ticks_every()).zero? && major_ticks_visible()
 
-        next if is_major_tick == false && minor_ticks_visible() == false 
+        next if is_major_tick == false && minor_ticks_visible() == false
 
         result << [
-          value * minor_ticks_px_between() - offset, 
-          is_major_tick, 
-          formatter.call(convert_to_external_value value)
+          value * minor_ticks_px_between() - offset,
+          is_major_tick,
+          formatter.call(convert_to_external_value(value))
         ]
       end
       result
@@ -104,7 +104,7 @@ module SolvingBits
 
     coordinate_delta = upper_coordinate - lower_coordinate
 
-    # Ugly hack to account for the fact that the 0,0 origin is top left not 
+    # Ugly hack to account for the fact that the 0,0 origin is top left not
     # bottom left which in turn means that for horizontal axis, as the value
     # increases, so does the coordinate values. For the vertical axis, as the
     # value increases, the coordinate values decrease.

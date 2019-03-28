@@ -76,10 +76,10 @@ module SolvingBits
         @axis = axis
       end
 
-      def render left:, right:, top:, bottom:, canvas: 
-        @axis.ticks.each do |y, is_major_tick, label|
+      def render left:, right:, top:, bottom:, canvas:
+        @axis.ticks.each do |y, is_major_tick, _label|
           next unless is_major_tick
-          next if y == 0 # Don't draw over the x axis, regardless of settings
+          next if y.zero? # Don't draw over the x axis, regardless of settings
 
           canvas.line(
             x1: left,

@@ -20,8 +20,8 @@ module SolvingBits
 
           define_method "#{name}=" do |value|
             if args[:only]&.include?(value) == false
-              legal_values = args[:only].collect {|i| i.inspect}.join(', ')
-              raise "Illegal value: #{value.inspect} legal values are #{legal_values}" 
+              legal_values = args[:only].collect(&:inspect).join(', ')
+              raise "Illegal value: #{value.inspect} legal values are #{legal_values}"
             end
 
             instance_variable_set instance_var_name, value
@@ -46,8 +46,12 @@ module SolvingBits
           )
         else
           method = :"#{new_key}="
-          raise "No configuration for #{key_description}" unless respond_to?(method, true)
-          __send__ method, value
+          
+          if respond_to?(method, true)
+            __send__ method, value
+          else
+            raise "No configuration for #{key_description}"
+          end
         end
       end
     end
