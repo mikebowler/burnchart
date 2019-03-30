@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SolvingBits
   class SimpleChart
     attr_reader :data_layers

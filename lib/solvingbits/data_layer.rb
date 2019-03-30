@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SolvingBits
   class DataLayer
     def self.create

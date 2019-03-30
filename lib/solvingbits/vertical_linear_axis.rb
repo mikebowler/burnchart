@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'solvingbits/abstract_linear_axis'
 
 module SolvingBits

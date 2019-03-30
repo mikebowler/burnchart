@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SolvingBits
   class Size
     attr_accessor :height, :width

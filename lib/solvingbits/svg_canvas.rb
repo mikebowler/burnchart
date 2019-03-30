@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SolvingBits
   class SvgCanvas
     def self.svg_primitive name, params
@@ -28,11 +30,11 @@ module SolvingBits
     svg_primitive :text, attrs: %w[x y style text_anchor transform alignment_baseline], takes_text: true
 
     def initialize
-      @svg = ''
+      @svg = +''
     end
 
     def to_svg svg_flavour = :full
-      output = ''
+      output = +''
 
       if svg_flavour == :full
         output << "<?xml version=\"1.0\" standalone=\"no\"?>\n" \
