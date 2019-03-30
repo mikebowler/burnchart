@@ -5,6 +5,7 @@ module SolvingBits
     def self.svg_primitive name, params
       possible_args = params[:attrs].collect { |a| ":#{a}" }.join(',')
       takes_text = params[:takes_text]
+
       module_eval <<-PRIMITIVE, __FILE__, __LINE__ + 1
         def #{name} #{'text,' if takes_text} hash
           possible_args = [#{possible_args}]
