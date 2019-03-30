@@ -27,7 +27,7 @@ RSpec.describe 'Runnable examples' do
     chart.data_layers << DataLayer.create do |layer|
       layer.renderers << y_axis.background_line_renderer
       layer.renderers << LineChartRenderer.new # (stroke: 'red')
-      layer.renderers << DotChartRenderer.new # (stroke: 'black')
+      layer.renderers << DotRenderer.new # (stroke: 'black')
       layer.data = [
         Point.new(x: Date.parse('2018-01-02'), y: 25),
         Point.new(x: Date.parse('2018-01-03'), y: 21),

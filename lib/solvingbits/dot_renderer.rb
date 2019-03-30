@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module SolvingBits
-  class DotChartRenderer
+  class DotRenderer
     attr_accessor :data_points
 
     def render left:, right:, top:, bottom:, canvas:
