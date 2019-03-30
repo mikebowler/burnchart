@@ -34,15 +34,17 @@ module SolvingBits
     def initialize params = {}
       initialize_configuration params: params
 
-      self.values_lower_bound = convert_to_internal_value(self.values_lower_bound)
-      self.values_upper_bound = convert_to_internal_value(self.values_upper_bound)
+      self.values_lower_bound = convert_to_internal_value(values_lower_bound())
+      self.values_upper_bound = convert_to_internal_value(values_upper_bound())
 
       if values_lower_bound() > values_upper_bound()
-        raise "Lower bound must be less than upper: #{values_lower_bound()} > #{values_upper_bound()}"
+        raise 'Lower bound must be less than upper: ' \
+          "#{values_lower_bound()} > #{values_upper_bound()}"
       end
 
       unless (major_ticks_every() % minor_ticks_every()).zero?
-        raise "Major ticks must be a multiple of minor: #{major_ticks_every()} and #{minor_ticks_every()}"
+        raise 'Major ticks must be a multiple of minor: ' \
+          "#{major_ticks_every()} and #{minor_ticks_every()}"
       end
     end
 

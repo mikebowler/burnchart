@@ -15,5 +15,4 @@ module SolvingBits
     @renderers = []
     @data = []
   end
-
 end

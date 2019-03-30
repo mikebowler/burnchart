@@ -6,7 +6,7 @@ include SolvingBits
 
 # Since AbstractAxis is a mixin, we test through HorizontalLinearAxis
 RSpec.describe AbstractLinearAxis do
-  it 'should calculate ticks with lower bound of zero' do 
+  it 'should calculate ticks with lower bound of zero' do
     component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 30 },
@@ -17,22 +17,24 @@ RSpec.describe AbstractLinearAxis do
       [50,  false, '10'],
       [100, false, '20'],
       [150, true,  '30'],
-      [200, false, '40'],
+      [200, false, '40']
     ])
   end
 
-  it 'should calculate ticks with non-zero lower bound' do 
+  it 'should calculate ticks with non-zero lower bound' do
     component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 30 },
       values: { lower_bound: 10, upper_bound: 40 }
     )
 
-    expect(component.ticks).to eq([
-      [50,  false, '20'],
-      [100, true,  '30'],
-      [150, false, '40'],
-    ])
+    expect(component.ticks).to eq(
+      [
+        [50,  false, '20'],
+        [100, true,  '30'],
+        [150, false, '40']
+      ]
+    )
   end
 
   it "should include lower bound tick when asked" do 
@@ -42,13 +44,15 @@ RSpec.describe AbstractLinearAxis do
       values: { lower_bound: 0, upper_bound: 40 }
     )
 
-    expect(component.ticks).to eq([
-      [0,   true, '0'],
-      [50,  false, '10'],
-      [100, false, '20'],
-      [150, true,  '30'],
-      [200, false, '40'],
-    ])
+    expect(component.ticks).to eq(
+      [
+        [0,   true, '0'],
+        [50,  false, '10'],
+        [100, false, '20'],
+        [150, true,  '30'],
+        [200, false, '40'],
+      ]
+    )
   end
 
   it 'hide minor ticks when specified' do 
@@ -58,24 +62,28 @@ RSpec.describe AbstractLinearAxis do
       values: { lower_bound: 0, upper_bound: 40 }
     )
 
-    expect(component.ticks).to eq([
-      [150, true,  '30'],
-    ])
+    expect(component.ticks).to eq(
+      [
+        [150, true, '30']
+      ]
+    )
   end
 
-  it 'should draw major ticks as minor when major ticks are hidden' do 
+  it 'should draw major ticks as minor when major ticks are hidden' do
     component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 30, visible: false },
       values: { lower_bound: 0, upper_bound: 40 }
     )
 
-    expect(component.ticks).to eq([
-      [50,  false, '10'],
-      [100, false, '20'],
-      [150, false,  '30'],
-      [200, false, '40'],
-    ])
+    expect(component.ticks).to eq(
+      [
+        [50,  false, '10'],
+        [100, false, '20'],
+        [150, false, '30'],
+        [200, false, '40']
+      ]
+    )
   end
 
   it "should reject lower bounds being higher than upper bounds" do
@@ -103,7 +111,7 @@ RSpec.describe AbstractLinearAxis do
 
     inputs = [10, 20, 40]
     expected = [25, 50, 100]
-    actual = inputs.collect do |i| 
+    actual = inputs.collect do |i|
       component.to_coordinate_space value: i, lower_coordinate: 0, upper_coordinate: 100
     end
     expect(actual).to eq(expected)
@@ -118,7 +126,7 @@ RSpec.describe AbstractLinearAxis do
 
     inputs = [20, 30, 50]
     expected = [25, 50, 100]
-    actual = inputs.collect do |i| 
+    actual = inputs.collect do |i|
       component.to_coordinate_space value: i, lower_coordinate: 0, upper_coordinate: 100
     end
     expect(actual).to eq(expected)
@@ -133,7 +141,7 @@ RSpec.describe AbstractLinearAxis do
 
     inputs = [10, 20, 40]
     expected = [35, 60, 110]
-    actual = inputs.collect do |i| 
+    actual = inputs.collect do |i|
       component.to_coordinate_space value: i, lower_coordinate: 10, upper_coordinate: 110
     end
     expect(actual).to eq(expected)
@@ -143,9 +151,9 @@ RSpec.describe AbstractLinearAxis do
     component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, px_between: 5 },
       major_ticks: { every: 30 },
-      values: { 
-        lower_bound: Date.parse('2019-01-01'), 
-        upper_bound: Date.parse('2019-01-05'), 
+      values: {
+        lower_bound: Date.parse('2019-01-01'),
+        upper_bound: Date.parse('2019-01-05'),
         unit: Date
       }
     )

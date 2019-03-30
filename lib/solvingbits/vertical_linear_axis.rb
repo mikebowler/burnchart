@@ -4,7 +4,6 @@ require 'solvingbits/abstract_linear_axis'
 
 module SolvingBits
   class VerticalLinearAxis < AbstractLinearAxis
-
     # We need the top pad to ensure we aren't truncating labels
     # TODO: Be smarter about this. We only need the padding if there is a label right at the
     # top and today we're always putting padding just in case
