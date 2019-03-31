@@ -70,7 +70,7 @@ module SolvingBits
 
           canvas.line(
             x1: left + x,
-            y1: top, 
+            y1: top,
             x2: left + x,
             y2: bottom,
             style: "stroke: #{color()}"

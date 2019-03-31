@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Algorithm based on this writeup by François Romain
+# Algorithm based on this writeup by Francois Romain
 # https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74
 module SolvingBits
   class SmoothLineChartRenderer
@@ -46,7 +46,7 @@ module SolvingBits
       x_length = next_point.x - previous_point.x
       y_length = next_point.y - previous_point.y
 
-      opposed_line_length = Math.sqrt((x_length ** 2) + (y_length ** 2))
+      opposed_line_length = Math.sqrt((x_length**2) + (y_length**2))
       opposed_line_angle = Math.atan2 x_length, y_length
       opposed_line_angle += Math::PI if is_end_control_point
 
