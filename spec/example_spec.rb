@@ -43,6 +43,6 @@ RSpec.describe 'Runnable examples' do
 
     File.open 'simple_chart.svg', 'w' do |file|
       file.puts chart.to_svg
-    end   
+    end
   end
 end

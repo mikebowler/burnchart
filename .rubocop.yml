@@ -36,3 +36,6 @@ Style/MethodCallWithoutArgsParentheses:
 # Complexity within a method
 Metrics/AbcSize:
   Max: 20
+
+Style/NestedParenthesizedCalls:
+  Enabled: false

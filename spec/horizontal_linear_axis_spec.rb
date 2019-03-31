@@ -47,7 +47,7 @@ RSpec.describe HorizontalLinearAxis do
     component = HorizontalLinearAxis.new(
       minor_ticks: { every: 1, length: 4, px_between: 50 },
       major_ticks: { every: 7, length: 8, label: { visible: true } },
-      values: { 
+      values: {
         lower_bound: Date.parse('2019-01-01'),
         upper_bound: Date.parse('2019-01-08'),
         unit: Date
@@ -91,7 +91,7 @@ RSpec.describe HorizontalLinearAxis do
     )
   end
 
-  it "should draw background lines" do
+  it 'should draw background lines' do
     component = HorizontalLinearAxis.new(
       minor_ticks: { every: 10, length: 8, px_between: 5 },
       major_ticks: { every: 10, length: 15, label: { visible: false } },
@@ -101,10 +101,10 @@ RSpec.describe HorizontalLinearAxis do
     canvas = SvgCanvas.new
     size = component.preferred_size
     component.background_line_renderer.render(
-      left: 0, 
-      right: size.width, 
-      top: 0, 
-      bottom: size.height, 
+      left: 0,
+      right: size.width,
+      top: 0,
+      bottom: size.height,
       canvas: canvas
     )
     expect(canvas.to_svg(:partial)).to eq(
@@ -114,5 +114,4 @@ RSpec.describe HorizontalLinearAxis do
       "<line x1='200' y1='0' x2='200' y2='15' style='stroke: lightgray'/>"
     )
   end
-
 end

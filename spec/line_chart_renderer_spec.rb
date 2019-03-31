@@ -11,7 +11,7 @@ RSpec.describe Configurable do
       Point.new(x: 4, y: 5),
       Point.new(x: 6, y: 7)
     ]
-    renderer.render( left: 0, right: 100, top: 0, bottom: 100, canvas: canvas )
+    renderer.render left: 0, right: 100, top: 0, bottom: 100, canvas: canvas
 
     expect(canvas.to_svg :partial).to eq(
       "<line x1='4' y1='5' x2='6' y2='7' style='stroke:red'/>"
