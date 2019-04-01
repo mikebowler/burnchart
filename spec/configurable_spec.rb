@@ -71,4 +71,20 @@ RSpec.describe Configurable do
       )
     end.to raise_error 'Illegal value: :bad_data legal values are :two, :three'
   end
+
+  it 'should reject unspecified configurable values' do
+    expect do
+      Class.new do
+        include Configurable
+        attr_configurable :one
+
+        def initialize args
+          initialize_configuration params: args
+        end
+      end.new(
+        one: 1,
+        two: 2
+      )
+    end.to raise_error('No configuration for two')
+  end
 end

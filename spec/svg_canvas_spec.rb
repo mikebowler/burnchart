@@ -29,4 +29,16 @@ RSpec.describe SvgCanvas do
       '<line x1=\'1\'/></svg>'
     )
   end
+
+  it 'handles unexpected canvas type' do
+    canvas = SvgCanvas.new
+    canvas.line x1: 1
+    expect { canvas.to_svg(:foo) }.to raise_error('unexpected svg flavour: :foo')
+  end
+
+  it 'handles unexpected command on primitive' do
+    canvas = SvgCanvas.new
+    expect { canvas.line x3: 1 }.to raise_error('x3 is not an attribute on svg line')
+  end
+
 end
