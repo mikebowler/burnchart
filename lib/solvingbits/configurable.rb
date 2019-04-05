@@ -50,15 +50,11 @@ module SolvingBits
           )
         else
           method = :"#{new_key}="
-          
-          if respond_to?(method, true)
-            __send__ method, value
-          else
-            raise "No configuration for #{key_description}"
-          end
+          raise "No configuration for #{key_description}" unless respond_to?(method, true)
+
+          __send__ method, value
         end
       end
     end
-
   end
 end
