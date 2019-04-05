@@ -32,6 +32,8 @@ module SolvingBits
       end
     end
 
+    # If you're calling this then only specify params. The other two are used when
+    # it recursively calls itself.
     def initialize_configuration params: {}, key_prefix: nil, key_description_prefix: nil
       params.each_pair do |key, value|
         key_description = key
@@ -40,7 +42,7 @@ module SolvingBits
         new_key = key
         new_key = "#{key_prefix}_#{key}" unless key_prefix.nil?
 
-        if value.respond_to? :each
+        if value.is_a? Hash
           initialize_configuration(
             params: value,
             key_prefix: new_key,
