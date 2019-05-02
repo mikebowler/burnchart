@@ -20,13 +20,23 @@ module SolvingBits
     end
 
     def render left:, right:, top:, bottom:, canvas:
-      canvas.line x1: left, y1: top, x2: right, y2: top, style: 'stroke:black;'
+      # canvas.rect x: left, y: top, height: bottom - top, width: right - left, style: 'fill: white; stroke: red'
+
+      segments_keys.each_with_index do |key, index|
+        left_edge = left + (segments_width_px() * index)
+        canvas.text(
+          key.to_s,
+          x: left_edge + (segments_width_px() / 2),
+          y: bottom,
+          text_anchor: 'middle'
+        )
+      end
     end
 
     def preferred_size
       Size.new(
-        height: values_font_size_px(),
-        width: values_keys().length() * values_length_px()
+        height: segments_font_size_px(),
+        width: segments_keys().length() * segments_width_px()
       )
     end
   end
