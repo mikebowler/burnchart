@@ -1,3 +1,5 @@
+
+
 # frozen_string_literal: true
 
 require 'spec_helper'
@@ -39,6 +41,19 @@ RSpec.describe SvgCanvas do
   it 'handles unexpected command on primitive' do
     canvas = SvgCanvas.new
     expect { canvas.line x3: 1 }.to raise_error('x3 is not an attribute on svg line')
+  end
+
+  it 'handles nested elements' do
+    canvas = SvgCanvas.new
+    canvas.rect x: 0, y: 0, width: 100, height: 100 do
+      canvas.title 'MyRect'
+    end
+
+    expect(canvas.to_svg(:partial)).to eq(
+      "<rect x='0' y='0' width='100' height='100'>" \
+      '<title>MyRect</title>' \
+      '</rect>'
+    )
   end
 
 end
