@@ -20,6 +20,7 @@ module SolvingBits
       @bottom - @top
     end
 
+    # Convenience to draw a box around the drawable area.
     def draw_outline
       @canvas.rect(
         x: @left,

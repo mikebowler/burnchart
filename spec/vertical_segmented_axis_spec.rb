@@ -20,8 +20,7 @@ module SolvingBits
       expect(canvas.to_svg(:partial)).to eq(
         "<text x='100' y='150' text-anchor='end' alignment-baseline='middle'>1</text>" \
         "<text x='100' y='150' text-anchor='end' alignment-baseline='middle'>2</text>" \
-        "<text x='100' y='150' text-anchor='end' alignment-baseline='middle'>3</text>" \
-        "<rect x='0' y='0' width='100' height='300' style='stroke: red; fill: none'/>"
+        "<text x='100' y='150' text-anchor='end' alignment-baseline='middle'>3</text>"
       )
     end
   end

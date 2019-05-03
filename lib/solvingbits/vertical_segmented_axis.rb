@@ -15,7 +15,6 @@ module SolvingBits
           alignment_baseline: 'middle'
         )
       end
-      viewport.draw_outline
     end
 
     def preferred_size
