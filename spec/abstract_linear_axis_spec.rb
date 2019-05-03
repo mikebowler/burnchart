@@ -3,9 +3,7 @@
 require 'spec_helper'
 require 'date'
 
-
 module SolvingBits
-
   # Since AbstractAxis is a mixin, we test through HorizontalLinearAxis
   RSpec.describe AbstractLinearAxis do
     it 'should calculate ticks with lower bound of zero' do
@@ -15,12 +13,14 @@ module SolvingBits
         values: { lower_bound: 0, upper_bound: 40 }
       )
 
-      expect(component.ticks).to eq([
-        [50,  false, '10'],
-        [100, false, '20'],
-        [150, true,  '30'],
-        [200, false, '40']
-      ])
+      expect(component.ticks).to eq(
+        [
+          [50,  false, '10'],
+          [100, false, '20'],
+          [150, true,  '30'],
+          [200, false, '40']
+        ]
+      )
     end
 
     it 'should calculate ticks with non-zero lower bound' do
@@ -39,7 +39,7 @@ module SolvingBits
       )
     end
 
-    it "should include lower bound tick when asked" do 
+    it 'should include lower bound tick when asked' do
       component = HorizontalLinearAxis.new(
         minor_ticks: { every: 10, px_between: 5, show_lowest_value: true },
         major_ticks: { every: 30 },
@@ -52,7 +52,7 @@ module SolvingBits
           [50,  false, '10'],
           [100, false, '20'],
           [150, true,  '30'],
-          [200, false, '40'],
+          [200, false, '40']
         ]
       )
     end
@@ -88,23 +88,27 @@ module SolvingBits
       )
     end
 
-    it "should reject lower bounds being higher than upper bounds" do
-      expect { HorizontalLinearAxis.new(
-        minor_ticks: { every: 10, px_between: 5 },
-        major_ticks: { every: 30 },
-        values: { lower_bound: 40, upper_bound: 10 }
-      ) }.to raise_error('Lower bound must be less than upper: 40 > 10')
+    it 'should reject lower bounds being higher than upper bounds' do
+      expect do
+        HorizontalLinearAxis.new(
+          minor_ticks: { every: 10, px_between: 5 },
+          major_ticks: { every: 30 },
+          values: { lower_bound: 40, upper_bound: 10 }
+        )
+      end.to raise_error('Lower bound must be less than upper: 40 > 10')
     end
 
     it "should reject major ticks if they aren't a multiple of minor" do
-      expect { HorizontalLinearAxis.new(
-        minor_ticks: { every: 10, px_between: 5 },
-        major_ticks: { every: 35 },
-        values: { lower_bound: 10, upper_bound: 40 }
-      ) }.to raise_error('Major ticks must be a multiple of minor: 35 and 10')
+      expect do
+        HorizontalLinearAxis.new(
+          minor_ticks: { every: 10, px_between: 5 },
+          major_ticks: { every: 35 },
+          values: { lower_bound: 10, upper_bound: 40 }
+        )
+      end.to raise_error('Major ticks must be a multiple of minor: 35 and 10')
     end
 
-    it 'should convert to coordinate space when lower value and coordinates are zero' do 
+    it 'should convert to coordinate space when lower value and coordinates are zero' do
       component = HorizontalLinearAxis.new(
         minor_ticks: { every: 10, px_between: 5 },
         major_ticks: { every: 30 },
@@ -119,7 +123,7 @@ module SolvingBits
       expect(actual).to eq(expected)
     end
 
-    it 'should convert to coordinate space when lower value is offset and coordinates are not' do 
+    it 'should convert to coordinate space when lower value is offset and coordinates are not' do
       component = HorizontalLinearAxis.new(
         minor_ticks: { every: 10, px_between: 5 },
         major_ticks: { every: 30 },
@@ -134,7 +138,7 @@ module SolvingBits
       expect(actual).to eq(expected)
     end
 
-    it 'should convert to coordinate space when lower coordinate is offset and value bounds are not' do 
+    it 'should convert to coordinate space when lower coordinate is offset and value bounds are not' do
       component = HorizontalLinearAxis.new(
         minor_ticks: { every: 10, px_between: 5 },
         major_ticks: { every: 30 },
@@ -149,7 +153,7 @@ module SolvingBits
       expect(actual).to eq(expected)
     end
 
-    it 'should convert to coordinate space when value is date' do 
+    it 'should convert to coordinate space when value is date' do
       component = HorizontalLinearAxis.new(
         minor_ticks: { every: 10, px_between: 5 },
         major_ticks: { every: 30 },
@@ -162,7 +166,7 @@ module SolvingBits
 
       inputs = [Date.parse('2019-01-02')]
       expected = [25]
-      actual = inputs.collect do |i| 
+      actual = inputs.collect do |i|
         component.to_coordinate_space value: i, lower_coordinate: 0, upper_coordinate: 100
       end
       expect(actual).to eq(expected)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 # The purpose of this "spec" is to generate some samples that can be used in
