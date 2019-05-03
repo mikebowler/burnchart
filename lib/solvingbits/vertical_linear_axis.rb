@@ -15,6 +15,10 @@ module SolvingBits
       end
     end
 
+    def vertical?
+      true
+    end
+    
     def render viewport
       top = viewport.top + top_pad
       viewport.canvas.line(

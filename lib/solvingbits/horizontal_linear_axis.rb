@@ -6,6 +6,10 @@ module SolvingBits
 
   class HorizontalLinearAxis < AbstractLinearAxis
 
+    def vertical?
+      false
+    end
+    
     def render viewport
       viewport.canvas.line(
         x1: viewport.left,

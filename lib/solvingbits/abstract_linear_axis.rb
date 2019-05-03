@@ -111,13 +111,10 @@ module SolvingBits
       # bottom left which in turn means that for horizontal axis, as the value
       # increases, so does the coordinate values. For the vertical axis, as the
       # value increases, the coordinate values decrease.
-      case self
-      when VerticalLinearAxis
+      if vertical?
         upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
-      when HorizontalLinearAxis
-        (coordinate_delta * value_percent).to_i + lower_coordinate
       else
-        raise "Unexpected axis type: #{self.class}"
+        (coordinate_delta * value_percent).to_i + lower_coordinate
       end
     end
   end
