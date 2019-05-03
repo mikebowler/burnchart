@@ -72,12 +72,11 @@ module SolvingBits
 
       output
     end
-  end
 
-  # Method to conveniently dump out the string we need to paste into the test
-  def dump
-    puts '      "' + to_svg(:partial).gsub('><', ">\" \\\n      \"<") + '"'
+    # Method to conveniently dump out the string we need to paste into the test
+    def dump
+      puts '      "' + to_svg(:partial).gsub('><', ">\" \\\n      \"<") + '"'
+    end
   end
-
 end
 

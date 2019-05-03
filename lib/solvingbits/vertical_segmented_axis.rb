@@ -3,17 +3,16 @@
 require 'solvingbits/abstract_segmented_axis'
 
 module SolvingBits
-  class HorizontalSegmentedAxis < AbstractSegmentedAxis
-
+  class VerticalSegmentedAxis < AbstractSegmentedAxis
     def render viewport
       segments_keys.each_with_index do |key, index|
         left_edge = viewport.left + (segments_width_px() * index)
         viewport.canvas.text(
           key.to_s,
-          x: left_edge + (segments_width_px() / 2),
-          y: viewport.top + segments_font_size_px,
-          text_anchor: 'middle',
-          alignment_baseline: 'top'
+          x: viewport.right,
+          y: viewport.bottom - (viewport.height / 2),
+          text_anchor: 'end',
+          alignment_baseline: 'middle'
         )
       end
       viewport.draw_outline
@@ -21,8 +20,8 @@ module SolvingBits
 
     def preferred_size
       Size.new(
-        height: segments_height_px(),
-        width: segments_keys().length() * segments_width_px()
+        width: segments_width_px(),
+        height: segments_keys().length() * segments_height_px()
       )
     end
   end

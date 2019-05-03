@@ -12,15 +12,16 @@ module SolvingBits
 
       canvas = SvgCanvas.new
       size = component.preferred_size
-      expect(size).to eq Size.new(height: 13, width: 300)
+      expect(size).to eq Size.new(height: 100, width: 300)
 
       component.render Viewport.new(
         left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
       )
       expect(canvas.to_svg(:partial)).to eq(
-        "<text x='50' y='13' text-anchor='middle'>1</text>" \
-        "<text x='150' y='13' text-anchor='middle'>2</text>" \
-        "<text x='250' y='13' text-anchor='middle'>3</text>"
+        "<text x='50' y='13' text-anchor='middle' alignment-baseline='top'>1</text>" \
+        "<text x='150' y='13' text-anchor='middle' alignment-baseline='top'>2</text>" \
+        "<text x='250' y='13' text-anchor='middle' alignment-baseline='top'>3</text>" \
+        "<rect x='0' y='0' width='300' height='100' style='stroke: red; fill: none'/>"
       )
     end
   end

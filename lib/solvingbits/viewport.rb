@@ -19,5 +19,15 @@ module SolvingBits
     def height
       @bottom - @top
     end
+
+    def draw_outline
+      @canvas.rect(
+        x: @left,
+        y: @top,
+        width: width,
+        height: height,
+        style: 'stroke: red; fill: none'
+      )
+    end
   end
 end
