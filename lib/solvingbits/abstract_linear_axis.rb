@@ -5,7 +5,7 @@ require 'date'
 
 module SolvingBits
   class AbstractLinearAxis
-    include Configurable
+    include SolvingBits::Configurable
 
     attr_configurable :minor_ticks_every, defaults_to: 1
     attr_configurable :minor_ticks_length, defaults_to: 10
@@ -98,27 +98,27 @@ module SolvingBits
       end
       result
     end
-  end
 
-  def to_coordinate_space value:, lower_coordinate:, upper_coordinate:
-    value = convert_to_internal_value value
+    def to_coordinate_space value:, lower_coordinate:, upper_coordinate:
+      value = convert_to_internal_value value
 
-    value_delta = values_upper_bound() - values_lower_bound()
-    value_percent = (value - values_lower_bound()) * 1.0 / value_delta
+      value_delta = values_upper_bound() - values_lower_bound()
+      value_percent = (value - values_lower_bound()) * 1.0 / value_delta
 
-    coordinate_delta = upper_coordinate - lower_coordinate
+      coordinate_delta = upper_coordinate - lower_coordinate
 
-    # Ugly hack to account for the fact that the 0,0 origin is top left not
-    # bottom left which in turn means that for horizontal axis, as the value
-    # increases, so does the coordinate values. For the vertical axis, as the
-    # value increases, the coordinate values decrease.
-    case self
-    when VerticalLinearAxis
-      upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
-    when HorizontalLinearAxis
-      (coordinate_delta * value_percent).to_i + lower_coordinate
-    else
-      raise "Unexpected axis type: #{self.class}"
+      # Ugly hack to account for the fact that the 0,0 origin is top left not
+      # bottom left which in turn means that for horizontal axis, as the value
+      # increases, so does the coordinate values. For the vertical axis, as the
+      # value increases, the coordinate values decrease.
+      case self
+      when VerticalLinearAxis
+        upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
+      when HorizontalLinearAxis
+        (coordinate_delta * value_percent).to_i + lower_coordinate
+      else
+        raise "Unexpected axis type: #{self.class}"
+      end
     end
   end
 end
