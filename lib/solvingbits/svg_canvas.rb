@@ -34,7 +34,6 @@ module SolvingBits
         end
       PRIMITIVE
     end
-          # tag << "#{takes_text ? ">\#{text}</#{name}>" : '/>'}"
 
     svg_primitive :line, attrs: %w[x1 y1 x2 y2 style]
     svg_primitive :rect, attrs: %w[x y width height style]

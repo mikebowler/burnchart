@@ -13,12 +13,12 @@ module SolvingBits
       @preferred_size
     end
 
-    def render left:, right:, top:, bottom:, canvas:
-      canvas.rect(
-        x: left,
-        y: top,
-        width: right - left,
-        height: bottom - top,
+    def render viewport
+      viewport.canvas.rect(
+        x: viewport.left,
+        y: viewport.top,
+        width: viewport.width,
+        height: viewport.height,
         style: 'stroke:red'
       )
     end

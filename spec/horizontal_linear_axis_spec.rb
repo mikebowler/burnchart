@@ -13,7 +13,7 @@ RSpec.describe HorizontalLinearAxis do
 
     canvas = SvgCanvas.new
     size = component.preferred_size
-    component.render left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
+    component.render Viewport.new left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
     expect(canvas.to_svg(:partial)).to eq(
       "<line x1='0' y1='0' x2='200' y2='0' style='stroke:black;'/>" \
       "<line x1='50' y1='0' x2='50' y2='8' style='stroke:black;'/>" \
@@ -32,7 +32,7 @@ RSpec.describe HorizontalLinearAxis do
 
     canvas = SvgCanvas.new
     size = component.preferred_size
-    component.render left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
+    component.render Viewport.new left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
     expect(canvas.to_svg(:partial)).to eq(
       "<line x1='0' y1='0' x2='200' y2='0' style='stroke:black;'/>" \
       "<line x1='50' y1='0' x2='50' y2='8' style='stroke:black;'/>" \
@@ -55,7 +55,7 @@ RSpec.describe HorizontalLinearAxis do
     )
     canvas = SvgCanvas.new
     size = component.preferred_size
-    component.render left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
+    component.render Viewport.new left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
     expect(canvas.to_svg(:partial)).to eq(
       "<line x1='0' y1='0' x2='350' y2='0' style='stroke:black;'/>" \
       "<line x1='50' y1='0' x2='50' y2='4' style='stroke:black;'/>" \
@@ -80,7 +80,7 @@ RSpec.describe HorizontalLinearAxis do
 
     canvas = SvgCanvas.new
     size = component.preferred_size
-    component.render left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
+    component.render Viewport.new left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
     expect(canvas.to_svg(:partial)).to eq(
       "<line x1='0' y1='0' x2='200' y2='0' style='stroke:black;'/>" \
       "<line x1='50' y1='0' x2='50' y2='8' style='stroke:black;'/>" \
@@ -100,7 +100,7 @@ RSpec.describe HorizontalLinearAxis do
 
     canvas = SvgCanvas.new
     size = component.preferred_size
-    component.background_line_renderer.render(
+    component.background_line_renderer.render Viewport.new(
       left: 0,
       right: size.width,
       top: 0,

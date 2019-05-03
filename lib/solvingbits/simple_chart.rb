@@ -29,57 +29,51 @@ module SolvingBits
       y_size = @y_axis.preferred_size
 
       canvas = SvgCanvas.new
-      @y_axis.render(
+      @y_axis.render Viewport.new(
         left: 0,
         right: y_size.width,
         top: 0,
         bottom: y_size.height,
         canvas: canvas
       )
-      @x_axis.render(
+      @x_axis.render Viewport.new(
         left: y_size.width,
         right: c_size.width,
         top: y_size.height,
         bottom: c_size.height,
         canvas: canvas
       )
+      viewport = Viewport.new(
+        left: y_size.width,
+        right: y_size.width + x_size.width,
+        top: 0,
+        bottom: y_size.height,
+        canvas: canvas
+      )
       @data_layers.each do |layer|
-        render_layer(
-          data_layer: layer,
-          left: y_size.width,
-          right: y_size.width + x_size.width,
-          top: 0,
-          bottom: y_size.height,
-          canvas: canvas
-        )
+        render_layer(data_layer: layer, viewport: viewport)
       end
       canvas.to_svg svg_flavour
     end
 
-    def render_layer data_layer:, left:, right:, top:, bottom:, canvas:
+    def render_layer data_layer:, viewport:
       points = data_layer.data.collect do |point|
         Point.new(
           x: @x_axis.to_coordinate_space(
             value: point.x,
-            lower_coordinate: left,
-            upper_coordinate: right
+            lower_coordinate: viewport.left,
+            upper_coordinate: viewport.right
           ),
           y: @y_axis.to_coordinate_space(
             value: point.y,
-            lower_coordinate: top,
-            upper_coordinate: bottom
+            lower_coordinate: viewport.top,
+            upper_coordinate: viewport.bottom
           )
         )
       end
       data_layer.renderers.each do |renderer|
         renderer.data_points = points if renderer.respond_to? :data_points
-        renderer.render(
-          left: left,
-          right: right,
-          top: top,
-          bottom: bottom,
-          canvas: canvas
-        )
+        renderer.render viewport
       end
     end
   end

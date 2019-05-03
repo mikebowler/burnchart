@@ -13,7 +13,7 @@ RSpec.describe VerticalLinearAxis do
 
     canvas = SvgCanvas.new
     size = component.preferred_size
-    component.render left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
+    component.render Viewport.new left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
     expect(canvas.to_svg(:partial)).to eq(
       "<line x1='16' y1='0' x2='16' y2='200' style='stroke:black;'/>" \
       "<line x1='8' y1='150' x2='16' y2='150' style='stroke:black;'/>" \
@@ -32,7 +32,7 @@ RSpec.describe VerticalLinearAxis do
 
     canvas = SvgCanvas.new
     size = component.preferred_size
-    component.render left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
+    component.render Viewport.new left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
     expect(canvas.to_svg(:partial)).to eq(
       "<line x1='36' y1='6' x2='36' y2='206' style='stroke:black;'/>" \
       "<line x1='28' y1='156' x2='36' y2='156' style='stroke:black;'/>" \
@@ -54,7 +54,7 @@ RSpec.describe VerticalLinearAxis do
 
     canvas = SvgCanvas.new
     size = component.preferred_size
-    component.render left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
+    component.render Viewport.new left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
     expect(canvas.to_svg(:partial)).to eq(
       "<line x1='29' y1='0' x2='29' y2='200' style='stroke:black;'/>" \
       "<line x1='21' y1='150' x2='29' y2='150' style='stroke:black;'/>" \
@@ -75,7 +75,7 @@ RSpec.describe VerticalLinearAxis do
 
     canvas = SvgCanvas.new
     size = component.preferred_size
-    component.background_line_renderer.render(
+    component.background_line_renderer.render Viewport.new(
       left: 0,
       right: size.width,
       top: 0,

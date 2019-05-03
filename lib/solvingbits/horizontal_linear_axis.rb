@@ -6,26 +6,32 @@ module SolvingBits
 
   class HorizontalLinearAxis < AbstractLinearAxis
 
-    def render left:, right:, top:, bottom:, canvas:
-      canvas.line x1: left, y1: top, x2: right, y2: top, style: 'stroke:black;'
+    def render viewport
+      viewport.canvas.line(
+        x1: viewport.left,
+        y1: viewport.top,
+        x2: viewport.right,
+        y2: viewport.top,
+        style: 'stroke:black;'
+      )
 
-      major_tick_bottom_edge = top + major_ticks_length
-      minor_tick_bottom_edge = top + minor_ticks_length
+      major_tick_bottom_edge = viewport.top + major_ticks_length
+      minor_tick_bottom_edge = viewport.top + minor_ticks_length
 
       ticks.each do |x, is_major_tick, label|
         tick_bottom_edge = (is_major_tick ? major_tick_bottom_edge : minor_tick_bottom_edge)
-        canvas.line(
-          x1: x + left,
-          y1: top,
-          x2: x + left,
+        viewport.canvas.line(
+          x1: x + viewport.left,
+          y1: viewport.top,
+          x2: x + viewport.left,
           y2: tick_bottom_edge,
           style: 'stroke:black;'
         )
         
         if major_ticks_label_visible() && is_major_tick
-          canvas.text(
+          viewport.canvas.text(
             label,
-            x: x + left,
+            x: x + viewport.left,
             y: major_tick_bottom_edge + major_ticks_label_font_size_px(),
             style: "font: italic #{major_ticks_label_font_size_px()}px sans-serif",
             text_anchor: 'middle'
@@ -34,10 +40,10 @@ module SolvingBits
       end
 
       if label_visible()
-        canvas.text(
+        viewport.canvas.text(
           label_text(),
-          x: right,
-          y: bottom,
+          x: viewport.right,
+          y: viewport.bottom,
           style: "font: #{label_font_size_px()}px sans-serif",
           text_anchor: 'end'
         )
@@ -63,16 +69,16 @@ module SolvingBits
         @axis = axis
       end
 
-      def render left:, right:, top:, bottom:, canvas:
+      def render viewport
         @axis.ticks.each do |x, is_major_tick, _label|
           next unless is_major_tick
           next if x.zero? # Don't draw over the y axis, regardless of settings
 
-          canvas.line(
-            x1: left + x,
-            y1: top,
-            x2: left + x,
-            y2: bottom,
+          viewport.canvas.line(
+            x1: viewport.left + x,
+            y1: viewport.top,
+            x2: viewport.left + x,
+            y2: viewport.bottom,
             style: "stroke: #{color()}"
           )
         end

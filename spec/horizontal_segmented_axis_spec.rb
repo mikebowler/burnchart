@@ -13,7 +13,9 @@ RSpec.describe HorizontalSegmentedAxis do
     size = component.preferred_size
     expect(size).to eq Size.new(height: 13, width: 300)
 
-    component.render left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
+    component.render Viewport.new(
+      left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
+    )
     expect(canvas.to_svg(:partial)).to eq(
       "<text x='50' y='13' text-anchor='middle'>1</text>" \
       "<text x='150' y='13' text-anchor='middle'>2</text>" \
