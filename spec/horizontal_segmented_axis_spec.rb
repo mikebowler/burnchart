@@ -18,9 +18,10 @@ module SolvingBits
         left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
       )
       expect(canvas.to_svg(:partial)).to eq(
-        "<text x='50' y='13' text-anchor='middle' alignment-baseline='top'>1</text>" \
-        "<text x='150' y='13' text-anchor='middle' alignment-baseline='top'>2</text>" \
-        "<text x='250' y='13' text-anchor='middle' alignment-baseline='top'>3</text>"
+        "<line x1='0' y1='0' x2='300' y2='0' style='stroke:black;'/>" \
+        "<text x='50' y='14' text-anchor='middle' alignment-baseline='top'>1</text>" \
+        "<text x='150' y='14' text-anchor='middle' alignment-baseline='top'>2</text>" \
+        "<text x='250' y='14' text-anchor='middle' alignment-baseline='top'>3</text>"
       )
     end
   end

@@ -59,7 +59,8 @@ RSpec.describe 'Runnable examples' do
     chart.left_axis = SolvingBits::VerticalSegmentedAxis.new(
       segments: {
         keys: [
-          'A' # Sprint.new
+          'A', # Sprint.new
+          'B'
         ],
         font_size_px: 13,
         width_px: 50,
@@ -70,7 +71,8 @@ RSpec.describe 'Runnable examples' do
     chart.bottom_axis = SolvingBits::HorizontalSegmentedAxis.new(
       segments: {
         keys: [
-          4 # Sprint.new
+          4, # Sprint.new
+          5
         ],
         font_size_px: 13,
         width_px: 100,
