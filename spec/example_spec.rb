@@ -49,13 +49,6 @@ RSpec.describe 'Runnable examples' do
 
   it 'should create In/Out chart' do
     chart = SolvingBits::SimpleChart.new
-    # chart.left_axis = y_axis = SolvingBits::VerticalLinearAxis.new(
-    #   minor_ticks: { every: 1, length: 4, px_between: 5 },
-    #   major_ticks: { every: 10, length: 8 },
-    #   values: { lower_bound: 0, upper_bound: 30, unit: Integer },
-    #   label: { visible: true, text: 'Story count', font_size_px: 15 }
-    # )
-
     chart.left_axis = SolvingBits::VerticalSegmentedAxis.new(
       segments: {
         keys: [
@@ -65,7 +58,7 @@ RSpec.describe 'Runnable examples' do
         font_size_px: 13,
         width_px: 50,
         height_px: 100
-      },
+      }
     )
 
     chart.bottom_axis = SolvingBits::HorizontalSegmentedAxis.new(
@@ -77,9 +70,7 @@ RSpec.describe 'Runnable examples' do
         font_size_px: 13,
         width_px: 100,
         height_px: 13
-      },
-      # formatter: ->(value) { value.inspect },
-      # label: { visible: true, text: 'Sprints', font_size_px: 15 }
+      }
     )
 
     # chart.data_layers << DataLayer.create do |layer|
