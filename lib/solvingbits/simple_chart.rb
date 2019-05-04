@@ -24,36 +24,47 @@ module SolvingBits
     end
 
     def to_svg svg_flavour = :full
+      size = preferred_size
+      canvas = SvgCanvas.new
+      render Viewport.new(
+        left: 0,
+        right: size.width,
+        top: 0,
+        bottom: size.height,
+        canvas: canvas
+      )
+      canvas.to_svg svg_flavour
+    end
+
+    def render viewport
       c_size = preferred_size
       x_size = @x_axis.preferred_size
       y_size = @y_axis.preferred_size
 
-      canvas = SvgCanvas.new
       @y_axis.render Viewport.new(
         left: 0,
         right: y_size.width,
         top: 0,
         bottom: y_size.height,
-        canvas: canvas
+        canvas: viewport.canvas
       )
       @x_axis.render Viewport.new(
         left: y_size.width,
         right: c_size.width,
         top: y_size.height,
         bottom: c_size.height,
-        canvas: canvas
+        canvas: viewport.canvas
       )
-      viewport = Viewport.new(
+      data_area = Viewport.new(
         left: y_size.width,
         right: y_size.width + x_size.width,
         top: 0,
         bottom: y_size.height,
-        canvas: canvas
+        canvas: viewport.canvas
       )
       @data_layers.each do |layer|
-        render_layer(data_layer: layer, viewport: viewport)
+        render_layer(data_layer: layer, viewport: data_area)
       end
-      canvas.to_svg svg_flavour
     end
 
     def render_layer data_layer:, viewport:
