@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolvingBits
-  class AbstractSegmentedAxis
+  class AbstractSegmentedAxis < SvgComponent
     include Configurable
 
     attr_configurable :segments_keys, defaults_to: []

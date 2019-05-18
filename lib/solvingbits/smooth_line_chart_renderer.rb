@@ -3,7 +3,7 @@
 # Algorithm based on this writeup by Francois Romain
 # https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74
 module SolvingBits
-  class SmoothLineChartRenderer
+  class SmoothLineChartRenderer < SvgComponent
     attr_accessor :data_points
 
     def render left:, right:, top:, bottom:, canvas:

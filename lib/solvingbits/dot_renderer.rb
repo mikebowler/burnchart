@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolvingBits
-  class DotRenderer
+  class DotRenderer < SvgComponent
     attr_accessor :data_points
 
     def render viewport

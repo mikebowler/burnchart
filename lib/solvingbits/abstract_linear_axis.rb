@@ -4,7 +4,7 @@ require 'solvingbits/configurable'
 require 'date'
 
 module SolvingBits
-  class AbstractLinearAxis
+  class AbstractLinearAxis < SvgComponent
     include SolvingBits::Configurable
 
     attr_configurable :minor_ticks_every, defaults_to: 1

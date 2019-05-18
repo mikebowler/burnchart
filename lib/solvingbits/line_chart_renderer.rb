@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolvingBits
-  class LineChartRenderer
+  class LineChartRenderer < SvgComponent
     attr_accessor :data_points
 
     def render viewport

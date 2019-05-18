@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+# require 'lib/solvingbits/svg_component'
+
 module SolvingBits
-  class SimpleChart
+  class SimpleChart < SvgComponent
     attr_reader :data_layers
 
     def initialize
@@ -21,19 +23,6 @@ module SolvingBits
       y_size = @y_axis.preferred_size
 
       Size.new height: x_size.height + y_size.height, width: x_size.width + y_size.width
-    end
-
-    def to_svg svg_flavour = :full
-      size = preferred_size
-      canvas = SvgCanvas.new
-      render Viewport.new(
-        left: 0,
-        right: size.width,
-        top: 0,
-        bottom: size.height,
-        canvas: canvas
-      )
-      canvas.to_svg svg_flavour
     end
 
     def render viewport
