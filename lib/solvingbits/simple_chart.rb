@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# require 'lib/solvingbits/svg_component'
-
 module SolvingBits
   class SimpleChart < SvgComponent
     attr_reader :data_layers
@@ -52,7 +50,7 @@ module SolvingBits
         canvas: viewport.canvas
       )
       @data_layers.each do |layer|
-        render_layer(data_layer: layer, viewport: data_area)
+        render_layer data_layer: layer, viewport: data_area
       end
     end
 
