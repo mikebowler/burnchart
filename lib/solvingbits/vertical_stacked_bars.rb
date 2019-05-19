@@ -52,9 +52,9 @@ module SolvingBits
             style: "fill: #{item.color}"
           )
 
-          left += bar_width_px()
           bottom -= adjusted_height
         end
+        left += bar_width_px()
       end
     end
   end

@@ -15,27 +15,28 @@ module SolvingBits
       )
     end
 
-    xit 'should render lots' do
+    it 'should render multiple stacks with multiple items per stack' do
       component = VerticalStackedBars.new
       component.create_stack do |stack|
-        stack.add value: 5, label: 'committed', color: 'blue'
-        stack.add value: 5, label: 'added', color: 'pink'
+        stack << StackItem.new(value: 5, label: 'committed', color: 'blue')
+        stack << StackItem.new(value: 5, label: 'added', color: 'pink')
       end
       component.create_stack do |stack|
-        stack.add value: 5, label: 'completed', color: 'green'
-        stack.add value: 5, label: 'removed', color: 'orange'
-        stack.add value: 5, label: 'incomplete', color: 'black'
+        stack << StackItem.new(value: 5, label: 'completed', color: 'green')
+        stack << StackItem.new(value: 5, label: 'removed', color: 'orange')
+        stack << StackItem.new(value: 5, label: 'incomplete', color: 'black')
       end
 
-      File.open 'stacked.svg', 'w' do |file|
-        file.puts component.to_svg
-      end
-      component.dump
+      # File.open 'stacked.svg', 'w' do |file|
+      #   file.puts component.to_svg
+      # end
+      # component.dump
       expect(component.to_svg(:partial)).to eq(
-        "<line x1='0' y1='0' x2='300' y2='0' style='stroke:black;'/>" \
-        "<text x='50' y='14' text-anchor='middle' alignment-baseline='top'>1</text>" \
-        "<text x='150' y='14' text-anchor='middle' alignment-baseline='top'>2</text>" \
-        "<text x='250' y='14' text-anchor='middle' alignment-baseline='top'>3</text>"
+        "<rect x='0' y='10' width='10' height='5' style='fill: blue'/>" \
+        "<rect x='0' y='5' width='10' height='5' style='fill: pink'/>" \
+        "<rect x='10' y='10' width='10' height='5' style='fill: green'/>" \
+        "<rect x='10' y='5' width='10' height='5' style='fill: orange'/>" \
+        "<rect x='10' y='0' width='10' height='5' style='fill: black'/>"
       )
     end
   end
