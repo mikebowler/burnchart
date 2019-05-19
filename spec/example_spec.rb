@@ -48,6 +48,7 @@ RSpec.describe 'Runnable examples' do
   end
 
   it 'should create In/Out chart' do
+    # -- start --
     chart = SolvingBits::SimpleChart.new
     chart.left_axis = y_axis = SolvingBits::VerticalLinearAxis.new(
       minor_ticks: { every: 1, length: 4, px_between: 5 },
@@ -59,7 +60,7 @@ RSpec.describe 'Runnable examples' do
     chart.bottom_axis = SolvingBits::HorizontalSegmentedAxis.new(
       segments: {
         keys: [
-          4, # Sprint.new
+          "Sprint 3", # Sprint.new
           5
         ],
         font_size_px: 13,
@@ -79,6 +80,7 @@ RSpec.describe 'Runnable examples' do
     #   # ]
     # end
 
+    # -- end --
     File.open 'in_out_chart.svg', 'w' do |file|
       file.puts chart.to_svg
     end

@@ -85,7 +85,7 @@ module SolvingBits
           one: 1,
           two: 2
         )
-      end.to raise_error('No configuration for two')
+      end.to raise_error('No configuration for :two')
     end
   end
 end

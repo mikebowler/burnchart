@@ -19,6 +19,19 @@ module SolvingBits
       canvas.to_svg svg_flavour
     end
 
+    def dump
+      size = preferred_size
+      canvas = SvgCanvas.new
+      render Viewport.new(
+        left: 0,
+        right: size.width,
+        top: 0,
+        bottom: size.height,
+        canvas: canvas
+      )
+      canvas.dump
+    end
+
     def render _viewport
       raise 'Should be implemented by subclass'
     end
