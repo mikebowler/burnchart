@@ -69,16 +69,29 @@ RSpec.describe 'Runnable examples' do
       }
     )
 
-    # chart.data_layers << DataLayer.create do |layer|
-    #   # layer.renderers << y_axis.background_line_renderer
-    #   # layer.renderers << LineChartRenderer.new # (stroke: 'red')
-    #   # layer.renderers << DotRenderer.new
+    chart.data_layers << SolvingBits::DataLayer.create do |layer|
+      component = SolvingBits::VerticalStackedBars.new
+      component.create_stack do |stack|
+        stack << SolvingBits::StackItem.new(value: 5, label: 'committed', color: 'blue')
+        stack << SolvingBits::StackItem.new(value: 5, label: 'added', color: 'pink')
+      end
+      component.create_stack do |stack|
+        stack << SolvingBits::StackItem.new(value: 5, label: 'completed', color: 'green')
+        stack << SolvingBits::StackItem.new(value: 5, label: 'removed', color: 'orange')
+        stack << SolvingBits::StackItem.new(value: 5, label: 'incomplete', color: 'black')
+      end
+      layer.renderers << component
 
-    #   # layer.data = [
-    #   #   Point.new(x: Sprint.new, y: SprintData.new),
-    #   #   Point.new(x: Sprint.new, y: SprintData.new)
-    #   # ]
-    # end
+
+      # layer.renderers << y_axis.background_line_renderer
+      # layer.renderers << LineChartRenderer.new # (stroke: 'red')
+      # layer.renderers << DotRenderer.new
+
+      # layer.data = [
+      #   Point.new(x: Sprint.new, y: SprintData.new),
+      #   Point.new(x: Sprint.new, y: SprintData.new)
+      # ]
+    end
 
     # -- end --
     File.open 'in_out_chart.svg', 'w' do |file|

@@ -5,9 +5,9 @@ module SolvingBits
   class StackItem
     include Configurable
 
-    attr_configurable :value
+    attr_configurable :value, defaults_to: 0
     attr_configurable :label
-    attr_configurable :color
+    attr_configurable :color, defaults_to: 'black'
 
     def initialize args
       initialize_configuration params: args
@@ -43,7 +43,7 @@ module SolvingBits
       @stacks.each do |stack|
         bottom = viewport.bottom
         stack.each do |item|
-          adjusted_height = item.value
+          adjusted_height = viewport.vertical_adjust item.value
           viewport.canvas.rect(
             x: left,
             y: bottom - adjusted_height,

@@ -47,7 +47,8 @@ module SolvingBits
         right: y_size.width + x_size.width,
         top: 0,
         bottom: y_size.height,
-        canvas: viewport.canvas
+        canvas: viewport.canvas,
+        vertical_axis: @y_axis
       )
       @data_layers.each do |layer|
         render_layer data_layer: layer, viewport: data_area

@@ -39,5 +39,6 @@ module SolvingBits
         "<rect x='10' y='0' width='10' height='5' style='fill: black'/>"
       )
     end
+
   end
 end
