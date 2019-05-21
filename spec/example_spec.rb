@@ -60,7 +60,8 @@ RSpec.describe 'Runnable examples' do
       label: { visible: true, text: 'Story points', font_size_px: 15 }
     )
 
-    chart.bottom_axis = SolvingBits::HorizontalSegmentedAxis.new(
+    chart.bottom_axis = SolvingBits::SegmentedAxis.new(
+      orientation: :horizontal,
       segments: {
         keys: [
           "Sprint 3", # Sprint.new
