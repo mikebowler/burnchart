@@ -4,7 +4,7 @@ module SolvingBits
   RSpec.describe StackedBars do
     context 'vertical' do
       it 'should render a single data point' do
-        component = VerticalStackedBars.new
+        component = StackedBars.new
         component.create_stack do |stack|
           stack << StackItem.new(value: 5, label: 'committed', color: 'blue')
         end
@@ -17,7 +17,7 @@ module SolvingBits
       end
 
       it 'should render multiple stacks with multiple items per stack' do
-        component = VerticalStackedBars.new
+        component = StackedBars.new
         component.create_stack do |stack|
           stack << StackItem.new(value: 5, label: 'committed', color: 'blue')
           stack << StackItem.new(value: 5, label: 'added', color: 'pink')

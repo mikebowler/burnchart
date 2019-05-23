@@ -14,8 +14,10 @@ module SolvingBits
     end
   end
 
-  class VerticalStackedBars < SvgComponent
+  class StackedBars < SvgComponent
     include Configurable
+
+    attr_configurable :orientation, defaults_to: :vertical, only: %i[vertical horizontal]
 
     attr_configurable :values, defaults_to: []
     attr_configurable :bar_width_px, defaults_to: 10

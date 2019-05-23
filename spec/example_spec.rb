@@ -74,7 +74,7 @@ RSpec.describe 'Runnable examples' do
     )
 
     chart.data_layers << SolvingBits::DataLayer.create do |layer|
-      component = SolvingBits::VerticalStackedBars.new
+      component = SolvingBits::StackedBars.new orientation: :vertical
       component.create_stack do |stack|
         stack << SolvingBits::StackItem.new(value: 5, label: 'committed', color: 'blue')
         stack << SolvingBits::StackItem.new(value: 5, label: 'added', color: 'pink')
