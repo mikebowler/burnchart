@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'solvingbits/abstract_segmented_axis'
-
 module SolvingBits
   class SegmentedAxis < SvgComponent
     include Configurable
