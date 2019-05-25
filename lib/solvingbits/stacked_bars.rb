@@ -52,7 +52,7 @@ module SolvingBits
             width: bar_width_px(),
             height: adjusted_height,
             style: "fill: #{item.color}"
-          )
+          ) { viewport.canvas.title item.label() unless item.label.nil? }
 
           bottom -= adjusted_height
         end

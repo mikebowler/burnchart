@@ -12,7 +12,9 @@ module SolvingBits
         expect(component.preferred_size).to eq(Size.new(height: 5, width: 10))
 
         expect(component.to_svg(:partial)).to eq(
-          "<rect x='0' y='0' width='10' height='5' style='fill: blue'/>"
+          "<rect x='0' y='0' width='10' height='5' style='fill: blue'>" \
+            "<title>committed</title>" \
+          "</rect>"
         )
       end
 
@@ -25,19 +27,27 @@ module SolvingBits
         component.create_stack do |stack|
           stack << StackItem.new(value: 5, label: 'completed', color: 'green')
           stack << StackItem.new(value: 5, label: 'removed', color: 'orange')
-          stack << StackItem.new(value: 5, label: 'incomplete', color: 'black')
+          stack << StackItem.new(value: 5, color: 'black')
         end
 
-        # File.open 'stacked.svg', 'w' do |file|
-        #   file.puts component.to_svg
-        # end
-        # component.dump
+        File.open 'stacked.svg', 'w' do |file|
+          file.puts component.to_svg
+        end
         expect(component.to_svg(:partial)).to eq(
-          "<rect x='0' y='10' width='10' height='5' style='fill: blue'/>" \
-          "<rect x='0' y='5' width='10' height='5' style='fill: pink'/>" \
-          "<rect x='10' y='10' width='10' height='5' style='fill: green'/>" \
-          "<rect x='10' y='5' width='10' height='5' style='fill: orange'/>" \
-          "<rect x='10' y='0' width='10' height='5' style='fill: black'/>"
+          "<rect x='0' y='10' width='10' height='5' style='fill: blue'>" \
+            "<title>committed</title>" \
+          "</rect>" \
+          "<rect x='0' y='5' width='10' height='5' style='fill: pink'>" \
+            "<title>added</title>" \
+          "</rect>" \
+          "<rect x='10' y='10' width='10' height='5' style='fill: green'>" \
+            "<title>completed</title>" \
+          "</rect>" \
+          "<rect x='10' y='5' width='10' height='5' style='fill: orange'>" \
+            "<title>removed</title>" \
+          "</rect>" \
+          "<rect x='10' y='0' width='10' height='5' style='fill: black'>" \
+          "</rect>"
         )
       end
     end
