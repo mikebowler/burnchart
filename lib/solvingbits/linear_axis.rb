@@ -7,7 +7,9 @@ module SolvingBits
   class LinearAxis < SvgComponent
     include Configurable
 
-    attr_configurable :orientation, defaults_to: :horizontal, only: %i[horizontal vertical]
+    # attr_configurable :orientation, defaults_to: :horizontal, only: %i[horizontal vertical]
+    attr_configurable :positioning_axis, only: %w[top bottom left right]
+    attr_configurable :positioning_origin, only: %w[top_left top_right bottom_left bottom_right]
 
     attr_configurable :minor_ticks_every, defaults_to: 1
     attr_configurable :minor_ticks_length, defaults_to: 10
@@ -48,6 +50,19 @@ module SolvingBits
         raise 'Major ticks must be a multiple of minor: ' \
           "#{major_ticks_every()} and #{minor_ticks_every()}"
       end
+
+      validate_positioning_arguments
+    end
+
+    def validate_positioning_arguments
+      legal_combinations = [
+        %w[bottom bottom_left],
+        %w[left bottom_left]
+      ]
+      return if legal_combinations.include? [positioning_axis(), positioning_origin()]
+
+      raise "Invalid positioning combination: axis=#{positioning_axis()} " \
+        "origin=#{positioning_origin()}"
     end
 
     def label_width text
@@ -121,7 +136,7 @@ module SolvingBits
     end
 
     def vertical?
-      orientation() == :vertical
+      %w[left right].include? positioning_axis()
     end
     
     def render viewport

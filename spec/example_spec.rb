@@ -8,7 +8,7 @@ RSpec.describe 'Runnable examples' do
   it 'should show burndown chart' do
     chart = SolvingBits::SimpleChart.new
     chart.left_axis = y_axis = SolvingBits::LinearAxis.new(
-      orientation: :vertical,
+      positioning: { axis: 'left', origin: 'bottom_left' },
       minor_ticks: { every: 1, length: 4, px_between: 5 },
       major_ticks: { every: 10, length: 8 },
       values: { lower_bound: 0, upper_bound: 30, unit: Integer },
@@ -16,7 +16,7 @@ RSpec.describe 'Runnable examples' do
     )
 
     chart.bottom_axis = SolvingBits::LinearAxis.new(
-      orientation: :horizontal,
+      positioning: { axis: 'left', origin: 'bottom_left' },
       values: {
         unit: Date,
         lower_bound: Date.parse('2018-01-02'),
@@ -53,7 +53,7 @@ RSpec.describe 'Runnable examples' do
     # -- start --
     chart = SolvingBits::SimpleChart.new
     chart.left_axis = y_axis = SolvingBits::LinearAxis.new(
-      orientation: :vertical,
+      positioning: { axis: 'left', origin: 'bottom_left' },
       minor_ticks: { every: 1, length: 4, px_between: 5 },
       major_ticks: { every: 10, length: 8 },
       values: { lower_bound: 0, upper_bound: 30, unit: Integer },
@@ -64,7 +64,7 @@ RSpec.describe 'Runnable examples' do
       orientation: :horizontal,
       segments: {
         keys: [
-          "Sprint 3", # Sprint.new
+          'Sprint 3', # Sprint.new
           5
         ],
         font_size_px: 13,
