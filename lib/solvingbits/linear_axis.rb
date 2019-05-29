@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
-require 'solvingbits/configurable'
+
 require 'date'
 
 module SolvingBits
   class LinearAxis < SvgComponent
     include Configurable
 
-    # attr_configurable :orientation, defaults_to: :horizontal, only: %i[horizontal vertical]
     attr_configurable :positioning_axis, only: %w[top bottom left right]
-    attr_configurable :positioning_origin, only: %w[top_left top_right bottom_left bottom_right]
+    attr_configurable :positioning_origin, only: %w[top bottom left right]
 
     attr_configurable :minor_ticks_every, defaults_to: 1
-    attr_configurable :minor_ticks_length, defaults_to: 10
+    attr_configurable :minor_ticks_length, defaults_to: 4
     attr_configurable :minor_ticks_visible, defaults_to: true
     attr_configurable :minor_ticks_px_between, defaults_to: 5
     # Often we don't want to display a tick at the 'zero' value
@@ -56,8 +55,9 @@ module SolvingBits
 
     def validate_positioning_arguments
       legal_combinations = [
-        %w[bottom bottom_left],
-        %w[left bottom_left]
+        %w[bottom left],
+        %w[left bottom],
+        %w[bottom right]
       ]
       return if legal_combinations.include? [positioning_axis(), positioning_origin()]
 
@@ -128,10 +128,19 @@ module SolvingBits
       # bottom left which in turn means that for horizontal axis, as the value
       # increases, so does the coordinate values. For the vertical axis, as the
       # value increases, the coordinate values decrease.
-      if vertical?
-        upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
-      else
+      if coordinate_values_move_in_same_direction_as_data_values?
         (coordinate_delta * value_percent).to_i + lower_coordinate
+      else
+        upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
+      end
+    end
+
+    def coordinate_values_move_in_same_direction_as_data_values?
+      case "#{positioning_axis()}:#{positioning_origin()}"
+      when 'left:top', 'bottom:left'
+        true
+      else
+        false
       end
     end
 
@@ -160,11 +169,17 @@ module SolvingBits
       minor_tick_bottom_edge = viewport.top + minor_ticks_length
 
       ticks.each do |x, is_major_tick, label|
+        left = if coordinate_values_move_in_same_direction_as_data_values?
+          x + viewport.left
+        else
+          viewport.right - x
+        end
+
         tick_bottom_edge = (is_major_tick ? major_tick_bottom_edge : minor_tick_bottom_edge)
         viewport.canvas.line(
-          x1: x + viewport.left,
+          x1: left,
           y1: viewport.top,
-          x2: x + viewport.left,
+          x2: left,
           y2: tick_bottom_edge,
           style: 'stroke:black;'
         )
@@ -172,7 +187,7 @@ module SolvingBits
         if major_ticks_label_visible() && is_major_tick
           viewport.canvas.text(
             label,
-            x: x + viewport.left,
+            x: left,
             y: major_tick_bottom_edge + major_ticks_label_font_size_px(),
             style: "font: italic #{major_ticks_label_font_size_px()}px sans-serif",
             text_anchor: 'middle'

@@ -8,7 +8,7 @@ RSpec.describe 'Runnable examples' do
   it 'should show burndown chart' do
     chart = SolvingBits::SimpleChart.new
     chart.left_axis = y_axis = SolvingBits::LinearAxis.new(
-      positioning: { axis: 'left', origin: 'bottom_left' },
+      positioning: { axis: 'left', origin: 'bottom' },
       minor_ticks: { every: 1, length: 4, px_between: 5 },
       major_ticks: { every: 10, length: 8 },
       values: { lower_bound: 0, upper_bound: 30, unit: Integer },
@@ -16,7 +16,7 @@ RSpec.describe 'Runnable examples' do
     )
 
     chart.bottom_axis = SolvingBits::LinearAxis.new(
-      positioning: { axis: 'left', origin: 'bottom_left' },
+      positioning: { axis: 'left', origin: 'bottom' },
       values: {
         unit: Date,
         lower_bound: Date.parse('2018-01-02'),
@@ -53,7 +53,7 @@ RSpec.describe 'Runnable examples' do
     # -- start --
     chart = SolvingBits::SimpleChart.new
     chart.left_axis = y_axis = SolvingBits::LinearAxis.new(
-      positioning: { axis: 'left', origin: 'bottom_left' },
+      positioning: { axis: 'left', origin: 'bottom' },
       minor_ticks: { every: 1, length: 4, px_between: 5 },
       major_ticks: { every: 10, length: 8 },
       values: { lower_bound: 0, upper_bound: 30, unit: Integer },
@@ -103,4 +103,30 @@ RSpec.describe 'Runnable examples' do
     end
   end
 
+  it 'should show all combinations of linear axis' do
+    flow_panel = SolvingBits::FlowPanel.new
+    [
+      %w[bottom left],
+      %w[bottom right],
+      # %w[top left]
+      # %w[top right]
+      # %w[left top],
+      %w[left bottom],
+      # %w[right top],
+      # %w[right bottom]
+
+    ].each do |axis, origin|
+      flow_panel.add SolvingBits::LinearAxis.new(
+        positioning: { axis: axis, origin: origin},
+        minor_ticks: { every: 1, px_between: 5, length: 4 },
+        major_ticks: { every: 10 },
+        values: { lower_bound: 0, upper_bound: 40 },
+        label: { text: "axis: #{axis} origin: #{origin}", visible: true }
+      )
+    end
+
+    File.open 'all_linear_axis.svg', 'w' do |file|
+      file.puts flow_panel.to_svg
+    end
+  end
 end

@@ -5,10 +5,10 @@ require 'date'
 
 module SolvingBits
   RSpec.describe LinearAxis do
-    context 'axis: bottom, origin: bottom_left' do
+    context 'ticks' do
       it 'should calculate ticks with lower bound of zero' do
         component = LinearAxis.new(
-         positioning: { axis: 'bottom', origin: 'bottom_left' },
+         positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5 },
           major_ticks: { every: 30 },
           values: { lower_bound: 0, upper_bound: 40 }
@@ -26,7 +26,7 @@ module SolvingBits
 
       it 'should calculate ticks with non-zero lower bound' do
         component = LinearAxis.new(
-          positioning: { axis: 'bottom', origin: 'bottom_left' },
+          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5 },
           major_ticks: { every: 30 },
           values: { lower_bound: 10, upper_bound: 40 }
@@ -43,7 +43,7 @@ module SolvingBits
 
       it 'should include lower bound tick when asked' do
         component = LinearAxis.new(
-          positioning: { axis: 'bottom', origin: 'bottom_left' },
+          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5, show_lowest_value: true },
           major_ticks: { every: 30 },
           values: { lower_bound: 0, upper_bound: 40 }
@@ -62,7 +62,7 @@ module SolvingBits
 
       it 'hide minor ticks when specified' do
         component = LinearAxis.new(
-          positioning: { axis: 'bottom', origin: 'bottom_left' },
+          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, visible: false, px_between: 5 },
           major_ticks: { every: 30 },
           values: { lower_bound: 0, upper_bound: 40 }
@@ -77,7 +77,7 @@ module SolvingBits
 
       it 'should draw major ticks as minor when major ticks are hidden' do
         component = LinearAxis.new(
-          positioning: { axis: 'bottom', origin: 'bottom_left' },
+          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5 },
           major_ticks: { every: 30, visible: false },
           values: { lower_bound: 0, upper_bound: 40 }
@@ -96,7 +96,7 @@ module SolvingBits
       it 'should reject lower bounds being higher than upper bounds' do
         expect do
           LinearAxis.new(
-            positioning: { axis: 'bottom', origin: 'bottom_left' },
+            positioning: { axis: 'bottom', origin: 'left' },
             minor_ticks: { every: 10, px_between: 5 },
             major_ticks: { every: 30 },
             values: { lower_bound: 40, upper_bound: 10 }
@@ -107,17 +107,20 @@ module SolvingBits
       it "should reject major ticks if they aren't a multiple of minor" do
         expect do
           LinearAxis.new(
-            positioning: { axis: 'bottom', origin: 'bottom_left' },
+            positioning: { axis: 'bottom', origin: 'left' },
             minor_ticks: { every: 10, px_between: 5 },
             major_ticks: { every: 35 },
             values: { lower_bound: 10, upper_bound: 40 }
           )
         end.to raise_error('Major ticks must be a multiple of minor: 35 and 10')
       end
+    end
+
+    context 'axis: bottom, origin: left' do
 
       it 'should convert to coordinate space when lower value and coordinates are zero' do
         component = LinearAxis.new(
-          positioning: { axis: 'bottom', origin: 'bottom_left' },
+          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5 },
           major_ticks: { every: 30 },
           values: { lower_bound: 0, upper_bound: 40 }
@@ -133,7 +136,7 @@ module SolvingBits
 
       it 'should convert to coordinate space when lower value is offset and coordinates are not' do
         component = LinearAxis.new(
-          positioning: { axis: 'bottom', origin: 'bottom_left' },
+          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5 },
           major_ticks: { every: 30 },
           values: { lower_bound: 10, upper_bound: 50 }
@@ -149,7 +152,7 @@ module SolvingBits
 
       it 'should convert to coordinate space when lower coordinate is offset and value bounds are not' do
         component = LinearAxis.new(
-          positioning: { axis: 'bottom', origin: 'bottom_left' },
+          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5 },
           major_ticks: { every: 30 },
           values: { lower_bound: 0, upper_bound: 40 }
@@ -165,7 +168,7 @@ module SolvingBits
 
       it 'should convert to coordinate space when value is date' do
         component = LinearAxis.new(
-          positioning: { axis: 'bottom', origin: 'bottom_left' },
+          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5 },
           major_ticks: { every: 30 },
           values: {
@@ -184,10 +187,10 @@ module SolvingBits
       end
     end
 
-    context 'axis: left, origin: bottom_left' do
+    context 'axis: left, origin: left' do
       it 'should draw simple ticks' do
         component = LinearAxis.new(
-          positioning: { axis: 'left', origin: 'bottom_left' },
+          positioning: { axis: 'left', origin: 'bottom' },
           minor_ticks: { every: 10, length: 8, px_between: 5 },
           major_ticks: { every: 30, length: 15, label: { visible: false } },
           values: { lower_bound: 0, upper_bound: 40 }
@@ -207,7 +210,7 @@ module SolvingBits
 
       it 'should draw simple ticks with labels' do
         component = LinearAxis.new(
-          positioning: { axis: 'left', origin: 'bottom_left' },
+          positioning: { axis: 'left', origin: 'bottom' },
           minor_ticks: { every: 10, length: 8, px_between: 5 },
           major_ticks: { every: 30, length: 15, label: { visible: true } },
           values: { lower_bound: 0, upper_bound: 40 }
@@ -229,7 +232,7 @@ module SolvingBits
 
       it 'should draw label' do
         component = LinearAxis.new(
-          positioning: { axis: 'left', origin: 'bottom_left' },
+          positioning: { axis: 'left', origin: 'bottom' },
           minor_ticks: { every: 10, length: 8, px_between: 5 },
           major_ticks: { every: 30, length: 15, label: { visible: false } },
           values: { lower_bound: 0, upper_bound: 40 },
@@ -252,7 +255,7 @@ module SolvingBits
 
       it 'should draw background lines' do
         component = LinearAxis.new(
-          positioning: { axis: 'left', origin: 'bottom_left' },
+          positioning: { axis: 'left', origin: 'bottom' },
           minor_ticks: { every: 10, length: 8, px_between: 5 },
           major_ticks: { every: 10, length: 15, label: { visible: false } },
           values: { lower_bound: 0, upper_bound: 40 }
