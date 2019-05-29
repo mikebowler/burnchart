@@ -110,7 +110,7 @@ RSpec.describe 'Runnable examples' do
       %w[bottom right],
       # %w[top left]
       # %w[top right]
-      # %w[left top],
+      %w[left top],
       %w[left bottom],
       # %w[right top],
       # %w[right bottom]

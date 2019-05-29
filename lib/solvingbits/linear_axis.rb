@@ -56,8 +56,9 @@ module SolvingBits
     def validate_positioning_arguments
       legal_combinations = [
         %w[bottom left],
+        %w[bottom right],
         %w[left bottom],
-        %w[bottom right]
+        %w[left top],
       ]
       return if legal_combinations.include? [positioning_axis(), positioning_origin()]
 
@@ -136,12 +137,7 @@ module SolvingBits
     end
 
     def coordinate_values_move_in_same_direction_as_data_values?
-      case "#{positioning_axis()}:#{positioning_origin()}"
-      when 'left:top', 'bottom:left'
-        true
-      else
-        false
-      end
+      %w[left top].include? positioning_origin() 
     end
 
     def vertical?
@@ -169,7 +165,7 @@ module SolvingBits
       minor_tick_bottom_edge = viewport.top + minor_ticks_length
 
       ticks.each do |x, is_major_tick, label|
-        left = if coordinate_values_move_in_same_direction_as_data_values?
+        adjusted_x = if coordinate_values_move_in_same_direction_as_data_values?
           x + viewport.left
         else
           viewport.right - x
@@ -177,9 +173,9 @@ module SolvingBits
 
         tick_bottom_edge = (is_major_tick ? major_tick_bottom_edge : minor_tick_bottom_edge)
         viewport.canvas.line(
-          x1: left,
+          x1: adjusted_x,
           y1: viewport.top,
-          x2: left,
+          x2: adjusted_x,
           y2: tick_bottom_edge,
           style: 'stroke:black;'
         )
@@ -187,7 +183,7 @@ module SolvingBits
         if major_ticks_label_visible() && is_major_tick
           viewport.canvas.text(
             label,
-            x: left,
+            x: adjusted_x,
             y: major_tick_bottom_edge + major_ticks_label_font_size_px(),
             style: "font: italic #{major_ticks_label_font_size_px()}px sans-serif",
             text_anchor: 'middle'
@@ -251,19 +247,25 @@ module SolvingBits
       minor_tick_left_edge = viewport.right - minor_ticks_length
 
       ticks.each do |y, is_major_tick, label|
+        adjusted_y = if coordinate_values_move_in_same_direction_as_data_values?
+          viewport.top + y
+        else
+          viewport.bottom - y
+        end
+
         tick_left_edge = (is_major_tick ? major_tick_left_edge : minor_tick_left_edge)
         viewport.canvas.line(
           x1: tick_left_edge,
-          y1: viewport.bottom - y,
+          y1: adjusted_y,
           x2: viewport.right,
-          y2: viewport.bottom - y,
+          y2: adjusted_y,
           style: 'stroke:black;'
         )
         if major_ticks_label_visible() && is_major_tick
           viewport.canvas.text(
             label,
             x: tick_left_edge - 1,
-            y: viewport.bottom - y,
+            y: adjusted_y,
             style: "font: italic #{major_ticks_label_font_size_px}px sans-serif",
             text_anchor: 'end',
             alignment_baseline: 'middle'
