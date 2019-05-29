@@ -57,6 +57,8 @@ module SolvingBits
       legal_combinations = [
         %w[bottom left],
         %w[bottom right],
+        %w[top left],
+        %w[top right],
         %w[left bottom],
         %w[left top],
       ]
@@ -153,16 +155,24 @@ module SolvingBits
     end
 
     def render_horizontal viewport
+      standard_direction = %w[bottom left].include? positioning_axis
+      baseline = standard_direction ? viewport.top : viewport.bottom
+
       viewport.canvas.line(
         x1: viewport.left,
-        y1: viewport.top,
+        y1: baseline,
         x2: viewport.right,
-        y2: viewport.top,
+        y2: baseline,
         style: 'stroke:black;'
       )
 
-      major_tick_bottom_edge = viewport.top + major_ticks_length
-      minor_tick_bottom_edge = viewport.top + minor_ticks_length
+      if standard_direction
+        major_tick_edge = baseline + major_ticks_length
+        minor_tick_edge = baseline + minor_ticks_length
+      else
+        major_tick_edge = baseline - major_ticks_length
+        minor_tick_edge = baseline - minor_ticks_length
+      end
 
       ticks.each do |x, is_major_tick, label|
         adjusted_x = if coordinate_values_move_in_same_direction_as_data_values?
@@ -171,20 +181,23 @@ module SolvingBits
           viewport.right - x
         end
 
-        tick_bottom_edge = (is_major_tick ? major_tick_bottom_edge : minor_tick_bottom_edge)
+        tick_edge = (is_major_tick ? major_tick_edge : minor_tick_edge)
         viewport.canvas.line(
           x1: adjusted_x,
-          y1: viewport.top,
+          y1: baseline,
           x2: adjusted_x,
-          y2: tick_bottom_edge,
+          y2: tick_edge,
           style: 'stroke:black;'
         )
         
         if major_ticks_label_visible() && is_major_tick
+          text_baseline = major_tick_edge
+          text_baseline += major_ticks_label_font_size_px() if standard_direction
+
           viewport.canvas.text(
             label,
             x: adjusted_x,
-            y: major_tick_bottom_edge + major_ticks_label_font_size_px(),
+            y: text_baseline, #major_tick_edge + major_ticks_label_font_size_px(),
             style: "font: italic #{major_ticks_label_font_size_px()}px sans-serif",
             text_anchor: 'middle'
           )
@@ -192,10 +205,13 @@ module SolvingBits
       end
 
       if label_visible()
+        text_baseline = viewport.bottom
+        text_baseline = viewport.top + label_font_size_px() unless standard_direction
+        
         viewport.canvas.text(
           label_text(),
           x: viewport.right,
-          y: viewport.bottom,
+          y: text_baseline, # viewport.bottom - label_font_size_px(),
           style: "font: #{label_font_size_px()}px sans-serif",
           text_anchor: 'end'
         )
