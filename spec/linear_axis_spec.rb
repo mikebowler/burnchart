@@ -278,5 +278,52 @@ module SolvingBits
         )
       end
     end
+
+    context 'positioning should be right with' do
+      def test_positioning args
+        component = LinearAxis.new(
+          positioning: { axis: args[:axis], origin: args[:origin] },
+          minor_ticks: { visible: false },
+          major_ticks: { every: 10, length: 5, label: { visible: true } },
+          values: { lower_bound: 0, upper_bound: 10 },
+          label: { visible: true, text: 'Time' }
+        )
+
+        canvas = SvgCanvas.new
+        size = component.preferred_size
+        component.render Viewport.new(
+          left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
+        )
+        expect(component.calculations).to eq(args[:expected])
+      end
+
+      it 'axis bottom and origin left' do
+        test_positioning(
+          axis: 'bottom', origin: 'left',
+          expected: { baseline: 0, label_baseline: 31, tick_label_baseline: 18, tick_label_center: 50 }
+        )
+      end
+
+      it 'axis bottom and origin right' do
+        test_positioning(
+          axis: 'bottom', origin: 'right',
+          expected: { baseline: 0, label_baseline: 31, tick_label_baseline: 18, tick_label_center: 0 }
+        )
+      end
+
+      it 'axis top and origin left' do
+        test_positioning(
+          axis: 'top', origin: 'left',
+          expected: { baseline: 31, label_baseline: 13, tick_label_baseline: 26, tick_label_center: 50 }
+        )
+      end
+
+      it 'axis top and origin right' do
+        test_positioning(
+          axis: 'top', origin: 'right',
+          expected: { baseline: 31, label_baseline: 13, tick_label_baseline: 26, tick_label_center: 0 }
+        )
+      end
+    end
   end
 end

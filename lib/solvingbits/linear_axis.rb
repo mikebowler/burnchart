@@ -7,6 +7,7 @@ module SolvingBits
   class LinearAxis < SvgComponent
     include Configurable
 
+    attr_reader :calculations
     attr_configurable :positioning_axis, only: %w[top bottom left right]
     attr_configurable :positioning_origin, only: %w[top bottom left right]
 
@@ -35,6 +36,7 @@ module SolvingBits
     attr_configurable :estimated_char_width, defaults_to: 10
 
     def initialize params = {}
+      @calculations = {}
       initialize_configuration params: params
 
       self.values_lower_bound = convert_to_internal_value(values_lower_bound())
@@ -157,6 +159,7 @@ module SolvingBits
     def render_horizontal viewport
       standard_direction = %w[bottom left].include? positioning_axis
       baseline = standard_direction ? viewport.top : viewport.bottom
+      @calculations[:baseline] = baseline
 
       viewport.canvas.line(
         x1: viewport.left,
@@ -194,6 +197,9 @@ module SolvingBits
           text_baseline = major_tick_edge
           text_baseline += major_ticks_label_font_size_px() if standard_direction
 
+          @calculations[:tick_label_baseline] = text_baseline
+          @calculations[:tick_label_center] = adjusted_x
+
           viewport.canvas.text(
             label,
             x: adjusted_x,
@@ -207,7 +213,8 @@ module SolvingBits
       if label_visible()
         text_baseline = viewport.bottom
         text_baseline = viewport.top + label_font_size_px() unless standard_direction
-        
+        @calculations[:label_baseline] = text_baseline
+
         viewport.canvas.text(
           label_text(),
           x: viewport.right,
