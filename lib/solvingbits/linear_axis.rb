@@ -63,6 +63,8 @@ module SolvingBits
         %w[top right],
         %w[left bottom],
         %w[left top],
+        %w[right bottom],
+        %w[right top]
       ]
       return if legal_combinations.include? [positioning_axis(), positioning_origin()]
 
@@ -149,6 +151,7 @@ module SolvingBits
     end
     
     def render viewport
+      viewport.draw_outline
       if vertical?
         render_vertical viewport
       else
@@ -157,8 +160,7 @@ module SolvingBits
     end
 
     def render_horizontal viewport
-      standard_direction = %w[bottom left].include? positioning_axis
-      baseline = standard_direction ? viewport.top : viewport.bottom
+      baseline = standard_direction? ? viewport.top : viewport.bottom
       @calculations[:baseline] = baseline
 
       viewport.canvas.line(
@@ -169,7 +171,7 @@ module SolvingBits
         style: 'stroke:black;'
       )
 
-      if standard_direction
+      if standard_direction?
         major_tick_edge = baseline + major_ticks_length
         minor_tick_edge = baseline + minor_ticks_length
       else
@@ -195,7 +197,7 @@ module SolvingBits
         
         if major_ticks_label_visible() && is_major_tick
           text_baseline = major_tick_edge
-          text_baseline += major_ticks_label_font_size_px() if standard_direction
+          text_baseline += major_ticks_label_font_size_px() if standard_direction?
 
           @calculations[:tick_label_baseline] = text_baseline
           @calculations[:tick_label_center] = adjusted_x
@@ -212,7 +214,7 @@ module SolvingBits
 
       if label_visible()
         text_baseline = viewport.bottom
-        text_baseline = viewport.top + label_font_size_px() unless standard_direction
+        text_baseline = viewport.top + label_font_size_px() unless standard_direction?
         @calculations[:label_baseline] = text_baseline
 
         viewport.canvas.text(
@@ -256,18 +258,32 @@ module SolvingBits
       end
     end
 
+    def standard_direction?
+      %w[bottom left].include? positioning_axis()
+    end
+
     def render_vertical viewport
       top = viewport.top + top_pad
+
+      baseline = standard_direction? ? viewport.right : viewport.left
+      @calculations[:baseline] = baseline
+
       viewport.canvas.line(
-        x1: viewport.right,
+        x1: baseline,
         y1: top,
-        x2: viewport.right,
+        x2: baseline,
         y2: viewport.bottom,
         style: 'stroke:black;'
       )
 
-      major_tick_left_edge = viewport.right - major_ticks_length
-      minor_tick_left_edge = viewport.right - minor_ticks_length
+      if standard_direction?
+        major_tick_edge = baseline - major_ticks_length
+        minor_tick_edge = baseline - minor_ticks_length
+      else
+        major_tick_edge = baseline + major_ticks_length
+        minor_tick_edge = baseline + minor_ticks_length
+      end
+
 
       ticks.each do |y, is_major_tick, label|
         adjusted_y = if coordinate_values_move_in_same_direction_as_data_values?
@@ -276,28 +292,31 @@ module SolvingBits
           viewport.bottom - y
         end
 
-        tick_left_edge = (is_major_tick ? major_tick_left_edge : minor_tick_left_edge)
+        tick_edge = (is_major_tick ? major_tick_edge : minor_tick_edge)
         viewport.canvas.line(
-          x1: tick_left_edge,
+          x1: tick_edge,
           y1: adjusted_y,
-          x2: viewport.right,
+          x2: baseline,
           y2: adjusted_y,
           style: 'stroke:black;'
         )
         if major_ticks_label_visible() && is_major_tick
           viewport.canvas.text(
             label,
-            x: tick_left_edge - 1,
+            x: tick_edge,
             y: adjusted_y,
             style: "font: italic #{major_ticks_label_font_size_px}px sans-serif",
-            text_anchor: 'end',
+            text_anchor: (standard_direction? ? 'end' : 'start'),
             alignment_baseline: 'middle'
           )
+          @calculations[:tick_label_baseline] = tick_edge
+          @calculations[:tick_label_center] = adjusted_y
         end
       end
 
       if label_visible()
-        x_rotation = viewport.left + label_font_size_px()
+        x_rotation = major_tick_edge + label_font_size_px()
+        x_rotation += major_ticks_label_font_size_px() if major_ticks_visible()
         y_rotation = top
 
         viewport.canvas.text(
@@ -308,6 +327,8 @@ module SolvingBits
           transform: "rotate(270, #{x_rotation}, #{y_rotation})",
           text_anchor: 'end'
         )
+        @calculations[:label_baseline] = x_rotation
+
       end
 
     end

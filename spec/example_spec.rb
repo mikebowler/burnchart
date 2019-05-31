@@ -104,17 +104,16 @@ RSpec.describe 'Runnable examples' do
   end
 
   it 'should show all combinations of linear axis' do
-    flow_panel = SolvingBits::FlowPanel.new
+    flow_panel = SolvingBits::FlowPanel.new gap: 5
     [
       %w[bottom left],
       %w[bottom right],
       %w[top left],
       %w[top right],
+      %w[right top],
+      %w[right bottom],
       %w[left top],
-      %w[left bottom],
-      # %w[right top],
-      # %w[right bottom]
-
+      %w[left bottom]
     ].each do |axis, origin|
       flow_panel.add SolvingBits::LinearAxis.new(
         positioning: { axis: axis, origin: origin},

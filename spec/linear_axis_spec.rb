@@ -188,7 +188,7 @@ module SolvingBits
     end
 
     context 'axis: left, origin: left' do
-      it 'should draw simple ticks' do
+      xit 'should draw simple ticks' do
         component = LinearAxis.new(
           positioning: { axis: 'left', origin: 'bottom' },
           minor_ticks: { every: 10, length: 8, px_between: 5 },
@@ -208,7 +208,7 @@ module SolvingBits
         )
       end
 
-      it 'should draw simple ticks with labels' do
+      xit 'should draw simple ticks with labels' do
         component = LinearAxis.new(
           positioning: { axis: 'left', origin: 'bottom' },
           minor_ticks: { every: 10, length: 8, px_between: 5 },
@@ -230,7 +230,7 @@ module SolvingBits
         )
       end
 
-      it 'should draw label' do
+      xit 'should draw label' do
         component = LinearAxis.new(
           positioning: { axis: 'left', origin: 'bottom' },
           minor_ticks: { every: 10, length: 8, px_between: 5 },

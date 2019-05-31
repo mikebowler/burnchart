@@ -2,7 +2,12 @@
 
 module SolvingBits
   class FlowPanel < SvgComponent
-    def initialize
+    include Configurable
+
+    attr_configurable :gap, defaults_to: 0
+
+    def initialize params={}
+      initialize_configuration params: params
       @components = []
     end
 
@@ -17,8 +22,9 @@ module SolvingBits
       @components.each do |c|
         size = c.preferred_size
         width = size.width if size.width > width
-        height = size.height if size.height > height
+        height += size.height
       end
+      height += gap() * (@components.size() - 1)
       Size.new width: width, height: height
     end
 
@@ -33,7 +39,7 @@ module SolvingBits
           top: current_top, bottom: new_top,
           canvas: viewport.canvas
         )
-        current_top = new_top
+        current_top = new_top + gap()
       end
     end
   end

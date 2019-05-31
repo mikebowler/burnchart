@@ -22,13 +22,13 @@ module SolvingBits
     end
 
     # Convenience to draw a box around the drawable area.
-    def draw_outline
+    def draw_outline color: 'red'
       @canvas.rect(
         x: @left,
         y: @top,
         width: width,
         height: height,
-        style: 'stroke: red; fill: none'
+        style: "stroke: #{color}; fill: none"
       )
     end
 
