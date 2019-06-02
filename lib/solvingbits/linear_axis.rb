@@ -26,7 +26,7 @@ module SolvingBits
 
     attr_configurable :values_lower_bound, defaults_to: 0
     attr_configurable :values_upper_bound, defaults_to: 100
-    attr_configurable :values_unit, defaults_to: Integer, only: [Integer, Date]
+    attr_configurable :values_unit, defaults_to: Integer, only: [Integer, Date, Time]
     attr_configurable :values_formatter
 
     attr_configurable :label_text
@@ -81,6 +81,8 @@ module SolvingBits
     def convert_to_internal_value value
       if values_unit() == Date
         value.jd
+      elsif values_unit() == Time
+        value.to_i
       else
         value
       end
@@ -91,6 +93,8 @@ module SolvingBits
     def convert_to_external_value value
       if values_unit() == Date
         Date.jd(value)
+      elsif values_unit() == Time
+        Time.at value
       else
         value
       end
@@ -131,10 +135,6 @@ module SolvingBits
 
       coordinate_delta = upper_coordinate - lower_coordinate
 
-      # Ugly hack to account for the fact that the 0,0 origin is top left not
-      # bottom left which in turn means that for horizontal axis, as the value
-      # increases, so does the coordinate values. For the vertical axis, as the
-      # value increases, the coordinate values decrease.
       if coordinate_values_move_in_same_direction_as_data_values?
         (coordinate_delta * value_percent).to_i + lower_coordinate
       else
@@ -222,7 +222,8 @@ module SolvingBits
           x: viewport.right,
           y: text_baseline, # viewport.bottom - label_font_size_px(),
           style: "font: #{label_font_size_px()}px sans-serif",
-          text_anchor: 'end'
+          text_anchor: 'end',
+          alignment_baseline: 'bottom'
         )
       end
     end
@@ -230,7 +231,7 @@ module SolvingBits
     def preferred_size
       height, width = 0, 0
       if vertical?
-        width = major_ticks_length() + 1
+        width = major_ticks_length()
         width += label_width(values_upper_bound().to_s) if major_ticks_label_visible()
         width += label_font_size_px() if label_visible()
 
@@ -315,8 +316,13 @@ module SolvingBits
       end
 
       if label_visible()
-        x_rotation = major_tick_edge + label_font_size_px()
-        x_rotation += major_ticks_label_font_size_px() if major_ticks_visible()
+        if standard_direction?
+          x_rotation = major_tick_edge - label_font_size_px()
+          x_rotation -= major_ticks_label_font_size_px() if major_ticks_visible()
+        else
+          x_rotation = major_tick_edge + label_font_size_px()
+          x_rotation += major_ticks_label_font_size_px() if major_ticks_visible()
+        end
         y_rotation = top
 
         viewport.canvas.text(

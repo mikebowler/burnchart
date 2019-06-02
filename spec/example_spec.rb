@@ -104,19 +104,33 @@ RSpec.describe 'Runnable examples' do
   end
 
   it 'should show all combinations of linear axis' do
-    flow_panel = SolvingBits::FlowPanel.new gap: 5
+    outer_flow_panel = SolvingBits::FlowPanel.new orientation: :vertical, gap: 5
     [
       %w[bottom left],
       %w[bottom right],
       %w[top left],
-      %w[top right],
+      %w[top right]
+    ].each do |axis, origin|
+      outer_flow_panel.add SolvingBits::LinearAxis.new(
+        positioning: { axis: axis, origin: origin },
+        minor_ticks: { every: 1, px_between: 5, length: 4 },
+        major_ticks: { every: 10 },
+        values: { lower_bound: 0, upper_bound: 40 },
+        label: { text: "axis: #{axis} origin: #{origin}", visible: true }
+      )
+    end
+
+    inner_flow_panel = SolvingBits::FlowPanel.new orientation: :horizontal, gap: 5
+    outer_flow_panel.add inner_flow_panel
+
+    [
       %w[right top],
       %w[right bottom],
       %w[left top],
       %w[left bottom]
     ].each do |axis, origin|
-      flow_panel.add SolvingBits::LinearAxis.new(
-        positioning: { axis: axis, origin: origin},
+      inner_flow_panel.add SolvingBits::LinearAxis.new(
+        positioning: { axis: axis, origin: origin },
         minor_ticks: { every: 1, px_between: 5, length: 4 },
         major_ticks: { every: 10 },
         values: { lower_bound: 0, upper_bound: 40 },
@@ -125,7 +139,7 @@ RSpec.describe 'Runnable examples' do
     end
 
     File.open 'all_linear_axis.svg', 'w' do |file|
-      file.puts flow_panel.to_svg
+      file.puts outer_flow_panel.to_svg
     end
   end
 end

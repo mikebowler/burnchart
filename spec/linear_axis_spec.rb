@@ -253,7 +253,7 @@ module SolvingBits
         )
       end
 
-      it 'should draw background lines' do
+      xit 'should draw background lines' do
         component = LinearAxis.new(
           positioning: { axis: 'left', origin: 'bottom' },
           minor_ticks: { every: 10, length: 8, px_between: 5 },
