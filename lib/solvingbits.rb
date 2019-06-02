@@ -7,7 +7,7 @@ preload.each do |file|
 end
 
 # Then load the rest
-Dir.foreach('lib/solvingbits') do |file|
+Dir.foreach("#{__dir__}/solvingbits") do |file|
   next if file.start_with? '.'
   next if preload.include? file
 
