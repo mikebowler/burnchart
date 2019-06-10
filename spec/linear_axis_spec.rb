@@ -114,6 +114,28 @@ module SolvingBits
           )
         end.to raise_error('Major ticks must be a multiple of minor: 35 and 10')
       end
+
+      xit 'should calculate ticks with type of Date' do
+        component = LinearAxis.new(
+         positioning: { axis: 'bottom', origin: 'left' },
+          minor_ticks: { every: 1, px_between: 10, show_lowest_value: true },
+          major_ticks: { every: 1, visible: false },
+          values: {
+            lower_bound: Date.parse('2019-01-11'),
+            upper_bound: Date.parse('2019-01-13'),
+            unit: Date
+          }
+        )
+
+        expect(component.ticks).to eq(
+          [
+            [0,  true, '2019-01-11'],
+            [10, true, '2019-01-12'],
+            [20, true, '2019-01-13']
+          ]
+        )
+      end
+
     end
 
     context 'axis: bottom, origin: left' do

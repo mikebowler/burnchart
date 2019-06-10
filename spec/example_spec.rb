@@ -16,7 +16,7 @@ RSpec.describe 'Runnable examples' do
     )
 
     chart.bottom_axis = SolvingBits::LinearAxis.new(
-      positioning: { axis: 'left', origin: 'bottom' },
+      positioning: { axis: 'bottom', origin: 'left' },
       values: {
         unit: Date,
         lower_bound: Date.parse('2018-01-02'),
@@ -139,7 +139,7 @@ RSpec.describe 'Runnable examples' do
     end
 
     File.open 'all_linear_axis.svg', 'w' do |file|
-      file.puts outer_flow_panel.to_svg
+      file.puts outer_flow_panel.to_svg :full
     end
   end
 end

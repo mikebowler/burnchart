@@ -68,7 +68,7 @@ module SolvingBits
             lower_coordinate: viewport.top,
             upper_coordinate: viewport.bottom
           )
-        )
+        ).tap { |p| p.metadata.merge! point.metadata }
       end
       data_layer.renderers.each do |renderer|
         renderer.data_points = points if renderer.respond_to? :data_points

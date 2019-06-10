@@ -2,6 +2,8 @@
 
 module SolvingBits
   class SvgCanvas
+    attr_accessor :canvas_height, :canvas_width
+
     def self.svg_primitive name, params
       possible_args = params[:attrs].collect { |a| ":#{a}" }.join(',')
       takes_text = params[:takes_text]
@@ -42,11 +44,15 @@ module SolvingBits
     svg_primitive :text, attrs: %w[x y style text_anchor transform alignment_baseline], takes_text: true
     svg_primitive :title, attrs: %w[style], takes_text: true
 
-    def initialize
+    def initialize width: nil, height: nil
       @svg = +''
+      @canvas_height = height
+      @canvas_width = width
     end
 
     def to_svg svg_flavour = :full
+      puts "to_svg(#{svg_flavour.inspect})"
+
       output = +''
 
       if svg_flavour == :full
@@ -59,7 +65,7 @@ module SolvingBits
       if [:include_root, :full].include? svg_flavour
         output << '<svg'
         output << " height='#{@canvas_height}'" if @canvas_height
-        output << " width='#{@canvas_width}'>" if @canvas_width
+        output << " width='#{@canvas_width}'" if @canvas_width
         output << ' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"'
         output << '>'
         output << @svg

@@ -8,7 +8,8 @@ module SolvingBits
 
     def to_svg svg_flavour = :full
       size = preferred_size
-      canvas = SvgCanvas.new
+      canvas = SvgCanvas.new width: size.width, height: size.height
+
       render Viewport.new(
         left: 0,
         right: size.width,

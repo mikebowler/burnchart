@@ -4,6 +4,7 @@
 require 'date'
 
 module SolvingBits
+  SECONDS_PER_DAY = 60 * 60 * 24
   class LinearAxis < SvgComponent
     include Configurable
 
@@ -26,7 +27,7 @@ module SolvingBits
 
     attr_configurable :values_lower_bound, defaults_to: 0
     attr_configurable :values_upper_bound, defaults_to: 100
-    attr_configurable :values_unit, defaults_to: Integer, only: [Integer, Date, Time]
+    attr_configurable :values_unit, defaults_to: Integer, only: [Integer, Date]
     attr_configurable :values_formatter
 
     attr_configurable :label_text
@@ -80,9 +81,8 @@ module SolvingBits
     # as what's passed in. Convert.
     def convert_to_internal_value value
       if values_unit() == Date
-        value.jd
-      elsif values_unit() == Time
-        value.to_i
+        # value.jd
+        (value.to_time.to_f / SECONDS_PER_DAY).to_i
       else
         value
       end
@@ -92,9 +92,7 @@ module SolvingBits
     # as what's passed in. Convert.
     def convert_to_external_value value
       if values_unit() == Date
-        Date.jd(value)
-      elsif values_unit() == Time
-        Time.at value
+        Time.at(value * SECONDS_PER_DAY).to_date
       else
         value
       end
@@ -109,6 +107,7 @@ module SolvingBits
       result = []
       offset = lower * minor_ticks_px_between()
       first_tick = lower - (lower % minor_ticks_every())
+
       if minor_ticks_show_lowest_value() == false && first_tick == lower
         first_tick = lower + minor_ticks_every()
       end
@@ -117,6 +116,10 @@ module SolvingBits
         is_major_tick = (value % major_ticks_every()).zero? && major_ticks_visible()
 
         next if is_major_tick == false && minor_ticks_visible() == false
+
+        if (value * minor_ticks_px_between() - offset).negative?
+          puts "FirstTick is negative. lower=#{lower} upper=#{upper} value=#{value} minor_ticks_px_between=#{minor_ticks_px_between} offset=#{offset}"
+        end
 
         result << [
           value * minor_ticks_px_between() - offset,
@@ -152,6 +155,7 @@ module SolvingBits
     
     def render viewport
       viewport.draw_outline
+
       if vertical?
         render_vertical viewport
       else
@@ -186,6 +190,7 @@ module SolvingBits
           viewport.right - x
         end
 
+        # puts "ticks: x=#{x} adjusted_x=#{adjusted_x} left=#{viewport.left}"
         tick_edge = (is_major_tick ? major_tick_edge : minor_tick_edge)
         viewport.canvas.line(
           x1: adjusted_x,
@@ -269,6 +274,14 @@ module SolvingBits
       baseline = standard_direction? ? viewport.right : viewport.left
       @calculations[:baseline] = baseline
 
+      if standard_direction?
+        major_tick_edge = baseline - major_ticks_length
+        minor_tick_edge = baseline - minor_ticks_length
+      else
+        major_tick_edge = baseline + major_ticks_length
+        minor_tick_edge = baseline + minor_ticks_length
+      end
+# ----
       viewport.canvas.line(
         x1: baseline,
         y1: top,
@@ -277,15 +290,6 @@ module SolvingBits
         style: 'stroke:black;'
       )
 
-      if standard_direction?
-        major_tick_edge = baseline - major_ticks_length
-        minor_tick_edge = baseline - minor_ticks_length
-      else
-        major_tick_edge = baseline + major_ticks_length
-        minor_tick_edge = baseline + minor_ticks_length
-      end
-
-
       ticks.each do |y, is_major_tick, label|
         adjusted_y = if coordinate_values_move_in_same_direction_as_data_values?
           viewport.top + y
@@ -293,9 +297,8 @@ module SolvingBits
           viewport.bottom - y
         end
 
-        tick_edge = (is_major_tick ? major_tick_edge : minor_tick_edge)
         viewport.canvas.line(
-          x1: tick_edge,
+          x1: (is_major_tick ? major_tick_edge : minor_tick_edge),
           y1: adjusted_y,
           x2: baseline,
           y2: adjusted_y,
@@ -304,14 +307,14 @@ module SolvingBits
         if major_ticks_label_visible() && is_major_tick
           viewport.canvas.text(
             label,
-            x: tick_edge,
+            x: major_tick_edge,
             y: adjusted_y,
             style: "font: italic #{major_ticks_label_font_size_px}px sans-serif",
             text_anchor: (standard_direction? ? 'end' : 'start'),
             alignment_baseline: 'middle'
           )
-          @calculations[:tick_label_baseline] = tick_edge
-          @calculations[:tick_label_center] = adjusted_y
+          # @calculations[:tick_label_baseline] = major_tick_edge
+          # @calculations[:tick_label_center] = adjusted_y
         end
       end
 
