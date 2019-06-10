@@ -154,7 +154,7 @@ module SolvingBits
     end
     
     def render viewport
-      viewport.draw_outline
+      # viewport.draw_outline
 
       if vertical?
         render_vertical viewport

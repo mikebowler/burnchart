@@ -115,7 +115,7 @@ module SolvingBits
         end.to raise_error('Major ticks must be a multiple of minor: 35 and 10')
       end
 
-      xit 'should calculate ticks with type of Date' do
+      it 'should calculate ticks with type of Date' do
         component = LinearAxis.new(
          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 1, px_between: 10, show_lowest_value: true },

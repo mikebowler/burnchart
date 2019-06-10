@@ -51,8 +51,6 @@ module SolvingBits
     end
 
     def to_svg svg_flavour = :full
-      puts "to_svg(#{svg_flavour.inspect})"
-
       output = +''
 
       if svg_flavour == :full
