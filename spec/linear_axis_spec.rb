@@ -133,7 +133,7 @@ module SolvingBits
         expect(external).to eql(date)
       end
 
-      xit 'should calculate ticks with type of Date' do
+      it 'should calculate ticks with type of Date' do
         component = LinearAxis.new(
          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 1, px_between: 10, show_lowest_value: true },
@@ -147,9 +147,9 @@ module SolvingBits
 
         expect(component.ticks true).to eq(
           [
-            [0,  true, '2019-01-11'],
-            [10, true, '2019-01-12'],
-            [20, true, '2019-01-13']
+            [0,  false, '2019-01-11'],
+            [10, false, '2019-01-12'],
+            [20, false, '2019-01-13']
           ]
         )
       end
