@@ -40,8 +40,8 @@ module SolvingBits
       @calculations = {}
       initialize_configuration params: params
 
-      self.values_lower_bound = convert_to_internal_value(values_lower_bound())
-      self.values_upper_bound = convert_to_internal_value(values_upper_bound())
+      @values_lower_bound_internal = convert_to_internal_value(values_lower_bound())
+      @values_upper_bound_internal = convert_to_internal_value(values_upper_bound())
 
       if values_lower_bound() > values_upper_bound()
         raise 'Lower bound must be less than upper: ' \
@@ -80,29 +80,21 @@ module SolvingBits
     # The internal represention that we use for the value may not be the same
     # as what's passed in. Convert.
     def convert_to_internal_value value
+      puts "value=#{value} class=#{value.class} unit=#{values_unit()}"
       if values_unit() == Date
-        # value.jd
         (value.to_time.to_f / SECONDS_PER_DAY).to_i
+      elsif values_unit == Integer
+        value.to_i
       else
-        value
-      end
-    end
-
-    # The internal represention that we use for the value may not be the same
-    # as what's passed in. Convert.
-    def convert_to_external_value value
-      if values_unit() == Date
-        Time.at(value * SECONDS_PER_DAY).to_date
-      else
-        value
+        raise "Unexpected unit: #{values_unit()}"
       end
     end
 
     # Returns an array of these: [px_position, is_major_tick, label]
-    def ticks
+    def ticks debug=false
       formatter = values_formatter() || ->(value) { value.to_s }
-      lower = values_lower_bound()
-      upper = values_upper_bound()
+      lower = @values_lower_bound_internal
+      upper = @values_upper_bound_internal
 
       result = []
       offset = lower * minor_ticks_px_between()
@@ -112,20 +104,18 @@ module SolvingBits
         first_tick = lower + minor_ticks_every()
       end
 
+      tick_count = 0
       first_tick.step(upper, minor_ticks_every()) do |value|
         is_major_tick = (value % major_ticks_every()).zero? && major_ticks_visible()
 
         next if is_major_tick == false && minor_ticks_visible() == false
 
-        if (value * minor_ticks_px_between() - offset).negative?
-          puts "FirstTick is negative. lower=#{lower} upper=#{upper} value=#{value} minor_ticks_px_between=#{minor_ticks_px_between} offset=#{offset}"
-        end
-
         result << [
           value * minor_ticks_px_between() - offset,
           is_major_tick,
-          formatter.call(convert_to_external_value(value))
+          formatter.call(values_lower_bound() + (tick_count*minor_ticks_every()))
         ]
+        tick_count += 1
       end
       result
     end
@@ -134,7 +124,7 @@ module SolvingBits
       value = convert_to_internal_value value
 
       value_delta = values_upper_bound() - values_lower_bound()
-      value_percent = (value - values_lower_bound()) * 1.0 / value_delta
+      value_percent = (value - @values_lower_bound_internal) * 1.0 / value_delta
 
       coordinate_delta = upper_coordinate - lower_coordinate
 
