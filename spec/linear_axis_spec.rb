@@ -75,7 +75,7 @@ module SolvingBits
         )
       end
 
-      xit 'should draw major ticks as minor when major ticks are hidden' do
+      it 'should draw major ticks as minor when major ticks are hidden' do
         component = LinearAxis.new(
           positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5 },

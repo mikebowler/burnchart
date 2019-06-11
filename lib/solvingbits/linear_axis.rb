@@ -100,11 +100,12 @@ module SolvingBits
       offset = lower * minor_ticks_px_between()
       first_tick = lower - (lower % minor_ticks_every())
 
+      tick_count = 0
       if minor_ticks_show_lowest_value() == false && first_tick == lower
         first_tick = lower + minor_ticks_every()
+        tick_count = 1
       end
 
-      tick_count = 0
       first_tick.step(upper, minor_ticks_every()) do |value|
         is_major_tick = (value % major_ticks_every()).zero? && major_ticks_visible()
 
@@ -113,7 +114,7 @@ module SolvingBits
         result << [
           value * minor_ticks_px_between() - offset,
           is_major_tick,
-          formatter.call(values_lower_bound() + (tick_count*minor_ticks_every()))
+          formatter.call(values_lower_bound() + (tick_count * minor_ticks_every()))
         ]
         tick_count += 1
       end
