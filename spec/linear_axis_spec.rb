@@ -6,7 +6,7 @@ require 'date'
 module SolvingBits
   RSpec.describe LinearAxis do
     context 'ticks' do
-      xit 'should calculate ticks with lower bound of zero' do
+      it 'should calculate ticks with lower bound of zero' do
         component = LinearAxis.new(
          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5 },
@@ -24,7 +24,7 @@ module SolvingBits
         )
       end
 
-      xit 'should calculate ticks with non-zero lower bound' do
+      it 'should calculate ticks with non-zero lower bound' do
         component = LinearAxis.new(
           positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5 },
