@@ -60,7 +60,7 @@ module SolvingBits
         )
       end
 
-      xit 'hide minor ticks when specified' do
+      it 'hide minor ticks when specified' do
         component = LinearAxis.new(
           positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, visible: false, px_between: 5 },

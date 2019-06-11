@@ -109,13 +109,13 @@ module SolvingBits
       first_tick.step(upper, minor_ticks_every()) do |value|
         is_major_tick = (value % major_ticks_every()).zero? && major_ticks_visible()
 
-        next if is_major_tick == false && minor_ticks_visible() == false
-
-        result << [
-          value * minor_ticks_px_between() - offset,
-          is_major_tick,
-          formatter.call(values_lower_bound() + (tick_count * minor_ticks_every()))
-        ]
+        if is_major_tick || minor_ticks_visible()
+          result << [
+            value * minor_ticks_px_between() - offset,
+            is_major_tick,
+            formatter.call(values_lower_bound() + (tick_count * minor_ticks_every()))
+          ]
+        end
         tick_count += 1
       end
       result
