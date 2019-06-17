@@ -56,7 +56,7 @@ module SolvingBits
           "#{major_ticks_every()} and #{minor_ticks_every()}"
       end
 
-      if values_unit() == Date
+      if day_unit?
         @gmt_offset = values_lower_bound().to_time.gmt_offset
         validate_same_timezone values_upper_bound()
       end
@@ -64,8 +64,12 @@ module SolvingBits
       validate_positioning_arguments
     end
 
+    def day_unit?
+      return values_unit() == Date
+    end
+
     def validate_same_timezone value
-      return if values_unit() != Date
+      return unless day_unit?
       return if value.to_time.gmt_offset == @gmt_offset
 
       raise "This value (#{value.inspect}) " \
@@ -106,7 +110,7 @@ module SolvingBits
     def convert_to_internal_value value
       value = fix_ambigious_value value
 
-      if values_unit() == Date
+      if day_unit?
         (BigDecimal(value.to_time.to_i) / SECONDS_PER_DAY)
       elsif values_unit == Integer
         value.to_i
@@ -136,7 +140,7 @@ module SolvingBits
 
         if is_major_tick || minor_ticks_visible()
           display_value = values_lower_bound()
-          display_value = display_value.to_date if values_unit() == Date
+          display_value = display_value.to_date if day_unit?
 
           result << [
             (tick * minor_ticks_px_between() - offset).to_i,
@@ -261,7 +265,7 @@ module SolvingBits
       height = 0
       width = 0
 
-      if values_unit() == Date
+      if day_unit?
         upper_seconds = values_upper_bound().to_time.to_i
         lower_seconds = values_lower_bound().to_time.to_i
         delta = (BigDecimal(upper_seconds - lower_seconds) / SECONDS_PER_DAY) + 1
