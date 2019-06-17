@@ -404,5 +404,20 @@ module SolvingBits
         )
       end
     end
+
+    it 'should have correct width when using time horizontally' do
+      component = LinearAxis.new(
+       positioning: { axis: 'bottom', origin: 'left' },
+        minor_ticks: { every: 1, px_between: 10 },
+        major_ticks: { every: 30 },
+        values: {
+          unit: Date,
+          lower_bound: DateTime.parse('2019-01-01').to_time,
+          upper_bound: DateTime.parse('2019-01-03').to_time
+        }
+      )
+
+      expect(component.preferred_size.width).to eq 30
+    end
   end
 end
