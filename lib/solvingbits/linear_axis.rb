@@ -107,7 +107,7 @@ module SolvingBits
       value = fix_ambigious_value value
 
       if values_unit() == Date
-        (BigDecimal(value.to_time.to_i) / SECONDS_PER_DAY) #.to_i
+        (BigDecimal(value.to_time.to_i) / SECONDS_PER_DAY)
       elsif values_unit == Integer
         value.to_i
       else
@@ -134,7 +134,6 @@ module SolvingBits
       first_tick.step(upper, minor_ticks_every()) do |tick|
         is_major_tick = (tick % major_ticks_every()).zero? && major_ticks_visible()
 
-        puts "ticks() tick=#{tick}" if debug
         if is_major_tick || minor_ticks_visible()
           display_value = values_lower_bound()
           display_value = display_value.to_date if values_unit() == Date
@@ -155,7 +154,6 @@ module SolvingBits
       validate_same_timezone value
 
       internal_value = convert_to_internal_value value
-      puts "to_coordinate_space() value=#{value} internal_value=#{internal_value}"
 
       value_delta = @values_upper_bound_internal - @values_lower_bound_internal
       value_percent = (internal_value - @values_lower_bound_internal) * 1.0 / value_delta
@@ -214,7 +212,6 @@ module SolvingBits
           viewport.right - x
         end
 
-        # puts "ticks: x=#{x} adjusted_x=#{adjusted_x} left=#{viewport.left}"
         tick_edge = (is_major_tick ? major_tick_edge : minor_tick_edge)
         viewport.canvas.line(
           x1: adjusted_x,
