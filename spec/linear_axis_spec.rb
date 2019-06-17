@@ -115,6 +115,7 @@ module SolvingBits
         end.to raise_error('Major ticks must be a multiple of minor: 35 and 10')
       end
 
+      # This is currently returning the wrong offsets per date
       it 'should calculate ticks with type of Date' do
         component = LinearAxis.new(
          positioning: { axis: 'bottom', origin: 'left' },
@@ -123,6 +124,27 @@ module SolvingBits
           values: {
             lower_bound: Date.parse('2019-01-11'),
             upper_bound: Date.parse('2019-01-13'),
+            unit: Date
+          }
+        )
+
+        expect(component.ticks true).to eq(
+          [
+            [0,  false, '2019-01-11'],
+            [10, false, '2019-01-12'],
+            [20, false, '2019-01-13']
+          ]
+        )
+      end
+
+      it 'should calculate ticks with type of Time' do
+        component = LinearAxis.new(
+         positioning: { axis: 'bottom', origin: 'left' },
+          minor_ticks: { every: 1, px_between: 10, show_lowest_value: true },
+          major_ticks: { every: 1, visible: false },
+          values: {
+            lower_bound: Time.parse('2019-01-11T00:00Z'),
+            upper_bound: Time.parse('2019-01-13T00:00Z'),
             unit: Date
           }
         )
@@ -188,22 +210,32 @@ module SolvingBits
         expect(actual).to eq(expected)
       end
 
-      it 'should convert to coordinate space when value is date' do
+      it 'should convert to coordinate space when value is a Time' do
         component = LinearAxis.new(
           positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5 },
           major_ticks: { every: 30 },
           values: {
             lower_bound: Date.parse('2019-01-01'),
-            upper_bound: Date.parse('2019-01-05'),
+            upper_bound: Date.parse('2019-01-02'),
             unit: Date
           }
         )
 
-        inputs = [Date.parse('2019-01-02')]
-        expected = [25]
+        inputs = [
+          Date.parse('2019-01-01'),
+          Time.parse('2019-01-01T00:00Z'),
+          Time.parse('2019-01-01T06:00Z'),
+          Time.parse('2019-01-01T12:00Z'),
+          Time.parse('2019-01-01T18:00Z'),
+          Time.parse('2019-01-02T00:00Z'),
+          Date.parse('2019-01-02')
+        ]
+        expected = [0, 0, 25, 50, 75, 100, 100]
         actual = inputs.collect do |i|
-          component.to_coordinate_space value: i, lower_coordinate: 0, upper_coordinate: 100
+          component.to_coordinate_space(
+            value: i, lower_coordinate: 0, upper_coordinate: 100
+          )
         end
         expect(actual).to eq(expected)
       end

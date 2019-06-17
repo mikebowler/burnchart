@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-
+require 'bigdecimal'
 require 'date'
 
 module SolvingBits
-  SECONDS_PER_DAY = 60 * 60 * 24
+  SECONDS_PER_DAY = BigDecimal(60 * 60 * 24)
   class LinearAxis < SvgComponent
     include Configurable
 
@@ -40,6 +40,9 @@ module SolvingBits
       @calculations = {}
       initialize_configuration params: params
 
+      @values_lower_bound = fix_ambigious_value values_lower_bound()
+      @values_upper_bound = fix_ambigious_value values_upper_bound()
+
       @values_lower_bound_internal = convert_to_internal_value(values_lower_bound())
       @values_upper_bound_internal = convert_to_internal_value(values_upper_bound())
 
@@ -53,7 +56,21 @@ module SolvingBits
           "#{major_ticks_every()} and #{minor_ticks_every()}"
       end
 
+      if values_unit() == Date
+        @gmt_offset = values_lower_bound().to_time.gmt_offset
+        validate_same_timezone values_upper_bound()
+      end
+
       validate_positioning_arguments
+    end
+
+    def validate_same_timezone value
+      return if values_unit() != Date
+      return if value.to_time.gmt_offset == @gmt_offset
+
+      raise "This value (#{value.inspect}) " \
+        "is in a different timezone (#{value.to_time.gmt_offset / 60 / 60})" \
+        " than the lower bound (#{@gmt_offset / 60 / 60}). This is likely a bug."
     end
 
     def validate_positioning_arguments
@@ -77,12 +94,20 @@ module SolvingBits
       text.to_s.length * estimated_char_width
     end
 
+    def fix_ambigious_value value
+        # Dates are ambiguous because they don't use timezones so convert
+        # to something that does.
+        value = DateTime.new value.year, value.month, value.day if value.is_a? Date
+        value
+    end
+
     # The internal represention that we use for the value may not be the same
     # as what's passed in. Convert.
     def convert_to_internal_value value
-      puts "value=#{value} class=#{value.class} unit=#{values_unit()}"
+      value = fix_ambigious_value value
+
       if values_unit() == Date
-        (value.to_time.to_f / SECONDS_PER_DAY).to_i
+        (BigDecimal(value.to_time.to_i) / SECONDS_PER_DAY) #.to_i
       elsif values_unit == Integer
         value.to_i
       else
@@ -106,14 +131,18 @@ module SolvingBits
         tick_count = 1
       end
 
-      first_tick.step(upper, minor_ticks_every()) do |value|
-        is_major_tick = (value % major_ticks_every()).zero? && major_ticks_visible()
+      first_tick.step(upper, minor_ticks_every()) do |tick|
+        is_major_tick = (tick % major_ticks_every()).zero? && major_ticks_visible()
 
+        puts "ticks() tick=#{tick}" if debug
         if is_major_tick || minor_ticks_visible()
+          display_value = values_lower_bound()
+          display_value = display_value.to_date if values_unit() == Date
+
           result << [
-            value * minor_ticks_px_between() - offset,
+            (tick * minor_ticks_px_between() - offset).to_i,
             is_major_tick,
-            formatter.call(values_lower_bound() + (tick_count * minor_ticks_every()))
+            formatter.call(display_value + (tick_count * minor_ticks_every()))
           ]
         end
         tick_count += 1
@@ -122,10 +151,14 @@ module SolvingBits
     end
 
     def to_coordinate_space value:, lower_coordinate:, upper_coordinate:
-      value = convert_to_internal_value value
+      value = fix_ambigious_value value
+      validate_same_timezone value
 
-      value_delta = values_upper_bound() - values_lower_bound()
-      value_percent = (value - @values_lower_bound_internal) * 1.0 / value_delta
+      internal_value = convert_to_internal_value value
+      puts "to_coordinate_space() value=#{value} internal_value=#{internal_value}"
+
+      value_delta = @values_upper_bound_internal - @values_lower_bound_internal
+      value_percent = (internal_value - @values_lower_bound_internal) * 1.0 / value_delta
 
       coordinate_delta = upper_coordinate - lower_coordinate
 
