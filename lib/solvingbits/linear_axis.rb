@@ -261,24 +261,24 @@ module SolvingBits
       height = 0
       width = 0
 
+      if values_unit() == Date
+        upper_seconds = values_upper_bound().to_time.to_i
+        lower_seconds = values_lower_bound().to_time.to_i
+        delta = (BigDecimal(upper_seconds - lower_seconds) / SECONDS_PER_DAY) + 1
+      else
+        delta = values_upper_bound - values_lower_bound
+      end
+
       if vertical?
         width = major_ticks_length()
         width += label_width(values_upper_bound().to_s) if major_ticks_label_visible()
         width += label_font_size_px() if label_visible()
 
-        height = (values_upper_bound() * minor_ticks_px_between()).to_i + top_pad
+        height = (delta * minor_ticks_px_between()).to_i + top_pad
       else
         height = major_ticks_length
         height += major_ticks_label_font_size_px() if major_ticks_label_visible()
         height += label_font_size_px() if label_visible()
-
-        if values_unit() == Date
-          upper_seconds = values_upper_bound().to_time.to_i
-          lower_seconds = values_lower_bound().to_time.to_i
-          delta = (BigDecimal(upper_seconds - lower_seconds) / SECONDS_PER_DAY) + 1
-        else
-          delta = values_upper_bound - values_lower_bound
-        end
         
         width = (delta * minor_ticks_px_between).to_i
       end

@@ -419,5 +419,20 @@ module SolvingBits
 
       expect(component.preferred_size.width).to eq 30
     end
+
+    it 'should have correct height when using time vertically' do
+      component = LinearAxis.new(
+       positioning: { axis: 'left', origin: 'top' },
+        minor_ticks: { every: 1, px_between: 10 },
+        major_ticks: { every: 30 },
+        values: {
+          unit: Date,
+          lower_bound: DateTime.parse('2019-01-01').to_time,
+          upper_bound: DateTime.parse('2019-01-03').to_time
+        }
+      )
+
+      expect(component.preferred_size.height).to eq 36
+    end
   end
 end
