@@ -12,7 +12,7 @@ module SolvingBits
     end
 
     it 'should handle to_s' do
-      expect(Point.new(x: 5, y: 6).to_s).to eq('Point(x:5,y:6)')
+      expect(Point.new(x: 5, y: 6).to_s).to eq('Point(x:5, y:6, metadata:nil)')
     end
   end
 end

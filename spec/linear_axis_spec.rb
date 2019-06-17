@@ -349,33 +349,58 @@ module SolvingBits
           left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
         )
         expect(component.calculations).to eq(args[:expected])
+        expect(size).to eq(args[:expected_size])
       end
 
       it 'axis bottom and origin left' do
         test_positioning(
           axis: 'bottom', origin: 'left',
-          expected: { baseline: 0, label_baseline: 31, tick_label_baseline: 18, tick_label_center: 50 }
+          expected: {
+            baseline: 0,
+            label_baseline: 31,
+            tick_label_baseline: 18,
+            tick_label_center: 50
+          },
+          expected_size: Size.new(width: 50, height: 31)
         )
       end
 
       it 'axis bottom and origin right' do
         test_positioning(
           axis: 'bottom', origin: 'right',
-          expected: { baseline: 0, label_baseline: 31, tick_label_baseline: 18, tick_label_center: 0 }
+          expected: { 
+            baseline: 0,
+            label_baseline: 31,
+            tick_label_baseline: 18,
+            tick_label_center: 0
+          },
+          expected_size: Size.new(width: 50, height: 31)
         )
       end
 
       it 'axis top and origin left' do
         test_positioning(
           axis: 'top', origin: 'left',
-          expected: { baseline: 31, label_baseline: 13, tick_label_baseline: 26, tick_label_center: 50 }
+          expected: { 
+            baseline: 31,
+            label_baseline: 13,
+            tick_label_baseline: 26,
+            tick_label_center: 50
+          },
+          expected_size: Size.new(width: 50, height: 31)
         )
       end
 
       it 'axis top and origin right' do
         test_positioning(
           axis: 'top', origin: 'right',
-          expected: { baseline: 31, label_baseline: 13, tick_label_baseline: 26, tick_label_center: 0 }
+          expected: {
+            baseline: 31,
+            label_baseline: 13,
+            tick_label_baseline: 26,
+            tick_label_center: 0
+          },
+          expected_size: Size.new(width: 50, height: 31)
         )
       end
     end

@@ -161,10 +161,13 @@ module SolvingBits
       coordinate_delta = upper_coordinate - lower_coordinate
 
       if coordinate_values_move_in_same_direction_as_data_values?
-        (coordinate_delta * value_percent).to_i + lower_coordinate
+        # puts "coordinate_delta=#{coordinate_delta} lower_coordinate=#{lower_coordinate} upper_coordinate=#{upper_coordinate}"
+        result = (coordinate_delta * value_percent).to_i + lower_coordinate
       else
-        upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
+        result = upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
       end
+      # puts "to_coordinate_space: value=#{value} %=#{value_percent} result=#{result}"
+      result
     end
 
     def coordinate_values_move_in_same_direction_as_data_values?
@@ -255,7 +258,9 @@ module SolvingBits
     end
 
     def preferred_size
-      height, width = 0, 0
+      height = 0
+      width = 0
+
       if vertical?
         width = major_ticks_length()
         width += label_width(values_upper_bound().to_s) if major_ticks_label_visible()
@@ -267,7 +272,14 @@ module SolvingBits
         height += major_ticks_label_font_size_px() if major_ticks_label_visible()
         height += label_font_size_px() if label_visible()
 
-        delta = values_upper_bound - values_lower_bound
+        if values_unit() == Date
+          upper_seconds = values_upper_bound().to_time.to_i
+          lower_seconds = values_lower_bound().to_time.to_i
+          delta = (BigDecimal(upper_seconds - lower_seconds) / SECONDS_PER_DAY) + 1
+        else
+          delta = values_upper_bound - values_lower_bound
+        end
+        
         width = (delta * minor_ticks_px_between).to_i
       end
 

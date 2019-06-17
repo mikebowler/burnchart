@@ -15,7 +15,7 @@ module SolvingBits
     end
 
     def to_s
-      "Point(x:#{@x},y:#{@y})"
+      "Point(x:#{@x}, y:#{@y}, metadata:#{@metadata.inspect})"
     end
 
     # A placeholder for information that needs to be passed with the point
