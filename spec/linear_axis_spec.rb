@@ -115,7 +115,6 @@ module SolvingBits
         end.to raise_error('Major ticks must be a multiple of minor: 35 and 10')
       end
 
-      # This is currently returning the wrong offsets per date
       it 'should calculate ticks with type of Date' do
         component = LinearAxis.new(
          positioning: { axis: 'bottom', origin: 'left' },
@@ -137,19 +136,19 @@ module SolvingBits
         )
       end
 
-      it 'should calculate ticks with type of Time' do
+      it 'should calculate ticks with type of Time and NOT at midnight' do
         component = LinearAxis.new(
          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 1, px_between: 10, show_lowest_value: true },
           major_ticks: { every: 1, visible: false },
           values: {
-            lower_bound: Time.parse('2019-01-11T00:00Z'),
-            upper_bound: Time.parse('2019-01-13T00:00Z'),
+            lower_bound: Time.parse('2019-05-08T17:57:07Z'),
+            upper_bound: Time.parse('2019-05-22T13:07:06Z'),
             unit: Date
           }
         )
 
-        expect(component.ticks true).to eq(
+        expect(component.ticks ).to eq(
           [
             [0,  false, '2019-01-11'],
             [10, false, '2019-01-12'],

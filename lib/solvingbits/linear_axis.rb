@@ -132,7 +132,7 @@ module SolvingBits
       tick_count = 0
       if minor_ticks_show_lowest_value() == false && first_tick == lower
         first_tick = lower + minor_ticks_every()
-        tick_count = 1
+        tick_count += 1
       end
 
       first_tick.step(upper, minor_ticks_every()) do |tick|
@@ -141,6 +141,14 @@ module SolvingBits
         if is_major_tick || minor_ticks_visible()
           display_value = values_lower_bound()
           display_value = display_value.to_date if day_unit?
+
+          # Debug logic. This should never be negative
+          if (tick * minor_ticks_px_between() - offset).to_i < 0
+            puts "tick=#{tick} coordinate=#{(tick * minor_ticks_px_between() - offset).to_i}"
+            puts formatter.call(display_value + (tick_count * minor_ticks_every()))
+            puts "lower=#{values_lower_bound()} upper=#{values_upper_bound()}"
+            puts
+          end
 
           result << [
             (tick * minor_ticks_px_between() - offset).to_i,
