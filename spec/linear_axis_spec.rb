@@ -127,7 +127,7 @@ module SolvingBits
           }
         )
 
-        expect(component.ticks true).to eq(
+        expect(component.ticks).to eq(
           [
             [0,  false, '2019-01-11'],
             [10, false, '2019-01-12'],
@@ -135,28 +135,6 @@ module SolvingBits
           ]
         )
       end
-
-      it 'should calculate ticks with type of Time and NOT at midnight' do
-        component = LinearAxis.new(
-         positioning: { axis: 'bottom', origin: 'left' },
-          minor_ticks: { every: 1, px_between: 10, show_lowest_value: true },
-          major_ticks: { every: 1, visible: false },
-          values: {
-            lower_bound: Time.parse('2019-05-08T17:57:07Z'),
-            upper_bound: Time.parse('2019-05-22T13:07:06Z'),
-            unit: Date
-          }
-        )
-
-        expect(component.ticks ).to eq(
-          [
-            [0,  false, '2019-01-11'],
-            [10, false, '2019-01-12'],
-            [20, false, '2019-01-13']
-          ]
-        )
-      end
-
     end
 
     context 'axis: bottom, origin: left' do
