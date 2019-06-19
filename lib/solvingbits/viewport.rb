@@ -40,8 +40,7 @@ module SolvingBits
       else
         @vertical_axis.to_coordinate_space(
           value: value,
-          lower_coordinate: bottom(),
-          upper_coordinate: top()
+          lower_coordinate: bottom()
         )
       end
     end

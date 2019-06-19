@@ -153,14 +153,16 @@ module SolvingBits
       result
     end
 
-    def to_coordinate_space value:, lower_coordinate:, upper_coordinate:
+    def to_coordinate_space value:, lower_coordinate:
+      preferred_size() unless @baseline_length
+      upper_coordinate = lower_coordinate + @baseline_length
       value = fix_ambigious_value value
       validate_same_timezone value
 
       internal_value = convert_to_internal_value value
 
       value_delta = @values_upper_bound_internal - @values_lower_bound_internal
-      value_percent = (internal_value - @values_lower_bound_internal) * 1.0 / value_delta
+      value_percent = BigDecimal(internal_value - @values_lower_bound_internal) / value_delta
 
       coordinate_delta = upper_coordinate - lower_coordinate
 
@@ -273,18 +275,19 @@ module SolvingBits
         delta = values_upper_bound - values_lower_bound
       end
 
+      @baseline_length = (delta * minor_ticks_px_between()).to_i
       if vertical?
         width = major_ticks_length()
         width += label_width(values_upper_bound().to_s) if major_ticks_label_visible()
         width += label_font_size_px() if label_visible()
 
-        height = (delta * minor_ticks_px_between()).to_i + top_pad
+        height = @baseline_length + top_pad
       else
         height = major_ticks_length
         height += major_ticks_label_font_size_px() if major_ticks_label_visible()
         height += label_font_size_px() if label_visible()
         
-        width = (delta * minor_ticks_px_between).to_i
+        width = @baseline_length
       end
 
       Size.new height: height, width: width

@@ -142,15 +142,15 @@ module SolvingBits
       it 'should convert to coordinate space when lower value and coordinates are zero' do
         component = LinearAxis.new(
           positioning: { axis: 'bottom', origin: 'left' },
-          minor_ticks: { every: 10, px_between: 5 },
+          minor_ticks: { every: 1, px_between: 2 },
           major_ticks: { every: 30 },
           values: { lower_bound: 0, upper_bound: 40 }
         )
 
-        inputs = [10, 20, 40]
-        expected = [25, 50, 100]
+        inputs = [0, 20, 40]
+        expected = [0, 40, 80]
         actual = inputs.collect do |i|
-          component.to_coordinate_space value: i, lower_coordinate: 0, upper_coordinate: 100
+          component.to_coordinate_space value: i, lower_coordinate: 0
         end
         expect(actual).to eq(expected)
       end
@@ -158,15 +158,15 @@ module SolvingBits
       it 'should convert to coordinate space when lower value is offset and coordinates are not' do
         component = LinearAxis.new(
           positioning: { axis: 'bottom', origin: 'left' },
-          minor_ticks: { every: 10, px_between: 5 },
+          minor_ticks: { every: 1, px_between: 2 },
           major_ticks: { every: 30 },
           values: { lower_bound: 10, upper_bound: 50 }
         )
 
-        inputs = [20, 30, 50]
-        expected = [25, 50, 100]
+        inputs = [10, 30, 50]
+        expected = [0, 40, 80]
         actual = inputs.collect do |i|
-          component.to_coordinate_space value: i, lower_coordinate: 0, upper_coordinate: 100
+          component.to_coordinate_space value: i, lower_coordinate: 0
         end
         expect(actual).to eq(expected)
       end
@@ -174,15 +174,15 @@ module SolvingBits
       it 'should convert to coordinate space when lower coordinate is offset and value bounds are not' do
         component = LinearAxis.new(
           positioning: { axis: 'bottom', origin: 'left' },
-          minor_ticks: { every: 10, px_between: 5 },
+          minor_ticks: { every: 1, px_between: 2 },
           major_ticks: { every: 30 },
-          values: { lower_bound: 0, upper_bound: 40 }
+          values: { lower_bound: 0, upper_bound: 50 }
         )
 
-        inputs = [10, 20, 40]
-        expected = [35, 60, 110]
+        inputs = [0, 25, 50]
+        expected = [10, 60, 110]
         actual = inputs.collect do |i|
-          component.to_coordinate_space value: i, lower_coordinate: 10, upper_coordinate: 110
+          component.to_coordinate_space value: i, lower_coordinate: 10
         end
         expect(actual).to eq(expected)
       end
@@ -190,7 +190,7 @@ module SolvingBits
       it 'should convert to coordinate space when value is a Time' do
         component = LinearAxis.new(
           positioning: { axis: 'bottom', origin: 'left' },
-          minor_ticks: { every: 10, px_between: 5 },
+          minor_ticks: { every: 10, px_between: 50 },
           major_ticks: { every: 30 },
           values: {
             lower_bound: Date.parse('2019-01-01'),
@@ -211,7 +211,7 @@ module SolvingBits
         expected = [0, 0, 25, 50, 75, 100, 100]
         actual = inputs.collect do |i|
           component.to_coordinate_space(
-            value: i, lower_coordinate: 0, upper_coordinate: 100
+            value: i, lower_coordinate: 0
           )
         end
         expect(actual).to eq(expected)

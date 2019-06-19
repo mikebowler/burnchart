@@ -60,13 +60,11 @@ module SolvingBits
         Point.new(
           x: @x_axis.to_coordinate_space(
             value: point.x,
-            lower_coordinate: viewport.left,
-            upper_coordinate: viewport.right
+            lower_coordinate: viewport.left
           ),
           y: @y_axis.to_coordinate_space(
             value: point.y,
-            lower_coordinate: viewport.top,
-            upper_coordinate: viewport.bottom
+            lower_coordinate: viewport.top
           )
         ).tap { |p| p.metadata.merge! point.metadata }
       end
