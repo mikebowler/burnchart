@@ -146,6 +146,8 @@ module SolvingBits
           major_ticks: { every: 30 },
           values: { lower_bound: 0, upper_bound: 40 }
         )
+        # some initialization happens during preferred_size so call this first
+        component.preferred_size
 
         inputs = [0, 20, 40]
         expected = [0, 40, 80]
@@ -162,6 +164,8 @@ module SolvingBits
           major_ticks: { every: 30 },
           values: { lower_bound: 10, upper_bound: 50 }
         )
+        # some initialization happens during preferred_size so call this first
+        component.preferred_size
 
         inputs = [10, 30, 50]
         expected = [0, 40, 80]
@@ -178,6 +182,8 @@ module SolvingBits
           major_ticks: { every: 30 },
           values: { lower_bound: 0, upper_bound: 50 }
         )
+        # some initialization happens during preferred_size so call this first
+        component.preferred_size
 
         inputs = [0, 25, 50]
         expected = [10, 60, 110]
@@ -198,6 +204,9 @@ module SolvingBits
             unit: Date
           }
         )
+        
+        # some initialization happens during preferred_size so call this first
+        component.preferred_size
 
         inputs = [
           Date.parse('2019-01-01'),

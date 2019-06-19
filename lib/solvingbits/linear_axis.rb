@@ -154,7 +154,8 @@ module SolvingBits
     end
 
     def to_coordinate_space value:, lower_coordinate:
-      preferred_size() unless @baseline_length
+      raise "You should be calling preferred_size() before this method" unless @baseline_length
+
       upper_coordinate = lower_coordinate + @baseline_length
       value = fix_ambigious_value value
       validate_same_timezone value
