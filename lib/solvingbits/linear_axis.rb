@@ -238,7 +238,7 @@ module SolvingBits
           viewport.canvas.text(
             label,
             x: adjusted_x,
-            y: text_baseline, #major_tick_edge + major_ticks_label_font_size_px(),
+            y: text_baseline,
             style: "font: italic #{major_ticks_label_font_size_px()}px sans-serif",
             text_anchor: 'middle'
           )
@@ -253,7 +253,7 @@ module SolvingBits
         viewport.canvas.text(
           label_text(),
           x: viewport.right,
-          y: text_baseline, # viewport.bottom - label_font_size_px(),
+          y: text_baseline,
           style: "font: #{label_font_size_px()}px sans-serif",
           text_anchor: 'end',
           alignment_baseline: 'bottom'
@@ -292,8 +292,8 @@ module SolvingBits
     end
 
     # We need the top pad to ensure we aren't truncating labels
-    # TODO: Be smarter about this. We only need the padding if there is a label right at the
-    # top and today we're always putting padding just in case
+    # TODO: Be smarter about this. We only need the padding if there is a label
+    # right at the top and today we're always putting padding just in case
     def top_pad
       if major_ticks_label_visible()
         major_ticks_label_font_size_px() / 2
