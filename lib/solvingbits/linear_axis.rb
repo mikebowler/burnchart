@@ -154,7 +154,7 @@ module SolvingBits
     end
 
     def to_coordinate_space value:, lower_coordinate:
-      raise "You should be calling preferred_size() before this method" unless @baseline_length
+      raise 'You should call preferred_size() before this method' unless @baseline_length
 
       upper_coordinate = lower_coordinate + @baseline_length
       value = fix_ambigious_value value
@@ -168,17 +168,14 @@ module SolvingBits
       coordinate_delta = upper_coordinate - lower_coordinate
 
       if coordinate_values_move_in_same_direction_as_data_values?
-        # puts "coordinate_delta=#{coordinate_delta} lower_coordinate=#{lower_coordinate} upper_coordinate=#{upper_coordinate}"
-        result = (coordinate_delta * value_percent).to_i + lower_coordinate
+        (coordinate_delta * value_percent).to_i + lower_coordinate
       else
-        result = upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
+        upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
       end
-      # puts "to_coordinate_space: value=#{value} %=#{value_percent} result=#{result}"
-      result
     end
 
     def coordinate_values_move_in_same_direction_as_data_values?
-      %w[left top].include? positioning_origin() 
+      %w[left top].include? positioning_origin()
     end
 
     def vertical?
@@ -202,7 +199,7 @@ module SolvingBits
       viewport.canvas.line(
         x1: viewport.left,
         y1: baseline,
-        x2: viewport.right,
+        x2: viewport.left + @baseline_length,
         y2: baseline,
         style: 'stroke:black;'
       )
@@ -354,8 +351,6 @@ module SolvingBits
             text_anchor: (standard_direction? ? 'end' : 'start'),
             alignment_baseline: 'middle'
           )
-          # @calculations[:tick_label_baseline] = major_tick_edge
-          # @calculations[:tick_label_center] = adjusted_y
         end
       end
 
