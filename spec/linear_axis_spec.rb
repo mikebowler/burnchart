@@ -344,7 +344,7 @@ module SolvingBits
           expected: {
             baseline: 0,
             label_baseline: 31,
-            tick_label_baseline: 18,
+            tick_label_baseline: 5,
             tick_label_center: 50
           },
           expected_size: Size.new(width: 50, height: 31)
@@ -357,7 +357,7 @@ module SolvingBits
           expected: { 
             baseline: 0,
             label_baseline: 31,
-            tick_label_baseline: 18,
+            tick_label_baseline: 5,
             tick_label_center: 0
           },
           expected_size: Size.new(width: 50, height: 31)

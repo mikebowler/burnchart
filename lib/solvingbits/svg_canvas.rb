@@ -10,7 +10,12 @@ module SolvingBits
 
       module_eval <<-PRIMITIVE, __FILE__, __LINE__ + 1
       # puts <<-PRIMITIVE
-        def #{name} #{'text,' if takes_text} hash={}
+        def #{name} text=nil, hash={}
+          if text.is_a? Hash
+            hash = text
+            text = nil
+          end
+
           possible_args = [#{possible_args}]
           hash.keys.each do |key|
             raise "\#{key} is not an attribute on svg #{name}" unless possible_args.include? key
@@ -20,8 +25,8 @@ module SolvingBits
             tag << " \#{key.to_s.gsub('_','-')}='\#{hash[key]}'"
           end
 
-          if #{takes_text ? 'true' : 'false'}
-            tag << ">\#{text}</#{name}>"
+          if text
+            tag << ">" << text << "</#{name}>"
           elsif block_given?
             tag << '>'
             @svg << tag
@@ -41,8 +46,9 @@ module SolvingBits
     svg_primitive :rect, attrs: %w[x y width height style]
     svg_primitive :circle, attrs: %w[cx cy r fill]
     svg_primitive :path, attrs: %w[d fill stroke]
-    svg_primitive :text, attrs: %w[x y style text_anchor transform alignment_baseline], takes_text: true
-    svg_primitive :title, attrs: %w[style], takes_text: true
+    svg_primitive :text, attrs: %w[x y style text_anchor transform alignment_baseline dominant_baseline]
+    svg_primitive :tspan, attrs: %w[alignment_baseline dominant_baseline]
+    svg_primitive :title, attrs: %w[style]
 
     def initialize width: nil, height: nil
       @svg = +''
