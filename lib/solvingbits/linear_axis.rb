@@ -28,7 +28,7 @@ module SolvingBits
     attr_configurable :values_lower_bound, defaults_to: 0
     attr_configurable :values_upper_bound, defaults_to: 100
     attr_configurable :values_unit, defaults_to: Integer, only: [Integer, Date]
-    attr_configurable :values_formatter
+    attr_configurable :values_formatter, defaults_to: ->(value) { value.to_s }
 
     attr_configurable :label_text
     attr_configurable :label_visible, defaults_to: false, only: [true, false]
@@ -55,6 +55,8 @@ module SolvingBits
         raise 'Major ticks must be a multiple of minor: ' \
           "#{major_ticks_every()} and #{minor_ticks_every()}"
       end
+
+      @major_ticks_length = minor_ticks_length() unless major_ticks_visible()
 
       if day_unit?
         @gmt_offset = values_lower_bound().to_time.gmt_offset
@@ -121,7 +123,6 @@ module SolvingBits
 
     # Returns an array of these: [px_position, is_major_tick, label]
     def ticks
-      formatter = values_formatter() || ->(value) { value.to_s }
       lower = @values_lower_bound_internal
       upper = @values_upper_bound_internal
 
@@ -145,7 +146,7 @@ module SolvingBits
           result << [
             (tick * minor_ticks_px_between() - offset).to_i,
             is_major_tick,
-            formatter.call(display_value + (tick_count * minor_ticks_every()))
+            values_formatter().call(display_value + (tick_count * minor_ticks_every()))
           ]
         end
         tick_count += 1
@@ -183,7 +184,7 @@ module SolvingBits
     end
     
     def render viewport
-      viewport.draw_outline
+      # viewport.draw_outline
 
       if vertical?
         render_vertical viewport
@@ -212,7 +213,7 @@ module SolvingBits
         minor_tick_edge = baseline - minor_ticks_length
       end
 
-      alignment_baseline = positioning_axis() == 'top' ? 'before-edge' : 'baseline'
+      alignment_baseline = positioning_axis() == 'top' ? 'before-edge' : 'hanging'
 
       ticks.each do |x, is_major_tick, label|
         adjusted_x = if coordinate_values_move_in_same_direction_as_data_values?
@@ -285,18 +286,20 @@ module SolvingBits
       @baseline_length = (delta * minor_ticks_px_between()).to_i
       if vertical?
         width = major_ticks_length()
-        width += label_width(values_upper_bound().to_s) if major_ticks_label_visible()
+        if major_ticks_label_visible
+          label = values_formatter().call(values_upper_bound())
+          width += label_width(label)
+        end
         width += label_font_size_px() if label_visible()
 
         height = @baseline_length + top_pad
       else
-        height = major_ticks_length
+        height = major_ticks_length()
         height += major_ticks_label_font_size_px() if major_ticks_label_visible()
         height += label_font_size_px() if label_visible()
         
         width = @baseline_length
       end
-
       Size.new height: height, width: width
     end
 

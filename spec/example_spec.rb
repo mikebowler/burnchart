@@ -132,14 +132,14 @@ RSpec.describe 'Runnable examples' do
       inner_flow_panel.add SolvingBits::LinearAxis.new(
         positioning: { axis: axis, origin: origin },
         minor_ticks: { every: 1, px_between: 5, length: 4 },
-        major_ticks: { every: 10 },
+        major_ticks: { every: 10, length: 4 },
         values: { lower_bound: 0, upper_bound: 40 },
         label: { text: "axis: #{axis} origin: #{origin}", visible: true }
       )
     end
 
     File.open 'all_linear_axis.svg', 'w' do |file|
-      file.puts outer_flow_panel.to_svg :full
+      file.puts inner_flow_panel.to_svg :full
     end
   end
 end

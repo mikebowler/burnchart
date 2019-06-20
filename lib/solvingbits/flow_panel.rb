@@ -5,9 +5,9 @@ module SolvingBits
     include Configurable
 
     attr_configurable :gap, defaults_to: 0
-    attr_configurable :orientation, only: [:vertical, :horizontal], defaults_to: :horizontal
+    attr_configurable :orientation, only: %i[vertical horizontal], defaults_to: :horizontal
 
-    def initialize params={}
+    def initialize params = {}
       initialize_configuration params: params
       @components = []
     end
@@ -40,10 +40,12 @@ module SolvingBits
       end
       height += gap() * (@components.size() - 1) if vertical?
       width += gap() * (@components.size() - 1) if horizontal?
+      # puts "Flow panel width=#{width} height=#{height} vertical=#{vertical?}"
       Size.new width: width, height: height
     end
 
     def render viewport
+      # viewport.draw_outline color: 'blue'
       current_edge = vertical? ? viewport.top : viewport.left
 
       @components.each do |c|
