@@ -183,7 +183,7 @@ module SolvingBits
     end
     
     def render viewport
-      # viewport.draw_outline
+      viewport.draw_outline
 
       if vertical?
         render_vertical viewport
@@ -250,9 +250,13 @@ module SolvingBits
       end
 
       if label_visible()
-        text_baseline = viewport.bottom
-        # text_baseline = viewport.top + label_font_size_px() unless standard_direction?
-        text_baseline -= label_font_size_px if positioning_axis() == 'bottom'
+        if positioning_axis() == 'top'
+          text_baseline = viewport.top
+        else
+          text_baseline = viewport.bottom
+          text_baseline -= label_font_size_px
+        end
+
         @calculations[:label_baseline] = text_baseline
 
         viewport.canvas.text(
