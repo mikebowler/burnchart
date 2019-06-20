@@ -230,7 +230,13 @@ module SolvingBits
         
         if major_ticks_label_visible() && is_major_tick
           text_baseline = major_tick_edge
-          # text_baseline += major_ticks_label_font_size_px() if standard_direction?
+
+          if positioning_axis() == 'top'
+            text_baseline -= major_ticks_label_font_size_px() if positioning_axis() == 'top'
+            alignment_baseline = 'before-edge'
+          else
+            alignment_baseline = 'baseline'
+          end
 
           @calculations[:tick_label_baseline] = text_baseline
           @calculations[:tick_label_center] = adjusted_x
@@ -241,7 +247,7 @@ module SolvingBits
             y: text_baseline,
             style: "font: italic #{major_ticks_label_font_size_px()}px sans-serif",
             text_anchor: 'middle',
-            alignment_baseline: 'baseline'
+            alignment_baseline: alignment_baseline
           )
         end
       end
