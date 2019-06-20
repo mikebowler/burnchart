@@ -343,7 +343,7 @@ module SolvingBits
           axis: 'bottom', origin: 'left',
           expected: {
             baseline: 0,
-            label_baseline: 31,
+            label_baseline: 18,
             tick_label_baseline: 5,
             tick_label_center: 50
           },
@@ -356,7 +356,7 @@ module SolvingBits
           axis: 'bottom', origin: 'right',
           expected: { 
             baseline: 0,
-            label_baseline: 31,
+            label_baseline: 18,
             tick_label_baseline: 5,
             tick_label_center: 0
           },
@@ -369,7 +369,7 @@ module SolvingBits
           axis: 'top', origin: 'left',
           expected: { 
             baseline: 31,
-            label_baseline: 13,
+            label_baseline: 31,
             tick_label_baseline: 13,
             tick_label_center: 50
           },
@@ -382,7 +382,7 @@ module SolvingBits
           axis: 'top', origin: 'right',
           expected: {
             baseline: 31,
-            label_baseline: 13,
+            label_baseline: 31,
             tick_label_baseline: 13,
             tick_label_center: 0
           },

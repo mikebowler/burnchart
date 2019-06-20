@@ -212,6 +212,8 @@ module SolvingBits
         minor_tick_edge = baseline - minor_ticks_length
       end
 
+      alignment_baseline = positioning_axis() == 'top' ? 'before-edge' : 'baseline'
+
       ticks.each do |x, is_major_tick, label|
         adjusted_x = if coordinate_values_move_in_same_direction_as_data_values?
           x + viewport.left
@@ -231,12 +233,7 @@ module SolvingBits
         if major_ticks_label_visible() && is_major_tick
           text_baseline = major_tick_edge
 
-          if positioning_axis() == 'top'
-            text_baseline -= major_ticks_label_font_size_px() if positioning_axis() == 'top'
-            alignment_baseline = 'before-edge'
-          else
-            alignment_baseline = 'baseline'
-          end
+          text_baseline -= major_ticks_label_font_size_px() if positioning_axis == 'top'
 
           @calculations[:tick_label_baseline] = text_baseline
           @calculations[:tick_label_center] = adjusted_x
@@ -254,7 +251,8 @@ module SolvingBits
 
       if label_visible()
         text_baseline = viewport.bottom
-        text_baseline = viewport.top + label_font_size_px() unless standard_direction?
+        # text_baseline = viewport.top + label_font_size_px() unless standard_direction?
+        text_baseline -= label_font_size_px if positioning_axis() == 'bottom'
         @calculations[:label_baseline] = text_baseline
 
         viewport.canvas.text(
@@ -263,7 +261,7 @@ module SolvingBits
           y: text_baseline,
           style: "font: #{label_font_size_px()}px sans-serif",
           text_anchor: 'end',
-          alignment_baseline: 'bottom'
+          alignment_baseline: alignment_baseline
         )
       end
     end
