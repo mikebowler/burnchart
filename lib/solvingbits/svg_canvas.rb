@@ -42,12 +42,13 @@ module SolvingBits
       PRIMITIVE
     end
 
+    # Jun-2019: Firefox doesn't support alignment-baseline so use dominant-baseline instead
     svg_primitive :line, attrs: %w[x1 y1 x2 y2 style]
     svg_primitive :rect, attrs: %w[x y width height style]
     svg_primitive :circle, attrs: %w[cx cy r fill]
     svg_primitive :path, attrs: %w[d fill stroke]
-    svg_primitive :text, attrs: %w[x y style text_anchor transform alignment_baseline dominant_baseline]
-    svg_primitive :tspan, attrs: %w[alignment_baseline dominant_baseline]
+    svg_primitive :text, attrs: %w[x y style text_anchor transform dominant_baseline]
+    svg_primitive :tspan, attrs: %w[dominant_baseline]
     svg_primitive :title, attrs: %w[style]
 
     def initialize width: nil, height: nil

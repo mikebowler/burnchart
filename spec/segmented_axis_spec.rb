@@ -21,9 +21,9 @@ module SolvingBits
         )
         expect(canvas.to_svg(:partial)).to eq(
           "<line x1='0' y1='0' x2='300' y2='0' style='stroke:black;'/>" \
-          "<text x='50' y='14' text-anchor='middle' alignment-baseline='top'>1</text>" \
-          "<text x='150' y='14' text-anchor='middle' alignment-baseline='top'>2</text>" \
-          "<text x='250' y='14' text-anchor='middle' alignment-baseline='top'>3</text>"
+          "<text x='50' y='14' text-anchor='middle' dominant-baseline='top'>1</text>" \
+          "<text x='150' y='14' text-anchor='middle' dominant-baseline='top'>2</text>" \
+          "<text x='250' y='14' text-anchor='middle' dominant-baseline='top'>3</text>"
         )
       end
     end
@@ -44,9 +44,9 @@ module SolvingBits
         )
         expect(canvas.to_svg(:partial)).to eq(
           "<line x1='100' y1='0' x2='100' y2='300' style='stroke:black;'/>" \
-          "<text x='99' y='250' text-anchor='end' alignment-baseline='middle'>1</text>" \
-          "<text x='99' y='150' text-anchor='end' alignment-baseline='middle'>2</text>" \
-          "<text x='99' y='50' text-anchor='end' alignment-baseline='middle'>3</text>"
+          "<text x='99' y='250' text-anchor='end' dominant-baseline='middle'>1</text>" \
+          "<text x='99' y='150' text-anchor='end' dominant-baseline='middle'>2</text>" \
+          "<text x='99' y='50' text-anchor='end' dominant-baseline='middle'>3</text>"
         )
       end
     end

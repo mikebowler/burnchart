@@ -139,7 +139,7 @@ RSpec.describe 'Runnable examples' do
     end
 
     File.open 'all_linear_axis.svg', 'w' do |file|
-      file.puts inner_flow_panel.to_svg :full
+      file.puts outer_flow_panel.to_svg :full
     end
   end
 end

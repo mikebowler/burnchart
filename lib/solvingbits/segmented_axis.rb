@@ -48,7 +48,7 @@ module SolvingBits
           x: left_edge + (segments_width_px() / 2),
           y: viewport.top + segments_font_size_px + top_pad,
           text_anchor: 'middle',
-          alignment_baseline: 'top'
+          dominant_baseline: 'top'
         )
       end
     end
@@ -70,7 +70,7 @@ module SolvingBits
           x: viewport.right - left_pad,
           y: viewport.bottom - (segments_height_px() * index) - (segments_height_px() / 2),
           text_anchor: 'end',
-          alignment_baseline: 'middle'
+          dominant_baseline: 'middle'
         )
       end
     end

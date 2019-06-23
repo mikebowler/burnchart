@@ -184,7 +184,7 @@ module SolvingBits
     end
     
     def render viewport
-      # viewport.draw_outline
+      viewport.draw_outline color: 'red'
 
       if vertical?
         render_vertical viewport
@@ -245,7 +245,7 @@ module SolvingBits
             y: text_baseline,
             style: "font: italic #{major_ticks_label_font_size_px()}px sans-serif",
             text_anchor: 'middle',
-            alignment_baseline: alignment_baseline
+            dominant_baseline: alignment_baseline
           )
         end
       end
@@ -266,7 +266,7 @@ module SolvingBits
           y: text_baseline,
           style: "font: #{label_font_size_px()}px sans-serif",
           text_anchor: 'end',
-          alignment_baseline: alignment_baseline
+          dominant_baseline: alignment_baseline
         )
       end
     end
@@ -361,7 +361,7 @@ module SolvingBits
             y: adjusted_y,
             style: "font: italic #{major_ticks_label_font_size_px}px sans-serif",
             text_anchor: (standard_direction? ? 'end' : 'start'),
-            alignment_baseline: 'middle'
+            dominant_baseline: 'middle'
           )
         end
       end
