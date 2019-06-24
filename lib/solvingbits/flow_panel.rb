@@ -50,7 +50,7 @@ module SolvingBits
 
       @components.each do |c|
         size = c.preferred_size
-        new_edge = current_edge + size.height
+        new_edge = current_edge + (vertical? ? size.height : size.width )
         if vertical?
           c.render Viewport.new(
             left: viewport.left, right: viewport.left + size.width,
