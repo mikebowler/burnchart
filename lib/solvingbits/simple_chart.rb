@@ -29,24 +29,24 @@ module SolvingBits
       y_size = @y_axis.preferred_size
 
       @y_axis.render Viewport.new(
-        left: 0,
-        right: y_size.width,
-        top: 0,
-        bottom: y_size.height,
+        left: viewport.left,
+        right: viewport.left + y_size.width,
+        top: viewport.top,
+        bottom: viewport.top + y_size.height,
         canvas: viewport.canvas
       )
       @x_axis.render Viewport.new(
-        left: y_size.width,
-        right: c_size.width,
-        top: y_size.height,
-        bottom: c_size.height,
+        left: viewport.left + y_size.width,
+        right: viewport.left + c_size.width,
+        top: viewport.top + y_size.height,
+        bottom: viewport.top + c_size.height,
         canvas: viewport.canvas
       )
       data_area = Viewport.new(
-        left: y_size.width,
-        right: y_size.width + x_size.width,
-        top: 0,
-        bottom: y_size.height,
+        left: viewport.left + y_size.width,
+        right: viewport.left + y_size.width + x_size.width,
+        top: viewport.top,
+        bottom: viewport.top + y_size.height,
         canvas: viewport.canvas,
         vertical_axis: @y_axis
       )
