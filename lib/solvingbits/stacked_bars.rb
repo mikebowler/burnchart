@@ -9,6 +9,10 @@ module SolvingBits
     attr_configurable :label
     attr_configurable :color, defaults_to: 'black'
 
+    attr_configurable :range_handles_enable, defaults_to: false, only: [true, false]
+    attr_configurable :range_handles_color, defaults_to: 'black'
+    attr_configurable :ranges_handles_gap, defaults_to: 1
+
     def initialize args
       initialize_configuration params: args
     end
@@ -21,6 +25,7 @@ module SolvingBits
 
     attr_configurable :values, defaults_to: []
     attr_configurable :bar_width_px, defaults_to: 10
+    attr_configurable :gap, defaults_to: 0
 
     def initialize params = {}
       initialize_configuration params: params
@@ -36,16 +41,18 @@ module SolvingBits
     def preferred_size
       Size.new(
         height: @stacks.collect { |stack| stack.collect(&:value).sum }.max,
-        width: @stacks.count * bar_width_px()
+        width: (@stacks.count * bar_width_px()) + ((@stacks.count - 1) * gap())
       )
     end
 
     def render viewport
-      left = viewport.left
+      remainder = viewport.width - (@stacks.length * bar_width_px()) - ((@stacks.count - 1) * gap())
+      left = viewport.left + (remainder / 2)
+
       @stacks.each do |stack|
         bottom = viewport.bottom
         stack.each do |item|
-          adjusted_height = viewport.vertical_adjust item.value
+          adjusted_height = viewport.vertical_axis&.value_to_length(item.value) || item.value
           viewport.canvas.rect(
             x: left,
             y: bottom - adjusted_height,
@@ -56,7 +63,7 @@ module SolvingBits
 
           bottom -= adjusted_height
         end
-        left += bar_width_px()
+        left += bar_width_px() + gap()
       end
     end
   end

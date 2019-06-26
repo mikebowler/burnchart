@@ -2,7 +2,7 @@
 
 module SolvingBits
   class Viewport
-    attr_reader :left, :right, :top, :bottom, :canvas
+    attr_reader :left, :right, :top, :bottom, :canvas, :vertical_axis
 
     def initialize left:, right:, top:, bottom:, canvas:, vertical_axis: nil
       @left = left
@@ -30,19 +30,6 @@ module SolvingBits
         height: height,
         style: "stroke: #{color}; fill: none"
       )
-    end
-
-    # If a vertical_axis has been set AND its position is matched to the position
-    # of the current viewport then return the y value in coordinate space.
-    def vertical_adjust value
-      if @vertical_axis.nil?
-        value
-      else
-        @vertical_axis.to_coordinate_space(
-          value: value,
-          lower_coordinate: bottom()
-        )
-      end
     end
 
   end

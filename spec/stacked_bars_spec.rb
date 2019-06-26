@@ -30,9 +30,6 @@ module SolvingBits
           stack << StackItem.new(value: 5, color: 'black')
         end
 
-        File.open 'stacked.svg', 'w' do |file|
-          file.puts component.to_svg
-        end
         expect(component.to_svg(:partial)).to eq(
           "<rect x='0' y='10' width='10' height='5' style='fill: blue'>" \
             "<title>committed</title>" \
@@ -51,5 +48,25 @@ module SolvingBits
         )
       end
     end
+
+    # it 'should render range handles' do
+    #   component = StackedBars.new
+    #   component.create_stack do |stack|
+    #     stack << StackItem.new(
+    #       value: [10, 15],
+    #       label: 'ranges',
+    #       color: 'blue',
+    #       range_handles: { enabled: true, color: 'black', gap: 2 }
+    #     )
+    #   end
+
+    #   expect(component.preferred_size).to eq(Size.new(height: 5, width: 10))
+
+    #   expect(component.to_svg(:partial)).to eq(
+    #     "<rect x='0' y='0' width='10' height='5' style='fill: blue'>" \
+    #       "<title>committed</title>" \
+    #     "</rect>"
+    #   )
+    # end
   end
 end

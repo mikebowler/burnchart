@@ -8,7 +8,7 @@ module SolvingBits
   class LinearAxis < SvgComponent
     include Configurable
 
-    attr_reader :calculations
+    attr_reader :calculations, :baseline_length
     attr_configurable :positioning_axis, only: %w[top bottom left right]
     attr_configurable :positioning_origin, only: %w[top bottom left right]
 
@@ -40,8 +40,8 @@ module SolvingBits
       @calculations = {}
       initialize_configuration params: params
 
-      @values_lower_bound = fix_ambigious_value values_lower_bound()
-      @values_upper_bound = fix_ambigious_value values_upper_bound()
+      @values_lower_bound = fix_ambigious_value values_lower_bound(), true
+      @values_upper_bound = fix_ambigious_value values_upper_bound(), false
 
       @values_lower_bound_internal = convert_to_internal_value(values_lower_bound())
       @values_upper_bound_internal = convert_to_internal_value(values_upper_bound())
@@ -100,17 +100,24 @@ module SolvingBits
       text.to_s.length * estimated_char_width
     end
 
-    def fix_ambigious_value value
+    def fix_ambigious_value value, is_lower_value
         # Dates are ambiguous because they don't use timezones so convert
         # to something that does.
-        value = DateTime.new value.year, value.month, value.day if value.is_a? Date
+        if value.is_a? Date
+          if is_lower_value
+            value = DateTime.new value.year, value.month, value.day, 0, 0, 0
+          else
+            value += 1
+            value = DateTime.new value.year, value.month, value.day, 23, 59, 29
+          end
+        end
         value
     end
 
     # The internal represention that we use for the value may not be the same
     # as what's passed in. Convert.
     def convert_to_internal_value value
-      value = fix_ambigious_value value
+      value = fix_ambigious_value value, true
 
       if day_unit?
         (BigDecimal(value.to_time.to_i) / SECONDS_PER_DAY)
@@ -154,24 +161,28 @@ module SolvingBits
       result
     end
 
-    def to_coordinate_space value:, lower_coordinate:
+    def value_to_length value, debug=false
       raise 'You should call preferred_size() before this method' unless @baseline_length
 
-      upper_coordinate = lower_coordinate + @baseline_length
-      value = fix_ambigious_value value
+      # upper_coordinate = lower_coordinate + @baseline_length
+      value = fix_ambigious_value value, true
       validate_same_timezone value
 
       internal_value = convert_to_internal_value value
 
       value_delta = @values_upper_bound_internal - @values_lower_bound_internal
       value_percent = BigDecimal(internal_value - @values_lower_bound_internal) / value_delta
+      # coordinate_delta = @baseline_length #upper_coordinate - lower_coordinate
 
-      coordinate_delta = upper_coordinate - lower_coordinate
+      (@baseline_length * value_percent).to_i.tap {|length| puts "value=#{value} length=#{length}" if debug}
+    end
 
+    def to_coordinate_space value:, lower_coordinate:
+      length = value_to_length value
       if coordinate_values_move_in_same_direction_as_data_values?
-        (coordinate_delta * value_percent).to_i + lower_coordinate
+        length + lower_coordinate
       else
-        upper_coordinate - ((coordinate_delta - top_pad()) * value_percent).to_i
+        lower_coordinate + @baseline_length - length
       end
     end
 
@@ -184,7 +195,7 @@ module SolvingBits
     end
     
     def render viewport
-      viewport.draw_outline color: 'red'
+      # viewport.draw_outline color: 'red'
 
       if vertical?
         render_vertical viewport
@@ -278,12 +289,13 @@ module SolvingBits
       if day_unit?
         upper_seconds = values_upper_bound().to_time.to_i
         lower_seconds = values_lower_bound().to_time.to_i
-        delta = (BigDecimal(upper_seconds - lower_seconds) / SECONDS_PER_DAY) + 1
+        delta = (BigDecimal(upper_seconds - lower_seconds) / SECONDS_PER_DAY)
       else
-        delta = values_upper_bound - values_lower_bound
+        delta = BigDecimal(values_upper_bound() + values_lower_bound(), Float::DIG)
       end
 
-      @baseline_length = (delta * minor_ticks_px_between()).to_i
+      tick_count = delta / minor_ticks_every()
+      @baseline_length = (tick_count * minor_ticks_px_between()).to_i
       if vertical?
         width = major_ticks_length()
         if major_ticks_label_visible
