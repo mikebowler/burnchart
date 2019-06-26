@@ -12,10 +12,10 @@ module SolvingBits
         expect(component.preferred_size).to eq(Size.new(height: 5, width: 10))
 
         expect(component.to_svg(:partial)).to eq(
-          "<rect x='0' y='0' width='10' height='5' style='fill: blue'>" \
+          "<rect x='0' y='0' width='10' height='5' style='stroke: blue; fill: blue;'>" \
             "<title>committed</title>" \
           "</rect>"
-        )
+      )
       end
 
       it 'should render multiple stacks with multiple items per stack' do
@@ -31,42 +31,41 @@ module SolvingBits
         end
 
         expect(component.to_svg(:partial)).to eq(
-          "<rect x='0' y='10' width='10' height='5' style='fill: blue'>" \
+          "<rect x='0' y='10' width='10' height='5' style='stroke: blue; fill: blue;'>" \
             "<title>committed</title>" \
           "</rect>" \
-          "<rect x='0' y='5' width='10' height='5' style='fill: pink'>" \
+          "<rect x='0' y='5' width='10' height='5' style='stroke: pink; fill: pink;'>" \
             "<title>added</title>" \
           "</rect>" \
-          "<rect x='10' y='10' width='10' height='5' style='fill: green'>" \
+          "<rect x='10' y='10' width='10' height='5' style='stroke: green; fill: green;'>" \
             "<title>completed</title>" \
           "</rect>" \
-          "<rect x='10' y='5' width='10' height='5' style='fill: orange'>" \
+          "<rect x='10' y='5' width='10' height='5' style='stroke: orange; fill: orange;'>" \
             "<title>removed</title>" \
           "</rect>" \
-          "<rect x='10' y='0' width='10' height='5' style='fill: black'>" \
+          "<rect x='10' y='0' width='10' height='5' style='stroke: black; fill: black;'>" \
           "</rect>"
         )
       end
     end
 
-    # it 'should render range handles' do
-    #   component = StackedBars.new
-    #   component.create_stack do |stack|
-    #     stack << StackItem.new(
-    #       value: [10, 15],
-    #       label: 'ranges',
-    #       color: 'blue',
-    #       range_handles: { enabled: true, color: 'black', gap: 2 }
-    #     )
-    #   end
+    it 'should render range handles' do
+      component = StackedBars.new range_handles: { enabled: true, color: 'black', gap: 2 }
+      component.create_stack do |stack|
+        stack << StackItem.new(
+          value: [10, 15],
+          label: 'ranges',
+          color: 'blue'
+        )
+      end
 
-    #   expect(component.preferred_size).to eq(Size.new(height: 5, width: 10))
-
-    #   expect(component.to_svg(:partial)).to eq(
-    #     "<rect x='0' y='0' width='10' height='5' style='fill: blue'>" \
-    #       "<title>committed</title>" \
-    #     "</rect>"
-    #   )
-    # end
+      expect(component.preferred_size).to eq(Size.new(height: 15, width: 13))
+      expect(component.to_svg(:partial)).to eq(
+        "<rect x='1' y='0' width='10' height='15' style='stroke: blue; fill: none;'/>" \
+        "<rect x='4' y='0' width='10' height='15' style='stroke: blue; fill: blue;'>" \
+          "<title>ranges</title>" \
+        "</rect>"
+      )
+    end
   end
 end
