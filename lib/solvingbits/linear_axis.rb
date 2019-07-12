@@ -195,7 +195,7 @@ module SolvingBits
     end
     
     def render viewport
-      # viewport.draw_outline color: 'red'
+      viewport.draw_outline color: 'red'
 
       if vertical?
         render_vertical viewport
@@ -223,8 +223,6 @@ module SolvingBits
         major_tick_edge = baseline - major_ticks_length
         minor_tick_edge = baseline - minor_ticks_length
       end
-
-      alignment_baseline = positioning_axis() == 'top' ? 'before-edge' : 'hanging'
 
       ticks.each do |x, is_major_tick, label|
         adjusted_x = if coordinate_values_move_in_same_direction_as_data_values?
@@ -256,7 +254,7 @@ module SolvingBits
             y: text_baseline,
             style: "font: italic #{major_ticks_label_font_size_px()}px sans-serif",
             text_anchor: 'middle',
-            dominant_baseline: alignment_baseline
+            dominant_baseline: 'hanging'
           )
         end
       end
@@ -277,7 +275,7 @@ module SolvingBits
           y: text_baseline,
           style: "font: #{label_font_size_px()}px sans-serif",
           text_anchor: 'end',
-          dominant_baseline: alignment_baseline
+          dominant_baseline: 'hanging'
         )
       end
     end
@@ -386,6 +384,9 @@ module SolvingBits
           x_rotation = major_tick_edge + label_font_size_px()
           x_rotation += major_ticks_label_font_size_px() if major_ticks_visible()
         end
+        # Not sure why we need this adjustment left of half the font size but
+        # it visually looks correct
+        x_rotation -= (label_font_size_px() / 2)
         y_rotation = top
 
         viewport.canvas.text(
@@ -394,12 +395,12 @@ module SolvingBits
           y: y_rotation,
           style: "font: #{label_font_size_px()}px sans-serif",
           transform: "rotate(270, #{x_rotation}, #{y_rotation})",
-          text_anchor: 'end'
+          text_anchor: 'end',
+          dominant_baseline: 'hanging'
+
         )
         @calculations[:label_baseline] = x_rotation
-
       end
-
     end
 
     class HorizontalBackgroundLineRenderer
