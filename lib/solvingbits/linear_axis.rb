@@ -195,7 +195,7 @@ module SolvingBits
     end
     
     def render viewport
-      viewport.draw_outline color: 'red'
+      # viewport.draw_outline color: 'red'
 
       if vertical?
         render_vertical viewport

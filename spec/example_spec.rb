@@ -133,7 +133,7 @@ RSpec.describe 'Runnable examples' do
         positioning: { axis: axis, origin: origin },
         minor_ticks: { every: 1, px_between: 5, length: 4 },
         major_ticks: { every: 10, length: 4 },
-        values: { lower_bound: 0.0, upper_bound: 40.0 },
+        values: { lower_bound: 0, upper_bound: 40 },
         label: { text: "axis: #{axis} origin: #{origin}", visible: true }
       )
     end
