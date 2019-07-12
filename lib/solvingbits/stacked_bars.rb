@@ -97,7 +97,7 @@ module SolvingBits
               y: bottom - bar_height,
               width: bar_width_px(),
               height: handle_height,
-              style: "stroke: #{item.color()}; fill: none;"
+              style: "stroke: #{item.color()}; fill: #{range_handles_color};"
             )
           end
 
