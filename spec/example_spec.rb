@@ -104,7 +104,7 @@ RSpec.describe 'Runnable examples' do
   end
 
   it 'should show all combinations of linear axis' do
-    outer_flow_panel = SolvingBits::FlowPanel.new orientation: :vertical, gap: 5
+    outer_flow_panel = SolvingBits::FlowPanel.new orientation: :vertical, gap: 5, debug: true
     [
       %w[bottom left],
       %w[bottom right],
@@ -120,7 +120,7 @@ RSpec.describe 'Runnable examples' do
       )
     end
 
-    inner_flow_panel = SolvingBits::FlowPanel.new orientation: :horizontal, gap: 5
+    inner_flow_panel = SolvingBits::FlowPanel.new orientation: :horizontal, gap: 5, debug: true
     outer_flow_panel.add inner_flow_panel
 
     [

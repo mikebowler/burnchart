@@ -6,6 +6,7 @@ module SolvingBits
 
     attr_configurable :gap, defaults_to: 0
     attr_configurable :orientation, only: %i[vertical horizontal], defaults_to: :horizontal
+    attr_configurable :debug, only: [true, false], defaults_to: false
 
     def initialize params = {}
       initialize_configuration params: params
@@ -45,25 +46,26 @@ module SolvingBits
     end
 
     def render viewport
-      # viewport.draw_outline color: 'blue'
       current_edge = vertical? ? viewport.top : viewport.left
 
       @components.each do |c|
         size = c.preferred_size
-        new_edge = current_edge + (vertical? ? size.height : size.width )
-        if vertical?
-          c.render Viewport.new(
+        new_edge = current_edge + (vertical? ? size.height : size.width)
+        component_viewport = if vertical?
+          Viewport.new(
             left: viewport.left, right: viewport.left + size.width,
             top: current_edge, bottom: new_edge,
             canvas: viewport.canvas
           )
         else
-          c.render Viewport.new(
+          Viewport.new(
             left: current_edge, right: new_edge,
             top: viewport.top, bottom: viewport.top + size.height,
             canvas: viewport.canvas
           )
         end
+        component_viewport.draw_outline if debug()
+        c.render component_viewport
         current_edge = new_edge + gap()
       end
     end
