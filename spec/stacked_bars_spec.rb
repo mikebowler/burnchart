@@ -61,7 +61,7 @@ module SolvingBits
 
       expect(component.preferred_size).to eq(Size.new(height: 15, width: 13))
       expect(component.to_svg(:partial)).to eq(
-        "<rect x='1' y='0' width='10' height='15' style='stroke: blue; fill: none;'/>" \
+        "<rect x='1' y='0' width='10' height='15' style='stroke: blue; fill: black;'/>" \
         "<rect x='4' y='0' width='10' height='15' style='stroke: blue; fill: blue;'>" \
           "<title>ranges</title>" \
         "</rect>"

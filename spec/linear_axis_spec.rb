@@ -146,7 +146,7 @@ module SolvingBits
           positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 1, px_between: 2 },
           major_ticks: { every: 30 },
-          values: { lower_bound: 0, upper_bound: 40 }
+          values: { lower_bound: 0, upper_bound: 40}
         )
         # some initialization happens during preferred_size so call this first
         component.preferred_size

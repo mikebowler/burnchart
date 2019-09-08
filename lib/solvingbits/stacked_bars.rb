@@ -90,7 +90,7 @@ module SolvingBits
           value = item.max_value
           bar_height = viewport.vertical_axis&.value_to_length(value) || value
 
-          if range_handles_enabled() && item.value_is_range 
+          if range_handles_enabled() && item.value_is_range
             handle_height = viewport.vertical_axis&.value_to_length(value-item.min_value) || value
             viewport.canvas.rect(
               x: left,

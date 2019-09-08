@@ -384,9 +384,6 @@ module SolvingBits
           x_rotation = major_tick_edge + label_font_size_px()
           x_rotation += major_ticks_label_font_size_px() if major_ticks_visible()
         end
-        # Not sure why we need this adjustment left of half the font size but
-        # it visually looks correct
-        x_rotation -= (label_font_size_px() / 2)
         y_rotation = top
 
         viewport.canvas.text(

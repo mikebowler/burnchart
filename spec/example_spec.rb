@@ -11,7 +11,7 @@ RSpec.describe 'Runnable examples' do
       positioning: { axis: 'left', origin: 'bottom' },
       minor_ticks: { every: 1, length: 4, px_between: 5 },
       major_ticks: { every: 10, length: 8 },
-      values: { lower_bound: 0, upper_bound: 30, unit: Integer },
+      values: { lower_bound: 0, upper_bound: 30 },
       label: { visible: true, text: 'Story points', font_size_px: 15 }
     )
 
@@ -34,7 +34,7 @@ RSpec.describe 'Runnable examples' do
 
       layer.data = [
         SolvingBits::Point.new(x: Date.parse('2018-01-02'), y: 25),
-        SolvingBits::Point.new(x: Date.parse('2018-01-03'), y: 21),
+        SolvingBits::Point.new(x: Date.parse('2018-01-03'), y: 20),
         SolvingBits::Point.new(x: Date.parse('2018-01-04'), y: 23),
         SolvingBits::Point.new(x: Date.parse('2018-01-05'), y: 17),
         SolvingBits::Point.new(x: Date.parse('2018-01-06'), y: 11),
