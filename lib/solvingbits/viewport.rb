@@ -2,15 +2,16 @@
 
 module SolvingBits
   class Viewport
-    attr_reader :left, :right, :top, :bottom, :canvas, :vertical_axis
+    attr_reader :left, :right, :top, :bottom, :canvas, :vertical_axis, :horizontal_axis
 
-    def initialize left:, right:, top:, bottom:, canvas:, vertical_axis: nil
+    def initialize left:, right:, top:, bottom:, canvas:, vertical_axis: nil, horizontal_axis: nil
       @left = left
       @right = right
       @top = top
       @bottom = bottom
       @canvas = canvas
       @vertical_axis = vertical_axis
+      @horizontal_axis = horizontal_axis
     end
 
     def width

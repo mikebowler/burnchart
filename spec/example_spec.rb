@@ -31,6 +31,7 @@ RSpec.describe 'Runnable examples' do
       layer.renderers << y_axis.background_line_renderer
       layer.renderers << SolvingBits::LineChartRenderer.new # (stroke: 'red')
       layer.renderers << SolvingBits::DotRenderer.new
+      layer.renderers << SolvingBits::LineMarkerRenderer.new(value: Date.parse('2018-01-04'))
 
       layer.data = [
         SolvingBits::Point.new(x: Date.parse('2018-01-02'), y: 25),
