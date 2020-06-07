@@ -293,7 +293,7 @@ module SolvingBits
       end
 
       tick_count = delta / minor_ticks_every()
-      @baseline_length = (tick_count * minor_ticks_px_between()).to_i
+      @baseline_length = (tick_count * minor_ticks_px_between()).round(0,BigDecimal::ROUND_UP).to_i
       if vertical?
         width = major_ticks_length()
         if major_ticks_label_visible
