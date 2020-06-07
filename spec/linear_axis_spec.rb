@@ -139,6 +139,16 @@ module SolvingBits
       end
     end
 
+    def test_to_coordinate_space component:, inputs:, expected:, lower_coordinate: 0
+      # some initialization happens during preferred_size so call this first
+      component.preferred_size
+
+      actual = inputs.collect do |i|
+        component.to_coordinate_space value: i, lower_coordinate: lower_coordinate
+      end
+      expect(actual).to eq(expected)
+    end
+
     context 'axis: bottom, origin: left' do
 
       it 'should convert to coordinate space when lower value and coordinates are zero' do
@@ -148,15 +158,11 @@ module SolvingBits
           major_ticks: { every: 30 },
           values: { lower_bound: 0, upper_bound: 40}
         )
-        # some initialization happens during preferred_size so call this first
-        component.preferred_size
-
-        inputs = [0, 20, 40]
-        expected = [0, 40, 80]
-        actual = inputs.collect do |i|
-          component.to_coordinate_space value: i, lower_coordinate: 0
-        end
-        expect(actual).to eq(expected)
+        test_to_coordinate_space(
+          component: component,
+          inputs: [0, 20, 40],
+          expected: [0, 40, 80]
+        )
       end
 
       xit 'should convert to coordinate space when lower value is offset and coordinates are not' do
@@ -166,15 +172,12 @@ module SolvingBits
           major_ticks: { every: 30 },
           values: { lower_bound: 10, upper_bound: 50 }
         )
-        # some initialization happens during preferred_size so call this first
-        component.preferred_size
-
-        inputs = [10, 30, 50]
-        expected = [0, 40, 80]
-        actual = inputs.collect do |i|
-          component.to_coordinate_space value: i, lower_coordinate: 0
-        end
-        expect(actual).to eq(expected)
+        offset = 10
+        test_to_coordinate_space(
+          component: component,
+          inputs: [0 + offset, 20 + offset, 40 + offset],
+          expected: [0, 40, 80]
+        )
       end
 
       it 'should convert to coordinate space when lower coordinate is offset and value bounds are not' do
@@ -184,15 +187,13 @@ module SolvingBits
           major_ticks: { every: 30 },
           values: { lower_bound: 0, upper_bound: 50 }
         )
-        # some initialization happens during preferred_size so call this first
-        component.preferred_size
+        test_to_coordinate_space(
+          component: component,
+          inputs: [0, 25, 50],
+          expected: [10, 60, 110],
+          lower_coordinate: 10
+        )
 
-        inputs = [0, 25, 50]
-        expected = [10, 60, 110]
-        actual = inputs.collect do |i|
-          component.to_coordinate_space value: i, lower_coordinate: 10
-        end
-        expect(actual).to eq(expected)
       end
 
       xit 'should convert to coordinate space when value is a Time' do
