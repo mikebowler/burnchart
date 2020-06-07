@@ -21,6 +21,10 @@ module SolvingBits
         style: 'stroke:red'
       )
     end
+
+    def top_pad
+      0
+    end
   end
 
   RSpec.describe SimpleChart do

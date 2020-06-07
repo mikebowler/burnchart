@@ -6,7 +6,7 @@ require 'spec_helper'
 # documentation
 RSpec.describe 'Runnable examples' do
   it 'should show burndown chart' do
-    chart = SolvingBits::SimpleChart.new
+    chart = SolvingBits::SimpleChart.new true
     chart.left_axis = y_axis = SolvingBits::LinearAxis.new(
       positioning: { axis: 'left', origin: 'bottom' },
       minor_ticks: { every: 1, length: 4, px_between: 5 },

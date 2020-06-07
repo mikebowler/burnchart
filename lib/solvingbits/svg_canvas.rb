@@ -42,7 +42,7 @@ module SolvingBits
       PRIMITIVE
     end
 
-    svg_primitive :line, attrs: %w[x1 y1 x2 y2 style]
+    svg_primitive :line, attrs: %w[x1 y1 x2 y2 style stroke stroke_dasharray]
     svg_primitive :rect, attrs: %w[x y width height style]
     svg_primitive :circle, attrs: %w[cx cy r fill]
     svg_primitive :path, attrs: %w[d fill stroke]

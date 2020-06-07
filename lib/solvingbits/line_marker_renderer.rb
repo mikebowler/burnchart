@@ -16,7 +16,7 @@ module SolvingBits
         value: value(), lower_coordinate: viewport.left
       )
       viewport.canvas.line(
-        x1: x, y1: viewport.top, x2: x, y2: viewport.bottom, style: 'stroke:red'
+        x1: x, y1: viewport.top, x2: x, y2: viewport.bottom, stroke: 'black', stroke_dasharray: 4
       )
     end
   end

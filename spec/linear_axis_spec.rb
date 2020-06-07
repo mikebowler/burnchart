@@ -8,7 +8,7 @@ module SolvingBits
     context 'ticks' do
       it 'should calculate ticks with lower bound of zero' do
         component = LinearAxis.new(
-         positioning: { axis: 'bottom', origin: 'left' },
+          positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 10, px_between: 5 },
           major_ticks: { every: 30 },
           values: { lower_bound: 0, upper_bound: 40 }
@@ -229,7 +229,7 @@ module SolvingBits
       end
     end
 
-    context 'axis: left, origin: left' do
+    context 'axis: left, origin: bottom' do
       xit 'should draw simple ticks' do
         component = LinearAxis.new(
           positioning: { axis: 'left', origin: 'bottom' },
@@ -395,7 +395,7 @@ module SolvingBits
 
     it 'should have correct width when using time horizontally' do
       component = LinearAxis.new(
-       positioning: { axis: 'bottom', origin: 'left' },
+        positioning: { axis: 'bottom', origin: 'left' },
         minor_ticks: { every: 1, px_between: 10 },
         major_ticks: { every: 30 },
         values: {
@@ -410,7 +410,7 @@ module SolvingBits
 
     it 'should have correct height when using time vertically' do
       component = LinearAxis.new(
-       positioning: { axis: 'left', origin: 'top' },
+        positioning: { axis: 'left', origin: 'top' },
         minor_ticks: { every: 1, px_between: 10 },
         major_ticks: { every: 30 },
         values: {

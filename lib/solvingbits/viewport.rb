@@ -5,6 +5,7 @@ module SolvingBits
     attr_reader :left, :right, :top, :bottom, :canvas, :vertical_axis, :horizontal_axis
 
     def initialize left:, right:, top:, bottom:, canvas:, vertical_axis: nil, horizontal_axis: nil
+
       @left = left
       @right = right
       @top = top
@@ -33,5 +34,8 @@ module SolvingBits
       )
     end
 
+    def to_s
+      "Viewport(@left=#{left}, @right=#{@right}, @top=#{@top}, @bottom=#{@bottom})"
+    end
   end
 end
