@@ -196,10 +196,10 @@ module SolvingBits
 
       end
 
-      xit 'should convert to coordinate space when value is a Time' do
+      it 'should convert to coordinate space when value is a Time' do
         component = LinearAxis.new(
           positioning: { axis: 'bottom', origin: 'left' },
-          minor_ticks: { every: 10, px_between: 50 },
+          minor_ticks: { every: 1, px_between: 100 },
           major_ticks: { every: 30 },
           values: {
             lower_bound: Time.parse('2019-01-01T00:00Z'),
@@ -207,26 +207,19 @@ module SolvingBits
             unit: Date
           }
         )
-        
-        # some initialization happens during preferred_size so call this first
-        component.preferred_size
-
-        inputs = [
-          Date.parse('2019-01-01'),
-          Time.parse('2019-01-01T00:00Z'),
-          Time.parse('2019-01-01T06:00Z'),
-          Time.parse('2019-01-01T12:00Z'),
-          Time.parse('2019-01-01T18:00Z'),
-          Time.parse('2019-01-02T00:00Z'),
-          Date.parse('2019-01-02')
-        ]
-        expected = [0, 0, 25, 50, 75, 100, 100]
-        actual = inputs.collect do |i|
-          component.to_coordinate_space(
-            value: i, lower_coordinate: 0
-          )
-        end
-        expect(actual).to eq(expected)
+        test_to_coordinate_space(
+          component: component,
+          inputs: [
+            Date.parse('2019-01-01'),
+            Time.parse('2019-01-01T00:00Z'),
+            Time.parse('2019-01-01T06:00Z'),
+            Time.parse('2019-01-01T12:00Z'),
+            Time.parse('2019-01-01T18:00Z'),
+            Time.parse('2019-01-02T00:00Z'),
+            Date.parse('2019-01-02')
+          ],
+          expected: [0, 0, 25, 50, 75, 100, 100]
+        )
       end
     end
 
