@@ -11,6 +11,7 @@
 .rspec_status
 *.svg
 coverage
+build.txt
 
 # generated gem
 SolvingBits-0.1.0.gem
