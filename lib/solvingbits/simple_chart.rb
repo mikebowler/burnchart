@@ -4,8 +4,7 @@ module SolvingBits
   class SimpleChart < SvgComponent
     attr_reader :data_layers
 
-    def initialize debug = false
-      @debug = debug
+    def initialize
       @data_layers = []
     end
 
@@ -58,13 +57,6 @@ module SolvingBits
     end
 
     def render_layer data_layer:, viewport:
-      #removeme
-      if @debug
-        viewport.draw_outline color: 'blue'
-        puts "viewport=#{viewport}"
-        puts "baseline_length=#{@baseline_length}"
-      end
-
       points = data_layer.data.collect do |point|
         puts point if @debug
         new_point = Point.new(
@@ -77,7 +69,6 @@ module SolvingBits
             lower_coordinate: viewport.top
           )
         ).tap { |p| p.metadata.merge! point.metadata }
-        puts "oldPoint=#{point} newPoint=#{new_point}" if @debug
         new_point
       end
       data_layer.renderers.each do |renderer|
