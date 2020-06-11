@@ -155,7 +155,6 @@ module SolvingBits
         component = LinearAxis.new(
           positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 1, px_between: 2 },
-          major_ticks: { every: 30 },
           values: { lower_bound: 0, upper_bound: 40}
         )
         test_to_coordinate_space(
@@ -166,13 +165,12 @@ module SolvingBits
       end
 
       xit 'should convert to coordinate space when lower value is offset and coordinates are not' do
+        offset = 10
         component = LinearAxis.new(
           positioning: { axis: 'bottom', origin: 'left' },
           minor_ticks: { every: 1, px_between: 2 },
-          major_ticks: { every: 30 },
-          values: { lower_bound: 10, upper_bound: 50 }
+          values: { lower_bound: 0 + offset, upper_bound: 40 + offset }
         )
-        offset = 10
         test_to_coordinate_space(
           component: component,
           inputs: [0 + offset, 20 + offset, 40 + offset],
@@ -224,23 +222,19 @@ module SolvingBits
     end
 
     context 'axis: left, origin: bottom' do
-      xit 'should draw simple ticks' do
+      it 'should draw simple ticks' do
         component = LinearAxis.new(
           positioning: { axis: 'left', origin: 'bottom' },
-          minor_ticks: { every: 10, length: 8, px_between: 5 },
-          major_ticks: { every: 30, length: 15, label: { visible: false } },
-          values: { lower_bound: 0, upper_bound: 40 }
+          minor_ticks: { every: 1, length: 4, px_between: 5 },
+          major_ticks: { every: 3, length: 8, label: { visible: false} },
+          values: { lower_bound: 0, upper_bound: 3 },
+          label: { visible: false, text: 'Story points', font_size_px: 15 }
         )
-
-        canvas = SvgCanvas.new
-        size = component.preferred_size
-        component.render Viewport.new left: 0, right: size.width, top: 0, bottom: size.height, canvas: canvas
-        expect(canvas.to_svg(:partial)).to eq(
-          "<line x1='16' y1='0' x2='16' y2='200' style='stroke:black;'/>" \
-          "<line x1='8' y1='150' x2='16' y2='150' style='stroke:black;'/>" \
-          "<line x1='8' y1='100' x2='16' y2='100' style='stroke:black;'/>" \
-          "<line x1='1' y1='50' x2='16' y2='50' style='stroke:black;'/>" \
-          "<line x1='8' y1='0' x2='16' y2='0' style='stroke:black;'/>"
+        expect(component.to_svg(:partial)).to eq(
+          "<line x1='8' y1='0' x2='8' y2='15' style='stroke:black;'/>" \
+          "<line x1='4' y1='10' x2='8' y2='10' style='stroke:black;'/>" \
+          "<line x1='4' y1='5' x2='8' y2='5' style='stroke:black;'/>" \
+          "<line x1='0' y1='0' x2='8' y2='0' style='stroke:black;'/>"
         )
       end
 

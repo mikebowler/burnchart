@@ -21,16 +21,12 @@ module SolvingBits
     end
 
     def dump
-      size = preferred_size
-      canvas = SvgCanvas.new
-      render Viewport.new(
-        left: 0,
-        right: size.width,
-        top: 0,
-        bottom: size.height,
-        canvas: canvas
-      )
-      canvas.dump
+      puts '      "' + to_svg(:partial).gsub('><', ">\" \\\n      \"<") + '"'
+    end
+    def dump_to_file filename
+      File.open filename, 'w' do |file|
+        file.write to_svg(:full)
+      end
     end
 
     def render _viewport
