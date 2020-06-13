@@ -6,11 +6,11 @@ module SolvingBits
   class SmoothLineChartRenderer < SvgComponent
     attr_accessor :data_points
 
-    def render left:, right:, top:, bottom:, canvas:
+    def render viewport
       # Without at least two points, there's nothing to draw
       return if @data_points.length < 2
 
-      command = "M#{@data_points[0].x} #{@data_points[0].y}"
+      command = +"M#{@data_points[0].x} #{@data_points[0].y}"
 
       1.upto(@data_points.length - 1) do |i|
         start_control_point = control_point(
@@ -25,7 +25,7 @@ module SolvingBits
           previous_point: @data_points[i - 1],
           current_point: @data_points[i],
           # For the very last point, next and current are the same
-          next_point: @data_points[i + 1] || points[i],
+          next_point: @data_points[i + 1] || @data_points[i],
           is_end_control_point: true
         )
 
@@ -36,7 +36,7 @@ module SolvingBits
         ].join(' ')
       end
 
-      canvas.path d: command, fill: 'none', stroke: 'red'
+      viewport.canvas.path d: command, fill: 'none', stroke: 'red'
     end
 
     def control_point previous_point:, current_point:, next_point:, is_end_control_point:
