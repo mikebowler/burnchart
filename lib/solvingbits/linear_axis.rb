@@ -66,6 +66,13 @@ module SolvingBits
       validate_positioning_arguments
     end
 
+    def debug= arg
+      @debug = arg
+    end
+    def debug
+      @debug || false
+    end
+
     def day_unit?
       return values_unit() == Date
     end
@@ -164,7 +171,6 @@ module SolvingBits
     def value_to_length value, debug=false
       raise 'You should call preferred_size() before this method' unless @baseline_length
 
-      # upper_coordinate = lower_coordinate + @baseline_length
       value = fix_ambigious_value value, true
       validate_same_timezone value
 
@@ -172,9 +178,8 @@ module SolvingBits
 
       value_delta = @values_upper_bound_internal - @values_lower_bound_internal
       value_percent = BigDecimal(internal_value - @values_lower_bound_internal) / value_delta
-      # coordinate_delta = @baseline_length #upper_coordinate - lower_coordinate
 
-      (@baseline_length * value_percent).to_i.tap {|length| puts "value=#{value} length=#{length}" if debug}
+      (@baseline_length * value_percent).to_i
     end
 
     def to_coordinate_space value:, lower_coordinate:
@@ -289,11 +294,12 @@ module SolvingBits
         lower_seconds = values_lower_bound().to_time.to_i
         delta = (BigDecimal(upper_seconds - lower_seconds) / SECONDS_PER_DAY)
       else
-        delta = BigDecimal(values_upper_bound() + values_lower_bound(), Float::DIG)
+        delta = BigDecimal(values_upper_bound() - values_lower_bound(), Float::DIG)
       end
 
-      tick_count = delta / minor_ticks_every()
-      @baseline_length = (tick_count * minor_ticks_px_between()).round(0,BigDecimal::ROUND_UP).to_i
+      tick_count = (delta / minor_ticks_every())
+      @baseline_length = (tick_count * minor_ticks_px_between()).round(0, BigDecimal::ROUND_UP).to_i
+
       if vertical?
         width = major_ticks_length()
         if major_ticks_label_visible
@@ -308,7 +314,7 @@ module SolvingBits
         height += major_ticks_label_font_size_px() if major_ticks_label_visible()
         height += label_font_size_px() if label_visible()
         
-        width = @baseline_length
+        width = @baseline_length # + top_pad
       end
       Size.new height: height, width: width
     end
@@ -317,7 +323,7 @@ module SolvingBits
     # TODO: Be smarter about this. We only need the padding if there is a label
     # right at the top and today we're always putting padding just in case
     def top_pad
-      if major_ticks_label_visible()
+      if vertical? && major_ticks_label_visible()
         major_ticks_label_font_size_px() / 2
       else
         0

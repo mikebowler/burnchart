@@ -227,9 +227,27 @@ module SolvingBits
           positioning: { axis: 'left', origin: 'bottom' },
           minor_ticks: { every: 1, length: 4, px_between: 5 },
           major_ticks: { every: 3, length: 8, label: { visible: false} },
-          values: { lower_bound: 0, upper_bound: 3 },
-          label: { visible: false, text: 'Story points', font_size_px: 15 }
+          values: { lower_bound: 0, upper_bound: 3 }
         )
+        expect(component.to_svg(:partial)).to eq(
+          "<line x1='8' y1='0' x2='8' y2='15' style='stroke:black;'/>" \
+          "<line x1='4' y1='10' x2='8' y2='10' style='stroke:black;'/>" \
+          "<line x1='4' y1='5' x2='8' y2='5' style='stroke:black;'/>" \
+          "<line x1='0' y1='0' x2='8' y2='0' style='stroke:black;'/>"
+        )
+      end
+
+      # Having ticks ever 1 is fine. Every 10 causes redraw problems. WTF?
+      xit 'should draw simple ticks 2' do
+        component = LinearAxis.new(
+          positioning: { axis: 'left', origin: 'bottom' },
+          minor_ticks: { every: 10, length: 4, px_between: 5 },
+          major_ticks: { every: 10, length: 8, label: { visible: false} },
+          values: { lower_bound: 0, upper_bound: 10 },
+          label: { visible: false, text: 'Story points', font_size_px: 15 }
+          )
+        component.dump_to_file 'simpleticks.svg'
+        component.dump
         expect(component.to_svg(:partial)).to eq(
           "<line x1='8' y1='0' x2='8' y2='15' style='stroke:black;'/>" \
           "<line x1='4' y1='10' x2='8' y2='10' style='stroke:black;'/>" \

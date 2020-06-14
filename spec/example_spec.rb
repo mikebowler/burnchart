@@ -143,4 +143,49 @@ RSpec.describe 'Runnable examples' do
       file.puts outer_flow_panel.to_svg :full
     end
   end
+
+  it 'should demonstrate a Weibull curve for K ~ 1.5' do
+    chart = SolvingBits::SimpleChart.new
+    chart.left_axis = y_axis = SolvingBits::LinearAxis.new(
+      positioning: { axis: 'left', origin: 'bottom' },
+      minor_ticks: { every: 1, length: 4, px_between: 20 },
+      major_ticks: { every: 1, length: 8, label: { visible: true, font_size_px: 11 } },
+      values: { lower_bound: 0, upper_bound: 5 },
+      label: { visible: true, text: '# completed', font_size_px: 15 }
+    )
+
+    chart.bottom_axis = SolvingBits::LinearAxis.new(
+      positioning: { axis: 'bottom', origin: 'left' },
+      values: {
+        unit: Integer,
+        lower_bound: 1,
+        upper_bound: 11
+      },
+      minor_ticks: { every: 1, length: 4, px_between: 20, show_lowest_value: true },
+      major_ticks: { every: 1, length: 4, label: { visible: true, font_size_px: 11 } },
+      label: { visible: true, text: 'Lead time', font_size_px: 15 }
+    )
+    chart.bottom_axis.debug = true
+    chart.data_layers << SolvingBits::DataLayer.create do |layer|
+      layer.renderers << y_axis.background_line_renderer
+      layer.renderers << SolvingBits::SmoothLineChartRenderer.new # (stroke: 'red')
+      layer.renderers << SolvingBits::DotRenderer.new
+      layer.renderers << SolvingBits::LineMarkerRenderer.new(value: 4)
+
+      layer.data = [
+        SolvingBits::Point.new(x: 1, y: 2),
+        SolvingBits::Point.new(x: 2, y: 4),
+        SolvingBits::Point.new(x: 3, y: 2),
+        SolvingBits::Point.new(x: 4, y: 2),
+        SolvingBits::Point.new(x: 5, y: 1),
+        SolvingBits::Point.new(x: 6, y: 0),
+        SolvingBits::Point.new(x: 7, y: 0),
+        SolvingBits::Point.new(x: 8, y: 1),
+      ]
+    end
+
+    File.open 'wiebull1_5.svg', 'w' do |file|
+      file.puts chart.to_svg
+    end
+  end
 end

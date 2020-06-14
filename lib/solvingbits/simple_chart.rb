@@ -11,9 +11,15 @@ module SolvingBits
     def left_axis= axis
       @y_axis = axis
     end
-
+    def left_axis
+      @y_axis
+    end
+    
     def bottom_axis= axis
       @x_axis = axis
+    end
+    def bottom_axis
+      @x_axis
     end
 
     def preferred_size
