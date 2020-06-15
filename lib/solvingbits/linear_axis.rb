@@ -51,7 +51,7 @@ module SolvingBits
           "#{values_lower_bound()} > #{values_upper_bound()}"
       end
 
-      unless (major_ticks_every() % minor_ticks_every()).zero?
+      if major_ticks_visible() && (major_ticks_every() % minor_ticks_every()).zero? == false
         raise 'Major ticks must be a multiple of minor: ' \
           "#{major_ticks_every()} and #{minor_ticks_every()}"
       end
@@ -314,7 +314,7 @@ module SolvingBits
         height += major_ticks_label_font_size_px() if major_ticks_label_visible()
         height += label_font_size_px() if label_visible()
         
-        width = @baseline_length # + top_pad
+        width = @baseline_length + top_pad
       end
       Size.new height: height, width: width
     end
@@ -322,9 +322,16 @@ module SolvingBits
     # We need the top pad to ensure we aren't truncating labels
     # TODO: Be smarter about this. We only need the padding if there is a label
     # right at the top and today we're always putting padding just in case
+    # Note that "top" really means away from the origin and may be other directions
     def top_pad
-      if vertical? && major_ticks_label_visible()
-        major_ticks_label_font_size_px() / 2
+      if major_ticks_visible()
+        if vertical?
+          major_ticks_label_font_size_px() / 2
+        else
+          # TODO: Doing the padding properly will break a bunch of tests. Do it anway.
+          # label_width(values_formatter().call(values_upper_bound())) / 2
+          0
+        end
       else
         0
       end

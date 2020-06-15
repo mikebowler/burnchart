@@ -164,7 +164,7 @@ module SolvingBits
         )
       end
 
-      xit 'should convert to coordinate space when lower value is offset and coordinates are not' do
+      it 'should convert to coordinate space when lower value is offset and coordinates are not' do
         offset = 10
         component = LinearAxis.new(
           positioning: { axis: 'bottom', origin: 'left' },
@@ -226,18 +226,19 @@ module SolvingBits
         component = LinearAxis.new(
           positioning: { axis: 'left', origin: 'bottom' },
           minor_ticks: { every: 1, length: 4, px_between: 5 },
-          major_ticks: { every: 3, length: 8, label: { visible: false} },
+          major_ticks: { every: 1, length: 4, label: { visible: false } },
           values: { lower_bound: 0, upper_bound: 3 }
         )
+        component.dump
         expect(component.to_svg(:partial)).to eq(
-          "<line x1='8' y1='0' x2='8' y2='15' style='stroke:black;'/>" \
-          "<line x1='4' y1='10' x2='8' y2='10' style='stroke:black;'/>" \
-          "<line x1='4' y1='5' x2='8' y2='5' style='stroke:black;'/>" \
-          "<line x1='0' y1='0' x2='8' y2='0' style='stroke:black;'/>"
+          "<line x1='4' y1='6' x2='4' y2='21' style='stroke:black;'/>" \
+          "<line x1='0' y1='16' x2='4' y2='16' style='stroke:black;'/>" \
+          "<line x1='0' y1='11' x2='4' y2='11' style='stroke:black;'/>" \
+          "<line x1='0' y1='6' x2='4' y2='6' style='stroke:black;'/>"
         )
       end
 
-      # Having ticks ever 1 is fine. Every 10 causes redraw problems. WTF?
+      # Having ticks every 1 is fine. Every 10 causes redraw problems. WTF?
       xit 'should draw simple ticks 2' do
         component = LinearAxis.new(
           positioning: { axis: 'left', origin: 'bottom' },
@@ -304,20 +305,21 @@ module SolvingBits
       xit 'should draw background lines' do
         component = LinearAxis.new(
           positioning: { axis: 'left', origin: 'bottom' },
-          minor_ticks: { every: 10, length: 8, px_between: 5 },
-          major_ticks: { every: 10, length: 15, label: { visible: false } },
-          values: { lower_bound: 0, upper_bound: 40 }
+          minor_ticks: { every: 1, length: 4, px_between: 5 },
+          major_ticks: { every: 1, length: 4, visible: true, label: { visible: false } },
+          values: { lower_bound: 0, upper_bound: 4 }
         )
 
-        canvas = SvgCanvas.new
+        canvas = SvgCanvas.new width: 100, height: 100
         size = component.preferred_size
         component.background_line_renderer.render Viewport.new(
           left: 0,
-          right: size.width,
+          right: 100,
           top: 0,
-          bottom: size.height,
+          bottom: 100,
           canvas: canvas
         )
+        component.dump_to_file 'simpleticks.svg'
         expect(canvas.to_svg(:partial)).to eq(
           "<line x1='0' y1='150' x2='16' y2='150' style='stroke: lightgray'/>" \
           "<line x1='0' y1='100' x2='16' y2='100' style='stroke: lightgray'/>" \
